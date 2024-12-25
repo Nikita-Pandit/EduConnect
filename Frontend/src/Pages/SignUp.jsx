@@ -1,6 +1,8 @@
 import React, { useState } from "react"; // Correctly import useState here
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
   const [name, setName] = useState(""); // Move the hooks inside the component
@@ -19,6 +21,9 @@ const SignUp = () => {
         password,
       });
       console.log(response)
+      toast.success('Verification email sent! Please check your inbox.', {
+        style: { color: "#ff5722" } 
+      })
     } 
     catch (error) {
       console.error("Error Sending verification email ", error);
@@ -26,6 +31,8 @@ const SignUp = () => {
   };
 
   return (
+    <>
+    <ToastContainer />
     <div className="flex justify-center items-center min-h-screen bg-gray-200">
       <div className="border-2 bg-zinc-700 rounded-md p-5 border-blue-300">
         <form
@@ -90,6 +97,7 @@ const SignUp = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

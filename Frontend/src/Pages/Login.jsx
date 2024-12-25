@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,8 +17,10 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:3002/api/login', { email, password });
       console.log(response);
-      console.log("Login successful", response.data);
-
+      //console.log("Login successful", response.data);
+    //  toast.success('Login Successfully.', {
+    //          style: { color: "#ff5722" } 
+    //        })
       // Navigate to home if login is successful
       if (response.data === "Login successful") {
         navigate("/Home"); // Ensure "/home" is defined in your routes
@@ -27,6 +31,8 @@ const Login = () => {
   };
 
   return (
+    <>
+    <ToastContainer />
     <div className="flex justify-center items-center min-h-screen bg-gray-200">
       <div className="border-2 bg-zinc-700 rounded-md p-5 border-blue-300">
         <form
@@ -66,6 +72,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

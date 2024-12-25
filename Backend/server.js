@@ -32,7 +32,7 @@ mongoose
 app.use("/api",signupRoutes)
 app.use("/api",loginRoutes)
 
-app.get('/verify',async (req,res)=>{
+app.get('/verify:id',async (req,res)=>{
   const {token} = req.query
   
   try{
