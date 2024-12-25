@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const nodemailer = require('nodemailer');
 const dotenv = require('dotenv')
 const env = dotenv.config()
 const mongoose = require('mongoose')
@@ -30,6 +31,29 @@ mongoose
 
 app.use("/api",signupRoutes)
 app.use("/api",loginRoutes)
+
+app.get('/verify',async (req,res)=>{
+  const {token} = req.query
+  
+  try{
+    console.log("Verify Route2")
+    //find the user with token
+    const userIDMatchWithToken = await studentModel.findOne({verificationToken:token})
+    const user = await studentModel.findOneAndUpdate(
+      { verificationToken: token },
+      {isVerified:true,verificationToken:null},
+      {new:true}
+    );
+    console.log(user)
+    if(!user){
+      return res.status(400).json({message:"Invalid or expired token"})
+    }
+    return res.redirect(`http://localhost:5173/SignUp?id=${userIDMatchWithToken._id}`);
+  }catch (error) {
+    console.error('Error during verification:', error);
+    res.status(400).json({ error: 'Verification failed' });
+}
+})
 
 
 app.listen(PORT,()=>{
