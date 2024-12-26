@@ -8,6 +8,7 @@ const cors = require('cors')
 const studentModel = require('./Models/studentmodel')
 const signupRoutes = require('./Routes/signupRoutes')
 const loginRoutes = require('./Routes/loginRoutes')
+const profileRoutes = require('./Routes/profile.Routes')
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json())
@@ -31,8 +32,10 @@ mongoose
 
 app.use("/api",signupRoutes)
 app.use("/api",loginRoutes)
+app.use("/api",profileRoutes)
 
-app.get('/verify:id',async (req,res)=>{
+
+app.get('/verify',async (req,res)=>{
   const {token} = req.query
   
   try{
@@ -55,6 +58,26 @@ app.get('/verify:id',async (req,res)=>{
 }
 })
 
+app.get('/api/student/:id', async (req, res) => {
+  const { id } = req.params; // Extract the id from the request params
+  try {
+    // Find the student by ID in the database
+    const student = await studentModel.findById(id);
+    //const moreinfo=await studentMoreInfo
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+console.log(student)
+    // Send the student name as a response
+    res.status(200).json({ name: student.name,
+    email:student.email,
+    contact:student.contact
+     });
+  } catch (error) {
+    console.error('Error fetching student:', error);
+    res.status(500).json({ error: 'Error fetching student' });
+  }
+});
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`)

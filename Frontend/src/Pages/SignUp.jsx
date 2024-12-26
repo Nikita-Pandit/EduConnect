@@ -1,10 +1,25 @@
-import React, { useState } from "react"; // Correctly import useState here
-import { Link } from "react-router-dom";
+import React, { useState,useEffect } from "react"; // Correctly import useState here
+import { Link ,useLocation } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
+  const location=useLocation()
+  const navigate = useNavigate()
+  useEffect(() => {
+    // Extract token from query params
+    const queryParams = new URLSearchParams(location.search);
+    const id = queryParams.get('id');
+  
+    if (id) {
+      console.log('Id received from URL:', id);
+      navigate("/Profile", { state: { id } });
+
+      // Handle the token (e.g., validate or display to the user)
+    }
+  }, [location,navigate]);
   const [name, setName] = useState(""); // Move the hooks inside the component
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
@@ -12,7 +27,6 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     console.log("jzsdfhb")
     try {
       const response = await axios.post("http://localhost:3002/api/SignUp", {
         name,
