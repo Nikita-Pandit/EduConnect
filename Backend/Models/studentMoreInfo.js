@@ -15,6 +15,9 @@
     type:String,
     //required:true
   },
+  domain:{
+    type:String
+  },
   location:{
     type:String,
     ///required:true
@@ -27,10 +30,10 @@
     type:String,
     //required:true
   },
-//   image:{
-    // type:String,
-    //required:true
-//   },
+  image:{
+    type:String,
+    // required:true
+  },
   studentID:String
   })
 const studentMoreInfo=mongoose.model("studentMoreInfo",studentMoreInfoSchema)
