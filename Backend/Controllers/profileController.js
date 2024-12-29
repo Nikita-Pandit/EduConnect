@@ -5,13 +5,14 @@ const createProfileInfo = async (req,res) => {
   console.log("Uploaded File:", req.file)
   const {id}=req.params;
 
-    const {Bio,github,instagram,linkedin,twitter,domain,leetcode,projects,skills,location,branch,selectYear} = req.body;
+    const {name,Bio,github,instagram,linkedin,twitter,domain,leetcode,projects,skills,location,branch,selectYear} = req.body;
       try{
         let image_filename = req.file ? req.file.filename : null;
         if (!image_filename) {
             return res.status(400).json({ success: false, message: "Image upload failed" });
         }
         const profile = new studentMoreInfo({
+            name,
             Bio,
             github,
             instagram,

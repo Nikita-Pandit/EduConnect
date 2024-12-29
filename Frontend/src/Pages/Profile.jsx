@@ -1,65 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { assets, url } from '../assets/assets';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { assets } from "../assets/assets";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
-  console.log('hello profile');
+  console.log("hello profile");
   const location = useLocation();
-  const id = location?.state?.id || localStorage.getItem('userId') || 'defaultID';
+  const id =
+    location?.state?.id || localStorage.getItem("userId") || "defaultID";
 
-  localStorage.setItem('userId', id);
+  localStorage.setItem("userId", id);
   console.log(id);
 
-  const [studentName, setStudentName] = useState('');
-  const [studentEmail, setStudentEmail] = useState('');
-  const [studentContact, setStudentContact] = useState('');
-  const [image, setImage] = useState('');
+  const [studentName, setStudentName] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+  const [studentContact, setStudentContact] = useState("");
+  const [image, setImage] = useState("");
   const [profile, setProfile] = useState({
-    Bio: '',
-    github: '',
-    instagram: '',
-    linkedin: '',
-    twitter: '',
-    leetcode: '',
-    projects: '',
-    skills: '',
-    domain:'',
-    location: '',
-    branch: '',
-    selectYear: '',
+    name: "",
+    Bio: "",
+    github: "",
+    instagram: "",
+    linkedin: "",
+    twitter: "",
+    leetcode: "",
+    projects: "",
+    skills: "",
+    domain: "",
+    location: "",
+    branch: "",
+    selectYear: "",
   });
 
   const fetchStudentName = async () => {
     try {
-      const response = await axios.get(`http://localhost:3002/api/student/${id}`);
+      const response = await axios.get(
+        `http://localhost:3002/api/student/${id}`
+      );
       setStudentName(response.data.name);
       setStudentEmail(response.data.email);
       setStudentContact(response.data.contact);
-      console.log(studentEmail); // Update student name from API response
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        name: response.data.name,
+      }));
     } catch (error) {
-      console.error('Error fetching student name:', error);
+      console.error("Error fetching student name:", error);
     }
   };
 
-  const fetchProfileInfo=async()=>{
-    console.log("profile section")
-    try{
-      const response=await axios.get(`http://localhost:3002/api/Profile/${id}`)
-      console.log(response.data.moreInfo)
-      setProfile(response.data.moreInfo);   
-     setProfile(prevProfile => ({
-      ...prevProfile,
-      ...response.data.moreInfo 
-    }));   
-    }
-    catch (error) {
+  const fetchProfileInfo = async () => {
+    console.log("profile section");
+    try {
+      const response = await axios.get(
+        `http://localhost:3002/api/Profile/${id}`
+      );
+      console.log(response.data.moreInfo);
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        ...response.data.moreInfo,
+      }));
+    } catch (error) {
       console.error("Error in fetching profile info:", error);
-      //  toast.error("Failed to fetch profile info",{
-      //   style: { color: "#ff5722" } 
-      // });
+      toast.error("Failed to fetch profile info");
     }
-  }
+  };
+
   useEffect(() => {
     fetchStudentName();
     fetchProfileInfo();
@@ -73,7 +81,7 @@ const Profile = () => {
   const handleSave = async (e) => {
     e.preventDefault();
     if (!image) {
-      // toast.error('Image not selected');
+      toast.error("Image not selected");
       return null;
     }
     const formData = new FormData();
@@ -81,32 +89,28 @@ const Profile = () => {
       formData.append(key, profile[key]);
     });
 
-    formData.append('image', image);
+    formData.append("image", image);
     try {
-      const response = await axios.post(`http://localhost:3002/api/Profile/${id}`, formData, {
+      await axios.post(`http://localhost:3002/api/Profile/${id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
-       
       });
-      console.log(response)
-      // toast.success('profile info saved in the database successfully.', {
-      // style: { color: '#ff5722' };
+      toast.success("Profile info saved in the database successfully.");
     } catch (error) {
-      console.error('Error saving profile info in the database:', error);
-      // toast.error('Failed to save profile info in the database', {
-      //   style: { color: '#ff5722' },
-      // });
+      console.error("Error saving profile info in the database:", error);
+      toast.error("Failed to save profile info in the database");
     }
   };
 
   return (
     <>
       <form onSubmit={handleSave}>
+        <ToastContainer />
         <div className="profile-container p-5 bg-zinc-700 flex">
           <div className="left-profile p-3 mt-10">
             <h4 className="student-name">
-              {studentName ? `Welcome ${studentName}` : 'Loading...'}
+              {studentName ? `Welcome ${studentName}` : "Loading..."}
             </h4>
 
             <input
@@ -114,7 +118,7 @@ const Profile = () => {
               accept="image/*"
               id="image"
               hidden
-              onChange={(e) => setImage(e.target.files[0])} // Fixed image state
+              onChange={(e) => setImage(e.target.files[0])}
             />
             <label htmlFor="image">
               <img
@@ -168,7 +172,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="bg-zinc-500 border-2 rounded-md outline-none w-full right-profile-info p-5">
-            <h1 className="text-3xl text-start mb-3">write short bio</h1>
+            <h1 className="text-3xl text-start mb-3">Write short bio</h1>
             <textarea
               className="outline bg-zinc-700 w-full border-2 rounded-md"
               name="Bio"
@@ -176,7 +180,9 @@ const Profile = () => {
               value={profile.Bio}
               onChange={handleChange}
             ></textarea>
-            <h1 className="text-2xl text-start mt-3 mb-2">Social media links</h1>
+            <h1 className="text-2xl text-start mt-3 mb-2">
+              Social media links
+            </h1>
 
             <div className="border-blue-300 flex flex-row bg-zinc-700 p-5 border-2 rounded-md outline-none">
               <div className="space-y-5 ml-20">
@@ -222,7 +228,9 @@ const Profile = () => {
             </div>
 
             <div>
-              <h1 className="text-2xl text-start mt-3 mb-2">Ongoing Projects</h1>
+              <h1 className="text-2xl text-start mt-3 mb-2">
+                Ongoing Projects
+              </h1>
               <textarea
                 className="outline-none bg-zinc-700 w-full border-2 rounded-md"
                 name="projects"
@@ -241,9 +249,15 @@ const Profile = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
-            <h1 className='text-2xl text-start mt-3  mb-2'>Domain</h1>
+            <h1 className="text-2xl text-start mt-3 mb-2">Domain</h1>
             <div>
-                <textarea  onChange={handleChange} className='bg-zinc-600 outline-none w-full border-2 rounded-md' name="domain" value={profile.domain}  required id=""></textarea>
+              <textarea
+                onChange={handleChange}
+                className="bg-zinc-600 outline-none w-full border-2 rounded-md"
+                name="domain"
+                value={profile.domain}
+                required
+              ></textarea>
             </div>
           </div>
         </div>

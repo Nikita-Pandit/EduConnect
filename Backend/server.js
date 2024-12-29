@@ -9,6 +9,7 @@ const studentModel = require('./Models/studentmodel')
 const signupRoutes = require('./Routes/signupRoutes')
 const loginRoutes = require('./Routes/loginRoutes')
 const profileRoutes = require('./Routes/profile.Routes')
+const projectsRoutes = require('./Routes/projectsRoutes')
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json())
@@ -33,6 +34,7 @@ mongoose
 app.use("/api",signupRoutes)
 app.use("/api",loginRoutes)
 app.use("/api",profileRoutes)
+app.use("/api",projectsRoutes)
 
 
 app.get('/verify',async (req,res)=>{

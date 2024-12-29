@@ -1,6 +1,9 @@
   
   const mongoose=require("mongoose")
   const studentMoreInfoSchema=new mongoose.Schema({
+    name:{
+      type:String,
+    },
     Bio:{
       type:String,
       required:true
