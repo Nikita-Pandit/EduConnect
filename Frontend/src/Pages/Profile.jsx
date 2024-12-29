@@ -75,7 +75,32 @@ const Profile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
+
+    // Normalize inputs for domain, branch, and selectYear
+    const normalizedValue =
+      name === "domain"
+        ? {
+            "web development": "Web Development",
+            ml: "ML",
+            "app development": "App Development",
+          }[value.toLowerCase()] || value // Default to input if no match
+    : name === "branch"
+    ? {
+        "cse": "CSE",
+        "bsc": "BSC",
+        "etc": "ETC",
+      }[value.toLowerCase()] || value
+    : name === "selectYear"
+    ? {
+        "3rd year": "3rd year",  // Standardize "3rd year"
+        "third year": "3rd year",  // Also accept "third year" as valid input
+        "1st year": "1st year",
+        "2nd year": "2nd year",
+        "4th year": "4th year",
+      }[value.toLowerCase()] || value // Normalize the year inputs
+    : value;
+
+    setProfile((prevProfile) => ({ ...prevProfile, [name]: normalizedValue }));
   };
 
   const handleSave = async (e) => {
