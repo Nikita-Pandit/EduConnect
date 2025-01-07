@@ -1,21 +1,33 @@
 const studentModel = require('../Models/studentmodel');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const studentMoreInfo = require("../Models/studentMoreInfo");
 
 const loginController = async (req, res) => {
-  console.log("Received data: ", req.body); // Debug log
-  const { email, password } = req.body;
-  const student = await studentModel.findOne({ email: email });
-  console.log("Hello student")
-  console.log(student)
-  if (student) {
-    console.log(student)
-    if (student.password === password) {
-      console.log(student.password)
-      res.json("Login successful");
-    } else {
-      res.json("Login unsuccessful");
+  const {email,password}=req.body
+      try{
+        const user= await studentModel.findOne({email})
+        const userMoreDetails=await studentMoreInfo.findOne({studentID:user._id})
+        if(user){
+          const isPasswordValid =  await bcrypt.compare(password,user.password)
+          if(isPasswordValid){
+            // If password matches, send a success response
+            // const token=jwt.sign(
+            //     {userID:user._id,email:user.email},
+            //     process.env.JWT_SECRET_KEY, 
+            //     { expiresIn: '1h' }  // Expiration time (optional)
+            // )
+                res.status(200).json({ success: true, message: "Login successful"});
+            } 
+                
+      }
+      else {
+        res.status(404).json({ success: false, message: "No record found in the DB." });
+      }
     }
-  } else {
-    res.json("No record exists");
+    catch(error){
+      console.error("Something went wrong", error.message);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
   }
-};
-module.exports={loginController}
+  module.exports={loginController}

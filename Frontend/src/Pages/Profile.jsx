@@ -6,13 +6,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
-  console.log("hello profile");
   const location = useLocation();
   const id =
     location?.state?.id || localStorage.getItem("userId") || "defaultID";
 
   localStorage.setItem("userId", id);
-  console.log(id);
 
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
@@ -28,11 +26,12 @@ const Profile = () => {
     leetcode: "",
     projects: "",
     skills: "",
-    domain: "",
+    domain: [],
     location: "",
     branch: "",
     selectYear: "",
   });
+  // const domainOptions = ["ML", "App Dev", "Web Dev", "Cyber Security"];
 
   const fetchStudentName = async () => {
     try {
@@ -52,12 +51,10 @@ const Profile = () => {
   };
 
   const fetchProfileInfo = async () => {
-    console.log("profile section");
     try {
       const response = await axios.get(
         `http://localhost:3002/api/Profile/${id}`
       );
-      console.log(response.data.moreInfo);
       setProfile((prevProfile) => ({
         ...prevProfile,
         ...response.data.moreInfo,
@@ -74,35 +71,34 @@ const Profile = () => {
   }, [id]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, options } = e.target;
+    let newValue = value;
 
-    // Normalize inputs for domain, branch, and selectYear
-    const normalizedValue =
-      name === "domain"
-        ? {
-            "web development": "Web Development",
-            ml: "ML",
-            "app development": "App Development",
-          }[value.toLowerCase()] || value // Default to input if no match
-    : name === "branch"
-    ? {
-        "cse": "CSE",
-        "bsc": "BSC",
-        "etc": "ETC",
-      }[value.toLowerCase()] || value
-    : name === "selectYear"
-    ? {
-        "3rd year": "3rd year",  // Standardize "3rd year"
-        "third year": "3rd year",  // Also accept "third year" as valid input
-        "1st year": "1st year",
-        "2nd year": "2nd year",
-        "4th year": "4th year",
-      }[value.toLowerCase()] || value // Normalize the year inputs
-    : value;
+    // Handle multiple selections for domain
+    if (name === "domain") {
+      newValue = Array.from(options)
+        .filter((option) => option.selected)
+        .map((option) => option.value);
+    }
 
-    setProfile((prevProfile) => ({ ...prevProfile, [name]: normalizedValue }));
+    setProfile((prevProfile) => ({ ...prevProfile, [name]: newValue }));
   };
 
+  // const handleDomainSelect = (e) => {
+  //   const selectedDomain = e.target.value;
+  //   if (selectedDomain && !profile.domain.includes(selectedDomain)) {
+  //     setProfile((prevProfile) => ({
+  //       ...prevProfile,
+  //       domain: [...prevProfile.domain, selectedDomain],
+  //     }));
+  //   }
+  // };
+  // const removeDomain = (domainToRemove) => {
+  //   setProfile((prevProfile) => ({
+  //     ...prevProfile,
+  //     domain: prevProfile.domain.filter((domain) => domain !== domainToRemove),
+  //   }));
+  // };
   const handleSave = async (e) => {
     e.preventDefault();
     if (!image) {
@@ -111,7 +107,11 @@ const Profile = () => {
     }
     const formData = new FormData();
     Object.keys(profile).forEach((key) => {
-      formData.append(key, profile[key]);
+      if (Array.isArray(profile[key])) {
+        profile[key].forEach((item) => formData.append(`${key}[]`, item));
+      } else {
+        formData.append(key, profile[key]);
+      }
     });
 
     formData.append("image", image);
@@ -185,15 +185,21 @@ const Profile = () => {
                 value={profile.branch}
                 onChange={handleChange}
               />
-              <input
-                type="text"
-                className="input-links bg-zinc-500"
-                placeholder="selectYear"
-                required
+              <select
                 name="selectYear"
+                className="input-links bg-zinc-500"
                 value={profile.selectYear}
                 onChange={handleChange}
-              />
+                required
+              >
+                <option value="" disabled>
+                  Select Year
+                </option>
+                <option value="1st year">1st year</option>
+                <option value="2nd year">2nd year</option>
+                <option value="3rd year">3rd year</option>
+                <option value="4th year">4th year</option>
+              </select>
             </div>
           </div>
           <div className="bg-zinc-500 border-2 rounded-md outline-none w-full right-profile-info p-5">
@@ -275,14 +281,36 @@ const Profile = () => {
               ></textarea>
             </div>
             <h1 className="text-2xl text-start mt-3 mb-2">Domain</h1>
-            <div>
-              <textarea
-                onChange={handleChange}
-                className="bg-zinc-600 outline-none w-full border-2 rounded-md"
+            {/* <div>
+              <select
                 name="domain"
+                className="bg-zinc-600 outline-none w-full border-2 rounded-md"
                 value={profile.domain}
+                onChange={handleChange}
+                multiple
                 required
-              ></textarea>
+              >
+                <option value="Web Development">Web Development</option>
+                <option value="ML">ML</option>
+                <option value="App Development">App Development</option>
+              </select>
+            </div> */}
+            <div className="flex flex-wrap mt-2">
+              {profile.domain.map((domain, index) => (
+                <div
+                  key={index}
+                  className="bg-blue-500 text-white px-3 py-1 rounded-full flex items-center gap-2 mr-2 mt-2"
+                >
+                  <span>{domain}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeDomain(domain)}
+                    className="text-white bg-red-500 px-1 rounded-full"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
