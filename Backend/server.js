@@ -13,16 +13,25 @@ app.use(cors());
 const studentModel = require('./Models/studentmodel');
 const signupRoutes = require('./Routes/signupRoutes');
 const loginRoutes = require('./Routes/loginRoutes');
-const profileRoutes = require('./Routes/profile.Routes');
+const profileRoutes = require('./Routes/profileRoutes');
 const projectsRoutes = require('./Routes/projectsRoutes');
 const forgetPasswordRoutes = require('./Routes/forgetPasswordRoutes');
 const resetPasswordRoutes = require('./Routes/resetPasswordRoutes');
+const path = require('path')
 const PORT = process.env.PORT || 5000;
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(path.join(__dirname, '../Frontend/public/images')));
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use('/uploads', express.static('uploads'));
 
-app.use(express.json());
+
+
 
 const jwt = require('jsonwebtoken');
 // const { default: ResetPassword } = require('');
@@ -44,6 +53,7 @@ app.use("/api", profileRoutes);
 app.use("/api", projectsRoutes);
 app.use("/api", forgetPasswordRoutes);
 app.use("/api",resetPasswordRoutes);
+
 
 app.get('/verify', async (req, res) => {
   const { token } = req.query;

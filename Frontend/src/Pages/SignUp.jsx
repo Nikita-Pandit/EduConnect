@@ -15,7 +15,8 @@ const SignUp = () => {
   
     if (id) {
       console.log('Id received from URL:', id);
-      navigate("/Profile", { state: { id } });
+      localStorage.setItem("userId",id)
+      navigate("/Profile");
 
       // Handle the token (e.g., validate or display to the user)
     }
