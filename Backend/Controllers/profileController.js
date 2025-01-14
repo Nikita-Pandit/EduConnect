@@ -54,4 +54,4 @@ const getProfileInfo=async (req,res)=>{
   }
   
   
-  module.exports={createProfileInfo,getProfileInfo} 
+  module.exports={createProfileInfo,getProfileInfo}

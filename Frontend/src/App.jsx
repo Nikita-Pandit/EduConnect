@@ -8,7 +8,7 @@ import ViewMoreDetails from './Pages/ViewMoreDetails'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import StudentHeader from './Components/StudentsHeader';
 import Footer from './Components/Footer';
-
+import Resetpassword  from './Pages/Resetpassword';         
 function App() {
   return (
     <>
@@ -22,6 +22,7 @@ function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Projects" element={<Projects />} />
         <Route path="/ViewMoreDetails" element={<ViewMoreDetails />} />
+        <Route path="/Resetpassword/:token" element={<Resetpassword/>}/>
       </Routes>
       <Footer/>
     </Router>

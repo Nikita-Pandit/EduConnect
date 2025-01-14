@@ -11,6 +11,7 @@
 // module.exports = studentModel;
 
 const mongoose=require("mongoose")
+const bcrypt=require("bcrypt")
   const studentSchema=new mongoose.Schema({
     name:{ type: String, required: true },
     password: { type: String, required: true },
@@ -37,3 +38,5 @@ studentSchema.pre('save', async function (next) {
 
 const studentModel=mongoose.model("students",studentSchema)
 module.exports=studentModel
+
+

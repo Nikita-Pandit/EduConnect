@@ -5,9 +5,13 @@ const studentMoreInfo = require("../Models/studentMoreInfo");
 
 const loginController = async (req, res) => {
   const {email,password}=req.body
+  console.log(email)
+  console.log(password)
       try{
         const user= await studentModel.findOne({email})
+        console.log(user)
         const userMoreDetails=await studentMoreInfo.findOne({studentID:user._id})
+        console.log(userMoreDetails)
         if(user){
           const isPasswordValid =  await bcrypt.compare(password,user.password)
           if(isPasswordValid){
@@ -17,7 +21,8 @@ const loginController = async (req, res) => {
             //     process.env.JWT_SECRET_KEY, 
             //     { expiresIn: '1h' }  // Expiration time (optional)
             // )
-                res.status(200).json({ success: true, message: "Login successful"});
+            console.log(isPasswordValid)
+                res.status(200).json({ success: true, message: "Login successful",userMoreDetails});
             } 
                 
       }

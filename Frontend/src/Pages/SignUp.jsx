@@ -24,9 +24,11 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
+  const [loading,setLoading] = useState(false);   //added loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);   //show loading spinner when the request starts
     try {
       const response = await axios.post("http://localhost:3002/api/SignUp", {
         name,
@@ -41,14 +43,22 @@ const SignUp = () => {
     } 
     catch (error) {
       console.error("Error Sending verification email ", error);
+    }finally{
+      setLoading(false);   //hide loading spinner when the request ends
     }
   };
 
   return (
     <>
     <ToastContainer />
-    <div className="flex justify-center items-center min-h-screen bg-gray-200">
-      <div className="border-2 bg-zinc-700 rounded-md p-5 border-blue-300">
+    {loading && (
+           <div className="loading-container flex justify-center items-center mt-50 relative inset-0 z-50  bg-opacity-50 ">
+           <div className="spinner-border animate-spin border-4 border-red-500 rounded-full w-8 h-8"></div>
+           <p className="ml-3 text-white">Sending verification mail. Please wait...</p>
+         </div>
+          )}
+      <div className='flex form-container items-center justify-center'>
+        <div className={`border-2 bg-zinc-700 rounded-md p-5 border-blue-300 ${loading ? 'filter blur-sm' : ''}`}>
         <form
           onSubmit={handleSubmit}
           action=""
