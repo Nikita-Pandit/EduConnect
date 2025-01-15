@@ -57,7 +57,7 @@ app.use("/api",resetPasswordRoutes);
 
 app.get('/verify', async (req, res) => {
   const { token } = req.query;
-
+   const {role} = req.query;
   try {
     console.log("Verify Route2");
     const userIDMatchWithToken = await studentModel.findOne({ verificationToken: token });
@@ -70,7 +70,7 @@ app.get('/verify', async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
-    return res.redirect(`http://localhost:5173/SignUp?id=${userIDMatchWithToken._id}`);
+    return res.redirect(`http://localhost:5173/SignUp?id=${userIDMatchWithToken._id}&role=${role}`);
   } catch (error) {
     console.error('Error during verification:', error);
     res.status(400).json({ error: 'Verification failed' });

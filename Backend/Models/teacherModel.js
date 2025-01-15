@@ -12,7 +12,7 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const studentSchema = new mongoose.Schema({
+const teacherSchema = new mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   contact: { type: Number, required: true },
@@ -29,7 +29,7 @@ const studentSchema = new mongoose.Schema({
   resetPasswordExpires: { type: Date }, // Optional
 });
 // Hash password before saving it to the database
-studentSchema.pre("save", async function (next) {
+teacherSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -37,5 +37,5 @@ studentSchema.pre("save", async function (next) {
   next();
 });
 
-const studentModel = mongoose.model("students", studentSchema);
-module.exports = studentModel;
+const teacherModel = mongoose.model("teacher", teacherSchema);
+module.exports = teacherModel;
