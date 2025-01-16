@@ -22,7 +22,7 @@ const loginController = async (req, res) => {
             //     { expiresIn: '1h' }  // Expiration time (optional)
             // )
             console.log(isPasswordValid)
-                res.status(200).json({ success: true, message: "Login successful",userMoreDetails});
+                res.status(200).json({ sucecess: true, message: "Login successful",userMoreDetails});
             } 
                 
       }
