@@ -1,5 +1,6 @@
- const mongoose=require("mongoose")
-const studentMoreInfoSchema=new mongoose.Schema({
+
+const mongoose=require("mongoose")
+const teacherMoreInfoSchema=new mongoose.Schema({
   Bio:{
     type:String,
     required:true
@@ -10,9 +11,8 @@ const studentMoreInfoSchema=new mongoose.Schema({
   twitter:String,
   instagram:String,
   projects:String,
- skills:{
+  skills:{
   type:String,
-
 },
 domain:{
   type:[String] //Array of strings
@@ -34,5 +34,5 @@ image:{
   default:"/images/default_image.jpg",
 }
 })
-const studentMoreInfo=mongoose.model("studentMoreInfo",studentMoreInfoSchema)
-module.exports=studentMoreInfo
+const teacherMoreInfo=mongoose.model("teacherMoreInfo",teacherMoreInfoSchema)
+module.exports=teacherMoreInfo

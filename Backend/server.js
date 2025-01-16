@@ -11,12 +11,14 @@ const cors = require('cors');
 app.use(cors());
 
 const studentModel = require('./Models/studentmodel');
+const teacherModel = require('./Models/teacherModel');
 const signupRoutes = require('./Routes/signupRoutes');
 const loginRoutes = require('./Routes/loginRoutes');
 const profileRoutes = require('./Routes/profileRoutes');
 const projectsRoutes = require('./Routes/projectsRoutes');
 const forgetPasswordRoutes = require('./Routes/forgetPasswordRoutes');
 const resetPasswordRoutes = require('./Routes/resetPasswordRoutes');
+const teacherProfileRoutes = require('./Routes/teacherProfileRoutes')
 const path = require('path')
 const PORT = process.env.PORT || 5000;
 
@@ -34,6 +36,7 @@ app.use('/uploads', express.static('uploads'));
 
 
 const jwt = require('jsonwebtoken');
+// const teacherModel = require('./Models/teacherModel');
 // const { default: ResetPassword } = require('');
 
 
@@ -53,6 +56,7 @@ app.use("/api", profileRoutes);
 app.use("/api", projectsRoutes);
 app.use("/api", forgetPasswordRoutes);
 app.use("/api",resetPasswordRoutes);
+app.use("/api",teacherProfileRoutes);
 
 
 app.get('/verify', async (req, res) => {
@@ -60,12 +64,23 @@ app.get('/verify', async (req, res) => {
    const {role} = req.query;
   try {
     console.log("Verify Route2");
-    const userIDMatchWithToken = await studentModel.findOne({ verificationToken: token });
-    const user = await studentModel.findOneAndUpdate(
+    let userIDMatchWithToken;
+    let user;
+    if(role == "student"){
+      userIDMatchWithToken = await studentModel.findOne({ verificationToken: token });
+    user = await studentModel.findOneAndUpdate(
       { verificationToken: token },
       { isVerified: true, verificationToken: null },
       { new: true }
     );
+    }else{
+      userIDMatchWithToken = await teacherModel.findOne({ verificationToken: token });
+      user = await teacherModel.findOneAndUpdate(
+      { verificationToken: token },
+      { isVerified: true, verificationToken: null },
+      { new: true }
+    );
+    }
     console.log(user);
     if (!user) {
       return res.status(400).json({ message: "Invalid or expired token" });
@@ -93,6 +108,26 @@ app.get('/api/student/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching student:', error);
     res.status(500).json({ error: 'Error fetching student' });
+  }
+});
+
+//teacher
+app.get('/api/teacher/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const teacher = await teacherModel.findById(id);
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+    console.log(teacher);
+    res.status(200).json({
+      name: teacher.name,
+      email: teacher.email,
+      contact: teacher.contact,
+    });
+  } catch (error) {
+    console.error('Error fetching teacher:', error);
+    res.status(500).json({ error: 'Error fetching teacher' });
   }
 });
 

@@ -1,8 +1,10 @@
-const studentMoreInfo= require("../Models/studentMoreInfo");
-const getProfileInfo = async (req, res) => {
+// const studentMoreInfo= require("../Models/studentMoreInfo");
+const teacherMoreInfo = require("../Models/teacherMoreInfo");
+
+const getTeacherProfileInfo = async (req, res) => {
   const { id } = req.params;
   try {
-    const moreInfo = await studentMoreInfo.findOne({ studentID: id });
+    const moreInfo = await teacherMoreInfo.findOne({ studentID: id });
     console.log("Before moreInfo", moreInfo);
     if (!moreInfo) {
       return res.status(404).json({ success: false, message: "Profile info not matched from the database." });
@@ -32,13 +34,13 @@ const getProfileInfo = async (req, res) => {
 
 
 
-const createProfileInfo = async (req, res) => {
+const createTeacherProfileInfo = async (req, res) => {
   console.log("Request Body:", req.body);
 //console.log("Uploaded File:", req.file)
 const {id}=req.params;
   const {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image}=req.body
   try {
-      const profile = new studentMoreInfo({
+      const profile = new teacherMoreInfo({
         name,
     Bio,
     github,
@@ -65,11 +67,11 @@ const {id}=req.params;
   }
 }
 
-const getProfileImage=async(req,res)=>{
+const getTeacherProfileImage=async(req,res)=>{
 try{
   const {id}=req.params
 const imagePath = `/uploads/${req.file.filename}`;
-await studentMoreInfo.findOneAndUpdate({ studentID: id }, { image: imagePath });
+await this.getTeacherProfileImage.findOneAndUpdate({ studentID: id }, { image: imagePath });
   res.json({ success: true, image: imagePath })
 }
 catch(error){
@@ -77,4 +79,4 @@ res.status(500).json({ success: false, message: "Error uploading image.", error:
 }
 }
 
-module.exports={createProfileInfo,getProfileInfo,getProfileImage}
+module.exports={createTeacherProfileInfo,getTeacherProfileInfo,getTeacherProfileImage}
