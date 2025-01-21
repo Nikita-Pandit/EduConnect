@@ -223,7 +223,7 @@ const [flag,setFlag]=useState(false)
 }
                 
                 
-                  <li><Link to="/Profile">Profile</Link></li> 
+                  {/* <li><Link to="/Profile">Profile</Link></li>  */}
                 <li><Link to="/Projects">Projects</Link></li>
                  <li><Link to="/ResearchDoubts">Research Doubts</Link></li> 
                  </> ) :

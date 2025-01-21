@@ -6,6 +6,7 @@ import Select from "react-select"; // Install via npm install react-select
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false); // NEW STATE
+  const [isFirstVisit,setIsFirstVisist] = useState(true);
 
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },
@@ -67,6 +68,8 @@ const Profile = () => {
           ...prevProfile,
           ...fetchedProfile
         }));
+        setIsFirstVisist(false);
+        setIsEditing(false);
       }
     } catch (error) {
       console.error("Error in fetching profile info:", error);
@@ -85,6 +88,8 @@ const Profile = () => {
       toast.success('Profile info saved in the database successfully.', {
         style: { color: "#ff5722" }
       });
+      setIsEditing(false);
+      setIsFirstVisist(false);
        // Emit custom event
        const event = new Event("profileUpdated");
        window.dispatchEvent(event); // Dispatch the event globally
@@ -196,7 +201,8 @@ const Profile = () => {
     : `http://localhost:3002/images/default_image.jpg`}
   alt="Profile"
   className="profile-image object-contain rounded-lg"
-  onClick={() => isEditing && document.getElementById("imageUpload").click()} // Prevent click if not editing
+  // onClick={() => isEditing && document.getElementById("imageUpload").click()} // Prevent click if not editing
+  onClick = {()=>(isEditing || isFirstVisit) && document.getElementById("imageUpload").click()}
   // onClick={() => document.getElementById("imageUpload").click()} // Prevent click if not editing
   style={{ width: "180px", height: "180px", cursor: isEditing ? "pointer" : "default" }}
   // style={{ width: "180px", height: "180px", cursor: "pointer" }}
@@ -206,7 +212,7 @@ const Profile = () => {
   id="imageUpload"
   style={{ display: "none" }}
   onChange={handleImageChange}
-  disabled={!isEditing} // Disable file input if not in editing mode
+  disabled={!isEditing && !isFirstVisit} // Disable file input if not in editing mode
 />
 
             </div>
@@ -225,8 +231,7 @@ const Profile = () => {
                 required
                 name="location"
                 value={profile.location}
-                disabled={!isEditing} // DISABLE BASED ON isEditing
-              />
+                disabled={!isEditing && !isFirstVisit}              />
               <input
                 type="tel"
                 className="input-links bg-zinc-500"
@@ -241,8 +246,7 @@ const Profile = () => {
                 required
                 name="branch"
                 value={profile.branch}
-                disabled={!isEditing} // DISABLE BASED ON isEditing
-              />
+                disabled={!isEditing && !isFirstVisit}              />
               <select
                 value={profile.selectYear}
                 onChange={handleChange}
@@ -250,7 +254,7 @@ const Profile = () => {
                 id="year"
                 required
                 className="input-links bg-zinc-500"
-                disabled={!isEditing} // DISABLE BASED ON isEditing
+                disabled={!isEditing && !isFirstVisit}
               >
                 <option value="">Select Year</option>
                 <option value="1st year">1st Year</option>
@@ -269,7 +273,7 @@ const Profile = () => {
               name="Bio"
               value={profile.Bio}
               required
-              disabled={!isEditing} // DISABLE BASED ON isEditing
+              disabled={!isEditing && !isFirstVisit}
             ></textarea>
             <h1 className='text-2xl text-start mt-3 mb-2'>Social media links</h1>
             <div className='border-blue-300 flex flex-row bg-zinc-700 p-5 border-2 rounded-md outline-none'>
@@ -280,7 +284,7 @@ const Profile = () => {
                   name="github"
                   onChange={handleChange}
                   value={profile.github}
-                  disabled={!isEditing} // DISABLE BASED ON isEditing
+                  disabled={!isEditing && !isFirstVisit}
                 />
                 <input
                   placeholder="LinkedIn Link"
@@ -288,7 +292,7 @@ const Profile = () => {
                   name="linkedin"
                   onChange={handleChange}
                   value={profile.linkedin}
-                  disabled={!isEditing} // DISABLE BASED ON isEditing
+                  disabled={!isEditing && !isFirstVisit}
                 />
                 <input
                   placeholder="Leetcode Link"
@@ -296,7 +300,7 @@ const Profile = () => {
                   onChange={handleChange}
                   name="leetcode"
                   value={profile.leetcode}
-                  disabled={!isEditing} // DISABLE BASED ON isEditing
+                  disabled={!isEditing && !isFirstVisit}
                 />
               </div>
               <div className='space-y-5 me-20'>
@@ -306,7 +310,7 @@ const Profile = () => {
                   className="bg-zinc-500 input-links"
                   name="instagram"
                   value={profile.instagram}
-                  disabled={!isEditing} // DISABLE BASED ON isEditing
+                  disabled={!isEditing && !isFirstVisit}
                 />
                 <input
                   placeholder="Twitter Link"
@@ -314,8 +318,7 @@ const Profile = () => {
                   className="bg-zinc-500 input-links"
                   name="twitter"
                   value={profile.twitter}
-                  disabled={!isEditing} // DISABLE BASED ON isEditing
-                />
+                  disabled={!isEditing && !isFirstVisit}                />
               </div>
             </div>
             <div>
@@ -325,7 +328,7 @@ const Profile = () => {
                 onChange={handleChange}
                 name="projects"
                 value={profile.projects}
-                disabled={!isEditing} // DISABLE BASED ON isEditing
+                disabled={!isEditing && !isFirstVisit}
               ></textarea>
             </div>
             <h1 className='text-2xl text-start mt-3 mb-2'>Skills</h1>
@@ -336,7 +339,7 @@ const Profile = () => {
                 name="skills"
                 value={profile.skills}
                 required
-                disabled={!isEditing} // DISABLE BASED ON isEditing
+                disabled={!isEditing && !isFirstVisit}
               ></textarea>
             </div>
             <h1 className='text-2xl text-start mt-3 mb-2'>Domain</h1>
@@ -349,7 +352,7 @@ const Profile = () => {
                 )}
                 onChange={handleDomainChange}
                 styles={customStyles}
-                isDisabled={!isEditing} // DISABLE BASED ON isEditing
+                isDisabled={!isEditing && !isFirstVisit}
               />
             </div>
           </div>
@@ -358,15 +361,19 @@ const Profile = () => {
           <button
             type="button"
             className='text-center px-5 py-2 bg-green-500 rounded-lg mr-3'
-            onClick={() => setIsEditing(true)} // ENABLE EDIT MODE
+            // onClick={() => setIsEditing(true)} // ENABLE EDIT MODE
+            onClick={()=>{
+              setIsEditing(true);
+              setIsFirstVisist(true);
+            }}
           >
             Edit
           </button>
           <button
             type="submit"
             className='text-center px-5 py-2 bg-blue-500 rounded-lg'
-            disabled={!isEditing} // DISABLE IF NOT EDITING
-          >
+            disabled={!isEditing && !isFirstVisit}
+             >
             Save
           </button>
         </div>

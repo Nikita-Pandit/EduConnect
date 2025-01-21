@@ -38,7 +38,15 @@ const createProfileInfo = async (req, res) => {
 const {id}=req.params;
   const {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image}=req.body
   try {
-      const profile = new studentMoreInfo({
+    const matchID=await studentMoreInfo.findOne({ studentID:id})
+    if(matchID){
+  const updated = await studentMoreInfo.findOneAndUpdate(
+        { studentID:id},
+        {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image}
+          )
+    }
+    else{
+      profile = new studentMoreInfo({
         name,
     Bio,
     github,
@@ -55,8 +63,8 @@ const {id}=req.params;
     studentID:id,
     image
     })
-
     await profile.save();
+    }
     console.log("After Saving",profile)
   res.json({success:true,message:"Profile info saved in the db successfully.",profile})
   } catch (error) {
