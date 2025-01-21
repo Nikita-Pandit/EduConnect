@@ -27,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/images', express.static(path.join(__dirname, '../Frontend/public/images')));
+// app.use('/images', express.static(path.join(__dirname, "../../Frontend/public/images")));
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -112,10 +113,12 @@ app.get('/api/student/:id', async (req, res) => {
 });
 
 //teacher
-app.get('/api/teacher/:id', async (req, res) => {
-  const { id } = req.params;
+app.get('/api/teacher/:teacherId', async (req, res) => {
+  const { teacherId } = req.params;
+  console.log(teacherId)
   try {
-    const teacher = await teacherModel.findById(id);
+    const teacher = await teacherModel.findById(teacherId);
+    console.log("Inside api/teacher/:id",teacher)
     if (!teacher) {
       return res.status(404).json({ message: 'Teacher not found' });
     }

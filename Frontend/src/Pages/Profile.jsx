@@ -21,7 +21,7 @@ const Profile = () => {
     }));
   };
 
-  const id = localStorage.getItem('userId') || "defaultID";
+  const id = localStorage.getItem('studentId') || "defaultID";
 
   const [studentName, setStudentName] = useState('');
   const [studentEmail, setStudentEmail] = useState('');
@@ -103,6 +103,7 @@ const Profile = () => {
     formData.append("image", file);
 
     try {
+      console.log("student img");
       const response = await axios.post(`http://localhost:3002/api/Profile/${id}/uploadImage`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
