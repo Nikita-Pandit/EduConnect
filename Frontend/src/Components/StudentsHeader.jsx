@@ -6,14 +6,12 @@ import { useNavigate } from "react-router-dom";
 const StudentHeader = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const userId =
-    localStorage.getItem("studentId") || localStorage.getItem("teacherId");
-  console.log("userid: ", userId);
+  const userId = localStorage.getItem("studentId") || localStorage.getItem("teacherId");
   const [image, setImage] = useState("/images/default_image.jpg");
   const [flag, setFlag] = useState(false);
 
   const handleLogout = async (e) => {
-    e.preventDefault(); // Prevent the default behavior of the link
+    e.preventDefault();
     try {
       if (localStorage.getItem("studentId")) {
         localStorage.removeItem("studentId");
@@ -42,14 +40,12 @@ const StudentHeader = () => {
     if (userId) {
       fetchProfile();
     }
-    //Listen for the custom event
     const handleProfileUpdate = () => {
-      fetchProfile(); // Fetch profile when the event is triggered
+      fetchProfile();
     };
 
     window.addEventListener("profileUpdated", handleProfileUpdate);
 
-    // Cleanup the event listener
     return () => {
       window.removeEventListener("profileUpdated", handleProfileUpdate);
     };
@@ -76,8 +72,6 @@ const StudentHeader = () => {
                       <Link to="/TeacherProfile">Profile</Link>
                     </li>
                   )}
-
-                  {/* <li><Link to="/Profile">Profile</Link></li>  */}
                   <li>
                     <Link to="/Projects">Projects</Link>
                   </li>
@@ -87,7 +81,6 @@ const StudentHeader = () => {
                 </>
               ) : (
                 <>
-                  {" "}
                   <li
                     className="text-gray-500 cursor-not-allowed"
                     title="Login required"
@@ -105,54 +98,56 @@ const StudentHeader = () => {
                     title="Login required"
                   >
                     Research Doubts
-                  </li>{" "}
+                  </li>
                 </>
               )}
-              userId ? ( flag ? (
-              <div className="relative">
-                <img
-                  className="w-10 h-10 rounded-full object-contain"
-                  src={image}
-                  onClick={() => setIsDropdownOpen((prev) => !prev)}
-                />
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
-                    <ul>
-                      <li
-                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-red-500"
-                        onClick={handleLogout}
-                      >
-                        Log out
-                      </li>
-                    </ul>
+              {userId ? (
+                flag ? (
+                  <div className="relative">
+                    <img
+                      className="w-10 h-10 rounded-full object-contain"
+                      src={image}
+                      onClick={() => setIsDropdownOpen((prev) => !prev)}
+                    />
+                    {isDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
+                        <ul>
+                          <li
+                            className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-red-500"
+                            onClick={handleLogout}
+                          >
+                            Log out
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                ) : (
+                  <div className="relative">
+                    <img
+                      className="w-10 h-10 rounded-full object-contain"
+                      src={image}
+                      onClick={() => setIsDropdownOpen((prev) => !prev)}
+                    />
+                    {isDropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
+                        <ul>
+                          <li
+                            className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-red-500"
+                            onClick={handleLogout}
+                          >
+                            Log out
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )
               ) : (
-              <div className="relative">
-                <img
-                  className="w-10 h-10 rounded-full object-contain"
-                  src={image}
-                  onClick={() => setIsDropdownOpen((prev) => !prev)}
-                />
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
-                    <ul>
-                      <li
-                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-red-500"
-                        onClick={handleLogout}
-                      >
-                        Log out
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-              ) ) : (
-              <li>
-                <Link to="/SignUp">Sign Up</Link>
-              </li>
-              ) }
+                <li>
+                  <Link to="/SignUp">Sign Up</Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

@@ -26,7 +26,8 @@ const TeacherProfile = () => {
   };
 
   const teacherId = localStorage.getItem("teacherId") || "defaultID";
-  console.log("TeacherId");
+
+  // console.log("TeacherId");
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherContact, setTeacherContact] = useState("");
@@ -61,22 +62,6 @@ const TeacherProfile = () => {
     }
   };
 
-  // const fetchTeacherProfileInfo = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:3002/api/teacherProfile/${teacherId}`);
-  //     if (response.data.success) {
-  //       const fetchedProfile = response.data.moreInfo;
-  //       setProfile(prevProfile => ({
-  //         ...prevProfile,
-  //         ...fetchedProfile
-  //       }));
-  //       setIsFirstVisist(false);
-  //       setIsEditing(false);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in fetching profile info:", error);
-  //   }
-  // };
 
   const fetchTeacherProfileInfo = async () => {
     try {
@@ -107,25 +92,6 @@ const TeacherProfile = () => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };
-
-  // const handleSave = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(`http://localhost:3002/api/teacherProfile/${teacherId}`, profile);
-  //     toast.success('Profile info saved in the database successfully.', {
-  //       style: { color: "#ff5722" }
-  //     });
-  //     setIsEditing(false);
-  //     setIsFirstVisit(false);
-  //      // Emit custom event
-  //      const event = new Event("profileUpdated");
-  //      window.dispatchEvent(event); // Dispatch the event globally
-  //     setIsEditing(false); // Exit edit mode after saving
-  //   } catch (error) {
-  //     console.error("Error saving profile info in the database:", error);
-  //     toast.error("Failed to save profile info in the database");
-  //   }
-  // };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -164,7 +130,7 @@ const TeacherProfile = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log("teacher image path", response.data.image);
+      // console.log("teacher image path", response.data.image);
       setProfile((prevProfile) => ({
         ...prevProfile,
         image: response.data.image,
@@ -367,3 +333,5 @@ const TeacherProfile = () => {
 };
 
 export default TeacherProfile;
+
+

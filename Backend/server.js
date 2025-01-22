@@ -16,6 +16,7 @@ const signupRoutes = require('./Routes/signupRoutes');
 const loginRoutes = require('./Routes/loginRoutes');
 const profileRoutes = require('./Routes/profileRoutes');
 const projectsRoutes = require('./Routes/projectsRoutes');
+const ResearchDoubtsRoutes = require('./Routes/ResearchDoubtsRoutes');
 const forgetPasswordRoutes = require('./Routes/forgetPasswordRoutes');
 const resetPasswordRoutes = require('./Routes/resetPasswordRoutes');
 const teacherProfileRoutes = require('./Routes/teacherProfileRoutes')
@@ -55,6 +56,7 @@ app.use("/api", signupRoutes);
 app.use("/api", loginRoutes);
 app.use("/api", profileRoutes);
 app.use("/api", projectsRoutes);
+app.use("/api", ResearchDoubtsRoutes);
 app.use("/api", forgetPasswordRoutes);
 app.use("/api",resetPasswordRoutes);
 app.use("/api",teacherProfileRoutes);

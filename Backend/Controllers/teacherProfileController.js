@@ -7,13 +7,13 @@ const getTeacherProfileInfo = async (req, res) => {
     const moreInfo = await teacherMoreInfo.findOne({ studentID: teacherId });
     console.log("Before moreInfo", moreInfo);
     if (!moreInfo) {
-      console.log("if");
+      // console.log("if");
       return res.status(404).json({
         success: false,
         message: "Profile info not matched from the database.",
       });
     }
-    console.log("After", moreInfo);
+    // console.log("After", moreInfo);
     res.status(200).json({ success: true, moreInfo });
   } catch (error) {
     console.error("Error in getProfileInfo:", error.message);
@@ -24,6 +24,7 @@ const getTeacherProfileInfo = async (req, res) => {
     });
   }
 };
+
 const createTeacherProfileInfo = async (req, res) => {
   console.log("Request Body:", req.body);
   const { teacherId } = req.params;
@@ -47,7 +48,7 @@ const createTeacherProfileInfo = async (req, res) => {
         domain: Array.isArray(domain) ? domain : [],
         location,
         studentID: teacherId,
-        image,
+        image
       });
       await profile.save();
     }
@@ -68,7 +69,7 @@ const getTeacherProfileImage = async (req, res) => {
     console.log("backend teacher image");
     const { teacherId } = req.params;
     const imagePath = `/uploads/${req.file.filename}`;
-    console.log("image path", imagePath);
+    // console.log("image path", imagePath);
     await teacherMoreInfo.findOneAndUpdate(
       { studentID: teacherId },
       { image: imagePath }

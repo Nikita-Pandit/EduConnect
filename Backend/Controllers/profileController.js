@@ -7,15 +7,6 @@ const getProfileInfo = async (req, res) => {
     if (!moreInfo) {
       return res.status(404).json({ success: false, message: "Profile info not matched from the database." });
     }
-
-    // if (!moreInfo.image) {
-    //   moreInfo.image = "/uploads/default_image.jpg";
-    // }
-
-    // Convert domain to array if it's a string
-    // if (typeof moreInfo.domain === "string") {
-    //   moreInfo.domain = moreInfo.domain.split(",").map((item) => item.trim());
-    // }
     console.log("After", moreInfo);
     res.status(200).json({ success: true, moreInfo });
   } catch (error) {
@@ -27,10 +18,6 @@ const getProfileInfo = async (req, res) => {
     });
   }
 };
-
-
-
-
 
 const createProfileInfo = async (req, res) => {
   console.log("Request Body:", req.body);
@@ -67,7 +54,7 @@ const {id}=req.params;
     }
     
     console.log("After Saving",profile)
-  res.json({success:true,message:"Profile info saved in the db successfully.",profile})
+     res.json({success:true,message:"Profile info saved in the db successfully.",profile})
   } catch (error) {
     console.error("Error in saving profile in the database:", error.message);
       res.json({ success: false, message: "Error" })

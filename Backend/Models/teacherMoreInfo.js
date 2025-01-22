@@ -7,26 +7,13 @@ const teacherMoreInfoSchema=new mongoose.Schema({
   },
   github:String,
   linkedin:String,
-  // leetcode:String,
   twitter:String,
-  // instagram:String,
-  // projects:String,
-//   skills:{
-//   type:String,
-// },
 domain:{
   type:[String] //Array of strings
 },
 location:{
   type:String,
 },
-// branch:{
-//   type:String,
-
-// },
-// selectYear:{
-//   type:String,
-// },
 studentID:String,
 name:String,
 image:{
