@@ -65,6 +65,7 @@ const {id}=req.params;
     })
     await profile.save();
     }
+    
     console.log("After Saving",profile)
   res.json({success:true,message:"Profile info saved in the db successfully.",profile})
   } catch (error) {
