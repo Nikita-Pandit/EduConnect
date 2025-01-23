@@ -210,11 +210,7 @@ const Projects = () => {
                     {/* uploaded image can be seen in this profile section */}
                     <img
                       className="rounded-md w-full h-full object-cover"
-                      src={
-                        item.image
-                          ? `http://localhost:3002${item.image}`
-                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWejx1A1AUS1FgggjfcC-4iUXMg7C-GaJdrQ&s"
-                      }
+                      src={`http://localhost:3002${item.image}`}
                       alt={item.name}
                     />
                   </div>

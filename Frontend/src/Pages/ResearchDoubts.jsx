@@ -86,11 +86,7 @@ const ResearchDoubts = () => {
                     {/* uploaded image can be seen in research doubt */}
                     <img
                       className="rounded-md w-full h-full object-cover"
-                      src={
-                        item.image
-                          ? `http://localhost:3002${item.image}`
-                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWejx1A1AUS1FgggjfcC-4iUXMg7C-GaJdrQ&s"
-                      }
+                      src={`http://localhost:3002${item.image}`}
                       alt={item.name}
                     />
                     
@@ -104,7 +100,7 @@ const ResearchDoubts = () => {
                       type="button"
                       className="more-info text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                       onClick={() =>
-                        navigate("/ViewMoreDetails", {
+                        navigate("/ViewTeacherDetails", {
                           state: { studentID: item.studentID },
                         })
                       }

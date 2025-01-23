@@ -1,7 +1,7 @@
 const teacherMoreInfo = require("../Models/teacherMoreInfo");
 
 const getTeacherProfileInfo = async (req, res) => {
-  console.log("hello");
+  // console.log("hello");
   const { teacherId } = req.params;
   try {
     const moreInfo = await teacherMoreInfo.findOne({ studentID: teacherId });

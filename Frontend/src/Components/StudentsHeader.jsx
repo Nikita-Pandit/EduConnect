@@ -26,13 +26,20 @@ const StudentHeader = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3002/api/Profile/${userId}`
-        );
+        let response
+        if(localStorage.getItem("teacherId")){
+           response = await axios.get(`http://localhost:3002/api/teacherProfile/${userId}`)
+        }
+        else{
+           response = await axios.get(
+            `http://localhost:3002/api/Profile/${userId}`
+          );
+        }
         if (response.data.moreInfo.image) {
           setImage(`http://localhost:3002${response.data.moreInfo.image}`);
           setFlag(true);
         }
+        
       } catch (error) {
         console.error("Failed to fetch profile:", error);
       }

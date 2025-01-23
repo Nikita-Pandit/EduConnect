@@ -11,6 +11,7 @@ import StudentHeader from './Components/StudentsHeader';
 import Footer from './Components/Footer';
 import Resetpassword  from './Pages/Resetpassword';   
 import TeacherProfile from "./Pages/TeacherProfile";
+import ViewTeacherDetails from "./Pages/ViewTeacherDetails";
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
         <Route path="/ViewMoreDetails" element={<ViewMoreDetails />} />
         <Route path="/Resetpassword/:token" element={<Resetpassword/>}/>
         <Route path="/TeacherProfile" element={<TeacherProfile/>}/>
+        <Route path="/ViewTeacherDetails" element={<ViewTeacherDetails/>}/>
       </Routes>
       <Footer/>
     </Router>
