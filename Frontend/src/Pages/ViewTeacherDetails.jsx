@@ -171,10 +171,10 @@ import axios from "axios";
 const ViewTeacherDetails = () => {
   const location = useLocation();
   const viewTeacherId =
-    location?.state?.studentID ||
+    location?.state?.teacherID ||
     localStorage.getItem("teacherId") ||
     "defaultID";
-  localStorage.setItem("teacherId", viewTeacherId);
+  // localStorage.setItem("teacherId", viewTeacherId);
   console.log("view more details teacher: ", viewTeacherId);
 
   const [teacherName, setTeacherName] = useState("");

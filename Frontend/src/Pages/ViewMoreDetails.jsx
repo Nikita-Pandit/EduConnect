@@ -8,8 +8,8 @@ import { assets, url } from "../assets/assets";
 const ViewMoreDetails = () => {
   const location = useLocation();
   const id =
-    location?.state?.studentID || localStorage.getItem("userId") || "defaultID";
-  localStorage.setItem("userId", id);
+    location?.state?.studentID || localStorage.getItem("studentId") || "defaultID";
+  // localStorage.setItem("userId", id);
   console.log(id);
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");

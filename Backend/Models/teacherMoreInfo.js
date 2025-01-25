@@ -14,7 +14,7 @@ domain:{
 location:{
   type:String,
 },
-studentID:String,
+teacherID:String,
 name:String,
 image:{
   type:String,

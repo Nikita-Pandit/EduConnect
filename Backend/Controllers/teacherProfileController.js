@@ -4,7 +4,7 @@ const getTeacherProfileInfo = async (req, res) => {
   // console.log("hello");
   const { teacherId } = req.params;
   try {
-    const moreInfo = await teacherMoreInfo.findOne({ studentID: teacherId });
+    const moreInfo = await teacherMoreInfo.findOne({ teacherID: teacherId });
     console.log("Before moreInfo", moreInfo);
     if (!moreInfo) {
       // console.log("if");
@@ -32,10 +32,10 @@ const createTeacherProfileInfo = async (req, res) => {
   const { name, Bio, github, linkedin, twitter, location, domain, image } =
     req.body;
   try {
-    const matchID = await teacherMoreInfo.findOne({ studentID: teacherId });
+    const matchID = await teacherMoreInfo.findOne({ teacherID: teacherId });
     if (matchID) {
       const updated = await teacherMoreInfo.findOneAndUpdate(
-        { studentID: teacherId },
+        { teacherID: teacherId },
         { name, Bio, github, linkedin, twitter, location, domain, image }
       );
     } else {
@@ -47,7 +47,7 @@ const createTeacherProfileInfo = async (req, res) => {
         twitter,
         domain: Array.isArray(domain) ? domain : [],
         location,
-        studentID: teacherId,
+        teacherID: teacherId,
         image
       });
       await profile.save();
@@ -71,7 +71,7 @@ const getTeacherProfileImage = async (req, res) => {
     const imagePath = `/uploads/${req.file.filename}`;
     // console.log("image path", imagePath);
     await teacherMoreInfo.findOneAndUpdate(
-      { studentID: teacherId },
+      { teacherID: teacherId },
       { image: imagePath }
     );
     res.json({ success: true, image: imagePath });
