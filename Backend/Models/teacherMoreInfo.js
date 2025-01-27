@@ -19,6 +19,9 @@ name:String,
 image:{
   type:String,
   default:"/images/default_image.jpg",
+},
+rank:{
+  type:Object,
 }
 })
 const teacherMoreInfo=mongoose.model("teacherMoreInfo",teacherMoreInfoSchema)

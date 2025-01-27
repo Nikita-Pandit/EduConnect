@@ -11,8 +11,7 @@ const studentMoreInfoSchema=new mongoose.Schema({
   instagram:String,
   projects:String,
  skills:{
-  type:String,
-
+ type:String,
 },
 domain:{
   type:[String] //Array of strings
@@ -32,7 +31,9 @@ name:String,
 image:{
   type:String,
   default:"/images/default_image.jpg",
-}
+},
+
+
 })
 const studentMoreInfo=mongoose.model("studentMoreInfo",studentMoreInfoSchema)
 module.exports=studentMoreInfo

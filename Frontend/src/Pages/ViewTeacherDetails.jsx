@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -15,6 +14,9 @@ const ViewTeacherDetails = () => {
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherContact, setTeacherContact] = useState("");
+  const [isRanked, setIsRanked] = useState(false);
+  // const [teacherRank, setTeacherRank] = useState(0);
+
   const [profile, setProfile] = useState({
     name: "",
     Bio: "",
@@ -23,6 +25,7 @@ const ViewTeacherDetails = () => {
     twitter: "",
     domain: "",
     location: "",
+    rank: {},
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -62,6 +65,28 @@ const ViewTeacherDetails = () => {
     fetchTeacherName();
     fetchTeacherProfileInfo();
   }, [viewTeacherId]);
+
+  // const saveRank = async () => {
+  //   const response=axios.post(
+  //     `http://localhost:3002/api/teacherRank/${teacherRank,localStorage.getItem("studentId")}`,
+  //     profile
+  //   );
+  // }
+  const saveRank = async (rank) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3002/api/teacherRank`,
+        {
+          teacherRank: rank,
+          studentId: localStorage.getItem("studentId"),
+          viewTeacherId
+        }
+      );
+      console.log("Rank saved successfully:", response.data);
+    } catch (error) {
+      console.error("Error saving rank:", error);
+    }
+  };
 
   return (
     <>
@@ -148,13 +173,16 @@ const ViewTeacherDetails = () => {
 
             {/* Rank this Teacher Button */}
             <div className="mt-5 flex justify-center">
-              <button
+              {isRanked?
+               (<div>response.data.teacher.rank.studentId</div>):
+                (<button
                 type="button"
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg"
                 onClick={() => setShowModal(true)}
               >
                 Rank this Teacher
-              </button>
+              </button>)}
+             
             </div>
           </div>
         </div>
@@ -170,9 +198,19 @@ const ViewTeacherDetails = () => {
                 <button
                   key={num}
                   className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 hover:text-white"
-                  onClick={() => {
-                    console.log(`Rank given: ${num}`);
-                    setShowModal(false);
+                  // onClick={() => {
+                  //   console.log(`Rank given: ${num}`);
+                  //   setShowModal(false);
+                  //   setTeacherRank(num);
+                  //   saveRank();
+                  // }}
+                  onClick={async () => {
+                    try {
+                      await saveRank(num);
+                      setShowModal(false);
+                    } catch (error) {
+                      console.error("Error in ranking:", error);
+                    }
                   }}
                 >
                   {num}
@@ -193,4 +231,3 @@ const ViewTeacherDetails = () => {
 };
 
 export default ViewTeacherDetails;
-

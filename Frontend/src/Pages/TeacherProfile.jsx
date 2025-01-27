@@ -42,6 +42,7 @@ const TeacherProfile = () => {
     domain: "",
     location: "",
     image: "/images/default_image.jpg",
+    rank: {},
   });
 
   const fetchTeacherName = async () => {
@@ -61,7 +62,6 @@ const TeacherProfile = () => {
       console.error("Error fetching student name:", error);
     }
   };
-
 
   const fetchTeacherProfileInfo = async () => {
     try {
@@ -311,7 +311,7 @@ const TeacherProfile = () => {
           <button
             type="button"
             className="text-center px-5 py-2 bg-green-500 rounded-lg mr-3"
-            onClick={()=>{
+            onClick={() => {
               setIsEditing(true);
               setIsFirstVisit(true);
             }}
@@ -333,5 +333,3 @@ const TeacherProfile = () => {
 };
 
 export default TeacherProfile;
-
-
