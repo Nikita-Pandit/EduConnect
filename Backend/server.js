@@ -150,32 +150,63 @@ app.get("/api/teacher/:teacherId", async (req, res) => {
 //   }
 //   );
 // })
+// app.post("/api/teacherRank", async (req, res) => {
+//   const { studentId, teacherRank, viewTeacherId } = req.body;
+//   console.log("studentId", studentId);
+//   console.log("teacherRank", teacherRank);
+//   console.log("viewTeacherId", viewTeacherId);
+//   console.log("insdie api teacherRank");
+//   try {
+//     console.log("inside try");
+//     // Use $set to dynamically set the studentId as a key and teacherRank as its value
+//     const teacher = await teacherMoreInfo.findOneAndUpdate(
+//       { teacherID: viewTeacherId }, // Match condition
+//       {
+//         $set: { [`rank.${studentId}`]: teacherRank }, // Update the rank object
+//       },
+//       { new: true, upsert: true } // Return the updated document and create if it doesn't exist
+//     );
+//     console.log("the teacher from database is", teacher);
+//     if (teacher) {
+//       console.log("inside if");
+//       res.status(200).json({
+//         message: "Rank updated successfully",
+//         teacher,
+//       });
+//     } else {
+//       res.status(404).json({ message: "Teacher not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error updating rank:", error);
+//     res.status(500).json({ message: "Internal Server Error", error });
+//   }
+// });
 app.post("/api/teacherRank", async (req, res) => {
   const { studentId, teacherRank, viewTeacherId } = req.body;
   console.log("studentId", studentId);
   console.log("teacherRank", teacherRank);
   console.log("viewTeacherId", viewTeacherId);
-  console.log("insdie api teacherRank");
+  console.log("inside api teacherRank");
+
   try {
     console.log("inside try");
-    // Use $set to dynamically set the studentId as a key and teacherRank as its value
-    const teacher = await teacherMoreInfo.findOneAndUpdate(
-      { teacherID: viewTeacherId }, // Match condition
-      {
-        $set: { [`rank.${studentId}`]: teacherRank }, // Update the rank object
-      },
-      { new: true, upsert: true } // Return the updated document and create if it doesn't exist
-    );
-    console.log("the teacher from database is", teacher);
-    if (teacher) {
-      console.log("inside if");
-      res.status(200).json({
-        message: "Rank updated successfully",
-        teacher,
-      });
-    } else {
-      res.status(404).json({ message: "Teacher not found" });
+
+    // Find the teacher document
+    const teacher = await teacherMoreInfo.findOne({ teacherID: viewTeacherId });
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
     }
+
+    // Update the rank map
+    teacher.rank.set(studentId, teacherRank);
+    await teacher.save(); // Save the document
+
+    console.log("Updated teacher:", teacher);
+    res.status(200).json({
+      message: "Rank updated successfully",
+      teacher,
+    });
   } catch (error) {
     console.error("Error updating rank:", error);
     res.status(500).json({ message: "Internal Server Error", error });

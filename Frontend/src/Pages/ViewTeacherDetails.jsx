@@ -15,6 +15,7 @@ const ViewTeacherDetails = () => {
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherContact, setTeacherContact] = useState("");
   const [isRanked, setIsRanked] = useState(false);
+  const [teacherRank, setTeacherRank] = useState(null);
   // const [teacherRank, setTeacherRank] = useState(0);
 
   const [profile, setProfile] = useState({
@@ -29,6 +30,7 @@ const ViewTeacherDetails = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const fetchTeacherName = async () => {
     try {
@@ -47,15 +49,39 @@ const ViewTeacherDetails = () => {
     }
   };
 
+  // const fetchTeacherProfileInfo = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3002/api/teacherProfile/${viewTeacherId}`
+  //     );
+  //     setProfile((prevProfile) => ({
+  //       ...prevProfile,
+  //       ...response.data.moreInfo,
+  //     }));
+  //   } catch (error) {
+  //     console.error("Error in fetching profile info:", error);
+  //   }
+  // };
   const fetchTeacherProfileInfo = async () => {
     try {
       const response = await axios.get(
         `http://localhost:3002/api/teacherProfile/${viewTeacherId}`
       );
+
       setProfile((prevProfile) => ({
         ...prevProfile,
         ...response.data.moreInfo,
       }));
+
+      // Check if this student has already ranked the teacher
+      const studentId = localStorage.getItem("studentId");
+      if (
+        response.data.moreInfo.rank &&
+        response.data.moreInfo.rank[studentId]
+      ) {
+        setIsRanked(true);
+        setTeacherRank(response.data.moreInfo.rank[studentId]);
+      }
     } catch (error) {
       console.error("Error in fetching profile info:", error);
     }
@@ -72,6 +98,7 @@ const ViewTeacherDetails = () => {
   //     profile
   //   );
   // }
+
   const saveRank = async (rank) => {
     try {
       const response = await axios.post(
@@ -79,10 +106,12 @@ const ViewTeacherDetails = () => {
         {
           teacherRank: rank,
           studentId: localStorage.getItem("studentId"),
-          viewTeacherId
+          viewTeacherId,
         }
       );
       console.log("Rank saved successfully:", response.data);
+      setIsRanked(true);
+      setTeacherRank(rank);
     } catch (error) {
       console.error("Error saving rank:", error);
     }
@@ -172,17 +201,39 @@ const ViewTeacherDetails = () => {
             </div>
 
             {/* Rank this Teacher Button */}
+            {/*<div className="mt-5 flex justify-center">
+              {isRanked ? (
+                <div>response.data.teacher.rank.studentId</div>
+              ) : (
+                <button
+                  type="button"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                  onClick={() => setShowModal(true)}
+                >
+                  Rank this Teacher
+                </button>
+              )}
+            </div>*/}
             <div className="mt-5 flex justify-center">
-              {isRanked?
-               (<div>response.data.teacher.rank.studentId</div>):
-                (<button
-                type="button"
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                onClick={() => setShowModal(true)}
-              >
-                Rank this Teacher
-              </button>)}
-             
+              {isRanked ? (
+                <div>Rank given by you : {teacherRank}
+                 <button
+                    type="button"
+                    className="bg-yellow-500 text-white px-4 py-2 rounded-lg ml-4"
+                    onClick={() => setIsEditMode(true)}
+                  >
+                    Edit Rank
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                  onClick={() => setShowModal(true)}
+                >
+                  Rank this Teacher
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -220,6 +271,39 @@ const ViewTeacherDetails = () => {
             <button
               className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
               onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+       {/* Modal for Editing Rank */}
+       {isEditMode && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold mb-4">Edit your Rank</h2>
+            <div className="flex gap-3">
+              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                <button
+                  key={num}
+                  className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 hover:text-white"
+                  onClick={async () => {
+                    try {
+                      await saveRank(num);
+                      setIsEditMode(false); // Close the edit mode after saving
+                    } catch (error) {
+                      console.error("Error in editing rank:", error);
+                    }
+                  }}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
+            <button
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+              onClick={() => setIsEditMode(false)}
             >
               Close
             </button>

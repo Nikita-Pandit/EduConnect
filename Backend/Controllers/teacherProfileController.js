@@ -40,13 +40,13 @@ const createTeacherProfileInfo = async (req, res) => {
     image,
     rank,
   } = req.body;
-  console.log("rank in createTeacherProfileInfo", rank);
+  // console.log("rank in createTeacherProfileInfo", rank);
   try {
     const matchID = await teacherMoreInfo.findOne({ teacherID: teacherId });
     if (matchID) {
       const updated = await teacherMoreInfo.findOneAndUpdate(
         { teacherID: teacherId },
-        { name, Bio, github, linkedin, twitter, location, domain, image, rank }
+        { name, Bio, github, linkedin, twitter, location, domain, image }
       );
     } else {
       profile = new teacherMoreInfo({
