@@ -49,19 +49,7 @@ const ViewTeacherDetails = () => {
     }
   };
 
-  // const fetchTeacherProfileInfo = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:3002/api/teacherProfile/${viewTeacherId}`
-  //     );
-  //     setProfile((prevProfile) => ({
-  //       ...prevProfile,
-  //       ...response.data.moreInfo,
-  //     }));
-  //   } catch (error) {
-  //     console.error("Error in fetching profile info:", error);
-  //   }
-  // };
+ 
   const fetchTeacherProfileInfo = async () => {
     try {
       const response = await axios.get(
@@ -92,30 +80,27 @@ const ViewTeacherDetails = () => {
     fetchTeacherProfileInfo();
   }, [viewTeacherId]);
 
-  // const saveRank = async () => {
-  //   const response=axios.post(
-  //     `http://localhost:3002/api/teacherRank/${teacherRank,localStorage.getItem("studentId")}`,
-  //     profile
-  //   );
-  // }
-
   const saveRank = async (rank) => {
     try {
-      const response = await axios.post(
-        `http://localhost:3002/api/teacherRank`,
-        {
-          teacherRank: rank,
-          studentId: localStorage.getItem("studentId"),
-          viewTeacherId,
-        }
-      );
+      const response = await axios.post(`http://localhost:3002/api/teacherRank`, {
+        teacherRank: rank,
+        studentId: localStorage.getItem("studentId"),
+        viewTeacherId,
+      });
+  
       console.log("Rank saved successfully:", response.data);
       setIsRanked(true);
       setTeacherRank(rank);
+      setShowModal(false);
     } catch (error) {
-      console.error("Error saving rank:", error);
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.message); // Show popup if duplicate rank
+      } else {
+        console.error("Error saving rank:", error);
+      }
     }
   };
+  
 
   return (
     <>
