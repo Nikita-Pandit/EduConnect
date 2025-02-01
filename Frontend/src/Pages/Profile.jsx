@@ -3,8 +3,10 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select"; // Install via npm install react-select
+// import { useLocation } from "react-router-dom";
 
 const Profile = () => {
+  // const location = useLocation();
   const [isEditing, setIsEditing] = useState(false); // NEW STATE
   const [isFirstVisit, setIsFirstVisist] = useState(true);
 
@@ -23,7 +25,8 @@ const Profile = () => {
     }));
   };
 
-  const id = localStorage.getItem("studentId") || "defaultID";
+  // const id = localStorage.getItem("studentId") ||location?.state?.studentID ||"defaultID";
+  const id = localStorage.getItem("studentId") ||"defaultID";
 
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");

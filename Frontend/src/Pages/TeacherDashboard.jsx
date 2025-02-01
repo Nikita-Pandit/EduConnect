@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const TeacherDashboard = () => {
+  const navigate = useNavigate()
   const teacherID = localStorage.getItem("teacherId");
   const [rankData, setRankData] = useState([]);
   const [rankDetails, setRankDetails] = useState({});
@@ -10,8 +12,16 @@ const TeacherDashboard = () => {
 
   // Colors for pie chart divisions
   const COLORS = [
-    "#FF5733", "#FFC300", "#DAF7A6", "#33FF57", "#33FFF3",
-    "#3375FF", "#8333FF", "#FF33F6", "#FF3366", "#FF6E33",
+    "#FF5733",
+    "#FFC300",
+    "#DAF7A6",
+    "#33FF57",
+    "#33FFF3",
+    "#3375FF",
+    "#8333FF",
+    "#FF33F6",
+    "#FF3366",
+    "#FF6E33",
   ];
 
   useEffect(() => {
@@ -40,7 +50,7 @@ const TeacherDashboard = () => {
   }, [teacherID]);
 
   return (
-    <div className="p-5 bg-gray-100">
+    <div className="p-5 bg-zinc-1000">
       <h1 className="text-2xl font-bold mb-5">Teacher Dashboard</h1>
 
       <div className="flex flex-col items-center">
@@ -53,29 +63,50 @@ const TeacherDashboard = () => {
             fill="#8884d8"
             dataKey="value"
             onMouseEnter={(data, index) => setHoveredRank(index + 1)} // Set hovered rank
-            onMouseLeave={() => setHoveredRank(null)} // Reset on mouse leave
+            // onMouseLeave={() => setHoveredRank(null)} // Reset on mouse leave
           >
             {rankData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
             ))}
           </Pie>
-          <Tooltip />
+          {/* <Tooltip /> */}
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#333", // Background color of tooltip
+              border: "1px solid #555",
+              borderRadius: "8px",
+              color: "white", // Change text color inside the tooltip
+            }}
+            labelStyle={{ color: "yellow", fontWeight: "bold" }} // Change label text color
+          />
         </PieChart>
 
-        {/* Hover Popup */}
         {hoveredRank && (
           <div className="p-4 bg-white shadow-md rounded-lg mt-4">
-            <h2 className="text-lg font-bold">
+            <h2 className="text-lg font-bold text-black">
               Students Who Gave Rank {hoveredRank}:
             </h2>
-            <ul className="list-disc pl-5">
+            <ul className="list-disc pl-5 text-black">
               {rankDetails[hoveredRank]?.map((studentID, idx) => (
-                <li key={idx}>{studentID}</li>
+                <li
+                  className="text-black flex items-center justify-between"
+                  key={idx}
+                >
+                  {studentID}
+                  <button
+                    className="ml-4 px-3 py-1 bg-blue-500 text-white rounded text-sm"
+                    onClick={() =>
+                      navigate("/ViewMoreDetails", {
+                        state: { studentID },
+                      })
+                    }
+                  >
+                    View More Details
+                  </button>
+                  <input  type="checkbox" />
+                </li>
               ))}
             </ul>
-            <button className="mt-3 px-4 py-2 bg-blue-500 text-white rounded">
-              View More Details
-            </button>
           </div>
         )}
       </div>
