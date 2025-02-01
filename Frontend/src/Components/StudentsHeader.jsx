@@ -85,6 +85,9 @@ const StudentHeader = () => {
                   <li>
                     <Link to="/ResearchDoubts">Research Doubts</Link>
                   </li>
+                  <li>
+                    <Link to="/TeacherDashboard">Teacher Dashboard</Link>
+                  </li>
                 </>
               ) : (
                 <>
@@ -105,6 +108,12 @@ const StudentHeader = () => {
                     title="Login required"
                   >
                     Research Doubts
+                  </li>
+                  <li
+                    className="text-gray-500 cursor-not-allowed"
+                    title="Login required"
+                  >
+                    Teacher Dashboard
                   </li>
                 </>
               )}

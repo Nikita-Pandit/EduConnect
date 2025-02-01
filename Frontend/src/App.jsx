@@ -12,6 +12,7 @@ import Footer from './Components/Footer';
 import Resetpassword  from './Pages/Resetpassword';   
 import TeacherProfile from "./Pages/TeacherProfile";
 import ViewTeacherDetails from "./Pages/ViewTeacherDetails";
+import TeacherDashboard from "./Pages/TeacherDashboard";
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
         <Route path="/Resetpassword/:token" element={<Resetpassword/>}/>
         <Route path="/TeacherProfile" element={<TeacherProfile/>}/>
         <Route path="/ViewTeacherDetails" element={<ViewTeacherDetails/>}/>
+        <Route path="/TeacherDashboard" element={<TeacherDashboard/>}/>
       </Routes>
       <Footer/>
     </Router>

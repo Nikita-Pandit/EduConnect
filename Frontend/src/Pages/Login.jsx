@@ -25,27 +25,26 @@ const Login = () => {
         email,
         password,
       });
-
-      if (response.data.userMoreDetails) {
-        const id = response.data.userMoreDetails.studentID;
-
-        // if (response.data.token) {
-        //   if (rememberMe) {
-        //     localStorage.setItem("token", response.data.token);
-        //   } else {
-        //     sessionStorage.setItem("token", response.data.token);
-        //   }
-
+console.log(response)
+      if (response.data.userMoreDetails.studentID) {
+        const id = response.data.userMoreDetails.studentID 
+        console.log("login id",id)
+        localStorage.setItem("studentId",id) 
+        console.log("Id in login: ",id);
           toast.success("Login Successful");
           setTimeout(() => {
             navigate("/Profile", { state: { id } });
           }, 7000);
-        // } else {
-        //   toast.error("Invalid credentials. Please try again.");
-        }
-      // } else {
-      //   toast.error("Invalid credentials. Please try again.");
-      // }
+      }
+      else{
+          const id = response.data.userMoreDetails.teacherID 
+          localStorage.setItem("teacherId",id) 
+          console.log("Id in login: ",id);
+            toast.success("Login Successful");
+            setTimeout(() => {
+              navigate("/TeacherProfile", { state: { id } });
+            }, 7000);
+      }
     } catch (error) {
       if (error.response?.status === 401) {
         toast.error("Invalid credentials. Please try again.");

@@ -27,5 +27,5 @@ rank: {
 }
 
 })
-const teacherMoreInfo=mongoose.model("teacherMoreInfo",teacherMoreInfoSchema)
+const teacherMoreInfo=mongoose.models.teacherMoreInfo || mongoose.model("teacherMoreInfo",teacherMoreInfoSchema)
 module.exports=teacherMoreInfo

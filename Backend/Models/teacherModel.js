@@ -25,5 +25,7 @@ teacherSchema.pre("save", async function (next) {
   next();
 });
 
-const teacherModel = mongoose.model("teacher", teacherSchema);
+// const teacherModel = mongoose.model("teacher", teacherSchema);
+const teacherModel = mongoose.models.teacher || mongoose.model("teacher", teacherSchema);
+
 module.exports = teacherModel;

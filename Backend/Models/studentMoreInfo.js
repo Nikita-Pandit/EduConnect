@@ -35,5 +35,5 @@ image:{
 
 
 })
-const studentMoreInfo=mongoose.model("studentMoreInfo",studentMoreInfoSchema)
+const studentMoreInfo=mongoose.models.studentMoreInfo || mongoose.model("studentMoreInfo",studentMoreInfoSchema)
 module.exports=studentMoreInfo

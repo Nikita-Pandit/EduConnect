@@ -1,38 +1,49 @@
-const studentModel = require('../Models/studentmodel');
+
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const studentMoreInfo = require("../Models/studentMoreInfo");
+const studentModel = require("../models/studentModel");
+const teacherModel = require("../models/teacherModel");
+const studentMoreInfo = require("../models/studentMoreInfo");
+const teacherMoreInfo = require("../models/teacherMoreInfo");
 
 const loginController = async (req, res) => {
-  const {email,password}=req.body
-  console.log(email)
-  console.log(password)
-      try{
-        const user= await studentModel.findOne({email})
-        console.log(user)
-        const userMoreDetails=await studentMoreInfo.findOne({studentID:user._id})
-        console.log(userMoreDetails)
-        if(user){
-          const isPasswordValid =  await bcrypt.compare(password,user.password)
-          if(isPasswordValid){
-            // If password matches, send a success response
-            // const token=jwt.sign(
-            //     {userID:user._id,email:user.email},
-            //     process.env.JWT_SECRET_KEY, 
-            //     { expiresIn: '1h' }  // Expiration time (optional)
-            // )
-            console.log(isPasswordValid)
-                res.status(200).json({ sucecess: true, message: "Login successful",userMoreDetails});
-            } 
-                
-      }
-      else {
-        res.status(404).json({ success: false, message: "No record found in the DB." });
-      }
+  const { email, password } = req.body;
+
+  console.log("Received Login Request for:", email);
+
+  console.log(password);
+  try {
+    const user =
+      (await studentModel.findOne({ email })) ||
+      (await teacherModel.findOne({ email }));
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ success: false, message: "User not found" });
     }
-    catch(error){
-      console.error("Something went wrong", error.message);
-      res.status(500).json({ success: false, message: "Internal server error" });
+
+    console.log("User found:", user);
+    console.log("Entered Password:", password);
+    console.log("Stored Hashed Password:", user.password);
+
+    // Compare entered password with hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log("Password Match:", isPasswordValid);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ success: false, message: "Incorrect password" });
     }
+
+    const userMoreDetails =
+      (await studentMoreInfo.findOne({ studentID: user._id })) ||
+      (await teacherMoreInfo.findOne({ teacherID: user._id }));
+
+    console.log("User More Details:", userMoreDetails);
+
+    res.status(200).json({ success: true, message: "Login successful", userMoreDetails });
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error", error });
   }
-  module.exports={loginController}
+};
+
+module.exports = { loginController};

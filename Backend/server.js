@@ -183,6 +183,55 @@ app.post("/api/teacherRank", async (req, res) => {
   }
 });
 
+
+//teacher dashboard
+
+// Endpoint to fetch rank data for a teacher
+app.get("/api/teacher/rankStatistics/:teacherID", async (req, res) => {
+  const { teacherID } = req.params;
+
+  try {
+    // Fetch teacher data by ID
+    const teacher = await teacherMoreInfo.findOne({ teacherID });
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    // Prepare data for pie chart
+    const rankMap = teacher.rank;
+    const rankCounts = Array(10).fill(0); // Array to count ranks 1–10
+    const rankDetails = {}; // Object to store student IDs for each rank
+
+    // Calculate rank distribution and details
+    rankMap.forEach((rank, studentID) => {
+      if (rank >= 1 && rank <= 10) {
+        rankCounts[rank - 1] += 1; // Increment count for the rank
+        if (!rankDetails[rank]) {
+          rankDetails[rank] = [];
+        }
+        rankDetails[rank].push(studentID); // Store student IDs for the rank
+      }
+    });
+
+    // Calculate percentages
+    const totalRanks = Array.from(rankMap.values()).length;
+    const rankPercentages = rankCounts.map((count) =>
+      totalRanks > 0 ? (count / totalRanks) * 100 : 0
+    );
+
+    // Return data
+    res.status(200).json({
+      rankPercentages,
+      rankDetails,
+    });
+  } catch (error) {
+    console.error("Error fetching rank statistics:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
