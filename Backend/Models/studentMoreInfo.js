@@ -32,7 +32,11 @@ image:{
   type:String,
   default:"/images/default_image.jpg",
 },
-
+selectStudent: {
+  type: Map,
+  of: Boolean, 
+  default: new Map(),
+}
 
 })
 const studentMoreInfo=mongoose.models.studentMoreInfo || mongoose.model("studentMoreInfo",studentMoreInfoSchema)

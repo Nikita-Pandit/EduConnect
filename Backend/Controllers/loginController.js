@@ -1,9 +1,8 @@
-
 const bcrypt = require("bcrypt");
-const studentModel = require("../models/studentModel");
-const teacherModel = require("../models/teacherModel");
-const studentMoreInfo = require("../models/studentMoreInfo");
-const teacherMoreInfo = require("../models/teacherMoreInfo");
+const studentModel = require("../Models/studentmodel");
+const teacherModel = require("../Models/teacherModel");
+const studentMoreInfo = require("../Models/studentMoreInfo");
+const teacherMoreInfo = require("../Models/teacherMoreInfo");
 
 const loginController = async (req, res) => {
   const { email, password } = req.body;

@@ -46,6 +46,7 @@ const Profile = () => {
     branch: "",
     selectYear: "",
     image: "/images/default_image.jpg",
+    selectStudent:{},
   });
 
   const fetchStudentName = async () => {

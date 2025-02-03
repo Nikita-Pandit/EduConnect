@@ -38,6 +38,7 @@ app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
 
 const jwt = require("jsonwebtoken");
+const studentMoreInfo = require("./Models/studentMoreInfo");
 
 // Connect to MongoDB
 mongoose
@@ -151,7 +152,7 @@ app.post("/api/teacherRank", async (req, res) => {
     // Check if the student has already given the same rank to another teacher
     const existingTeacher = await teacherMoreInfo.findOne({
       [`rank.${studentId}`]: teacherRank, // Check if this student gave the same rank
-      teacherID: { $ne: viewTeacherId },  // Ensure it's a different teacher
+      teacherID: { $ne: viewTeacherId }, // Ensure it's a different teacher
     });
 
     if (existingTeacher) {
@@ -159,7 +160,6 @@ app.post("/api/teacherRank", async (req, res) => {
         message: "You have already given this rank to another teacher!",
       });
     }
-
 
     // Find the teacher document
     const teacher = await teacherMoreInfo.findOne({ teacherID: viewTeacherId });
@@ -182,7 +182,6 @@ app.post("/api/teacherRank", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", error });
   }
 });
-
 
 //teacher dashboard
 
@@ -231,6 +230,52 @@ app.get("/api/teacher/rankStatistics/:teacherID", async (req, res) => {
   }
 });
 
+//studentcheckbox
+     
+
+
+
+
+app.post("/api/teacher/studentCheckbox", async (req, res) => {
+  const { teacherID, studentID } = req.body;
+  console.log("Teacher id for selecting student: ", teacherID);
+  console.log("Student id for selecting student: ", studentID);
+
+  try {
+    // Check if this student is already selected by ANY teacher
+    const existingStudent = await studentMoreInfo.findOne({
+      studentID,
+      selectStudent: { $exists: true, $ne: {} }, // Ensure selectStudent is not empty
+    });
+
+    if (existingStudent) {
+      return res.status(400).json({
+        message: "This student has already been selected by another teacher!",
+      });
+    }
+
+    // Find student and update selectStudent field
+    const student = await studentMoreInfo.findOne({ studentID });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Ensure selectStudent exists and is a Map
+    student.selectStudent = student.selectStudent || new Map();
+    student.selectStudent.set(teacherID, true); // Add teacher as key with value true
+
+    await student.save();
+
+    res.status(200).json({
+      message: "Student selected successfully",
+      student,
+    });
+  } catch (error) {
+    console.error("Error selecting students:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
