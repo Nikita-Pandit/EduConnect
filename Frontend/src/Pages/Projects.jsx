@@ -31,6 +31,7 @@ const Projects = () => {
 
   return (
     <>
+     
       <div className="flex items-center justify-center mt-20 gap-8">
         <select
           name="branch"
@@ -70,10 +71,10 @@ const Projects = () => {
           className="text-black-500 bg-zinc-500 p-4 border-2 rounded-md outline-none border-none w-64"
         >
           <option value="">Select Domain</option>
-          <option value="Web Development">Web Development</option>
+          <option value="Web Development">web development</option>
           <option value="Machine Learning">ML</option>
           <option value="App Development">App Development</option>
-          <option value="UI/UX Design">UI/UX Design</option>
+          <option value=" UI/UX Design">UI/UX Design</option>
         </select>
       </div>
 

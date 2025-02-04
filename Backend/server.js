@@ -277,6 +277,22 @@ app.post("/api/teacher/studentCheckbox", async (req, res) => {
   }
 });
 
+//searchteachersby   name
+app.get("/api/searchTeachers", async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    const teachers = await teacherMoreInfo.find({
+      name: { $regex: `^${name}`, $options: "i" }, // Match starting letters (case-insensitive)
+    });
+
+    res.json(teachers);
+  } catch (error) {
+    console.error("Error searching teachers:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

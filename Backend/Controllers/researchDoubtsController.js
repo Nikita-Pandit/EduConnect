@@ -1,31 +1,32 @@
 const teacherMoreInfo = require("../Models/teacherMoreInfo");
 
 const getResearchDoubtsController = async (req, res) => {
-  const { branch, year, domain } = req.query;
-  console.log("Branch:", branch);
-  console.log("Year:", year);
-  console.log("Domain:", domain);
+  const { name, domain, studentId } = req.query;
 
   try {
-    // Build the query object based on the provided parameters
+    // Build the query object
     let query = {};
-    if (branch && year && domain) {
-      query = { branch: branch, selectYear: year, domain: domain };
-    } else if (branch) {
-      query = { branch: branch };
-    } else if (year) {
-      query = { selectYear: year };
-    } else if (domain) {
-      query = { domain: domain };
+    if (name) {
+      query.name = { $regex: new RegExp(name, "i") }; // Case-insensitive search
     }
-    console.log("Query:", query);
+    if (domain) {
+      query.domain = { $in: [domain] }; // Matches domain in the array
+    }
 
     // Fetch the data from the database based on the query
-    const allProfileDetails = await teacherMoreInfo.find(query);
-    console.log("Fetched Data:", allProfileDetails);
+    const allProfileDetails = await teacherMoreInfo.find(query).lean(); // Convert to plain objects
+
+    // ✅ Fix: Use object access for rank instead of .get()
+    if (studentId) {
+      allProfileDetails.sort((a, b) => {
+        const rankA = a.rank?.[studentId] ?? Infinity; // Default to Infinity if no rank
+        const rankB = b.rank?.[studentId] ?? Infinity;
+        return rankA - rankB; // Ascending order (lower rank first)
+      });
+    }
 
     // Check if data was retrieved
-    if (!allProfileDetails || allProfileDetails.length === 0) {
+    if (!allProfileDetails.length) {
       return res.status(404).json({
         success: false,
         message: "No profiles found matching the provided filters.",
@@ -35,7 +36,7 @@ const getResearchDoubtsController = async (req, res) => {
     // Send the response with the fetched data
     res.status(200).json({ success: true, allProfileDetails });
   } catch (error) {
-    console.error("Error in getProjectController:", error.message);
+    console.error("Error in getResearchDoubtsController:", error.message);
     res.status(500).json({
       success: false,
       message: "An error occurred while fetching the profile info.",
