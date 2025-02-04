@@ -21,6 +21,7 @@ const ResearchDoubtsRoutes = require("./Routes/researchDoubtsRoutes");
 const forgetPasswordRoutes = require("./Routes/forgetPasswordRoutes");
 const resetPasswordRoutes = require("./Routes/resetPasswordRoutes");
 const teacherProfileRoutes = require("./Routes/teacherProfileRoutes");
+const searchTeachersRoutes = require("./Routes/searchTeachersRoutes");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
 
@@ -58,6 +59,7 @@ app.use("/api", ResearchDoubtsRoutes);
 app.use("/api", forgetPasswordRoutes);
 app.use("/api", resetPasswordRoutes);
 app.use("/api", teacherProfileRoutes);
+app.use('/api',searchTeachersRoutes)
 
 app.get("/verify", async (req, res) => {
   const { token } = req.query;
@@ -277,21 +279,7 @@ app.post("/api/teacher/studentCheckbox", async (req, res) => {
   }
 });
 
-//searchteachersby   name
-app.get("/api/searchTeachers", async (req, res) => {
-  const { name } = req.query;
 
-  try {
-    const teachers = await teacherMoreInfo.find({
-      name: { $regex: `^${name}`, $options: "i" }, // Match starting letters (case-insensitive)
-    });
-
-    res.json(teachers);
-  } catch (error) {
-    console.error("Error searching teachers:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
