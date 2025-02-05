@@ -1,4 +1,4 @@
-const {createProfileInfo,getProfileInfo,getProfileImage} = require('../Controllers/profileController')
+const {createProfileInfo,getProfileInfo,getProfileImage,getStudentInfo} = require('../Controllers/profileController')
 
 const express=require("express")
 const multer=require("multer")
@@ -23,4 +23,5 @@ const storage = multer.diskStorage({
 
  router.get("/Profile/:id",getProfileInfo)
 router.post("/Profile/:id/uploadImage",upload.single('image'),getProfileImage);
+router.get("/student/:id",getStudentInfo)
  module.exports=router

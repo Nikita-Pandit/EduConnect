@@ -1,4 +1,5 @@
 const studentMoreInfo= require("../Models/studentMoreInfo");
+const studentModel = require("../Models/studentmodel");
 const getProfileInfo = async (req, res) => {
   const { id } = req.params;
  console.log(id)
@@ -62,7 +63,24 @@ const {id}=req.params;
       res.json({ success: false, message: "Error" })
   }
 }
-
+const getStudentInfo = async(req,res)=>{
+  const { id } = req.params;
+  try {
+    const student = await studentModel.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    console.log(student);
+    res.status(200).json({
+      name: student.name,
+      email: student.email,
+      contact: student.contact,
+    });
+  } catch (error) {
+    console.error("Error fetching student:", error);
+    res.status(500).json({ error: "Error fetching student" });
+  }
+}
 const getProfileImage=async(req,res)=>{
 try{
   const {id}=req.params
@@ -75,4 +93,4 @@ res.status(500).json({ success: false, message: "Error uploading image.", error:
 }
 }
 
-module.exports={createProfileInfo,getProfileInfo,getProfileImage}
+module.exports={createProfileInfo,getProfileInfo,getProfileImage,getStudentInfo}

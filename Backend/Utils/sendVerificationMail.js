@@ -16,7 +16,7 @@ const sendVerificationMail = async (email,token,role)=> {
             html:`
             <h1>Email Verification</h1>
             <p>Please verify your email by clicking the link below:</p>
-            <a href="http://localhost:3002/verify?token=${token}&role=${role}">Verify Email</a> `,
+            <a href="http://localhost:3002/api/verify?token=${token}&role=${role}">Verify Email</a> `,
           
          };
             const info = await transporter.sendMail(mailOptions);
