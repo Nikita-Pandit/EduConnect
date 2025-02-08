@@ -23,6 +23,7 @@ const resetPasswordRoutes = require("./Routes/resetPasswordRoutes");
 const teacherProfileRoutes = require("./Routes/teacherProfileRoutes");
 const searchTeachersRoutes = require("./Routes/searchTeachersRoutes");
 const verifyEmailRoutes=require("./Routes/verifyEmailRoutes")
+const chatRoutes = require("./Routes/chatRoutes");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
 
@@ -62,45 +63,7 @@ app.use("/api", resetPasswordRoutes);
 app.use("/api", teacherProfileRoutes);
 app.use('/api',searchTeachersRoutes)
 app.use("/api",verifyEmailRoutes)
-
-// app.get("/api/verify", async (req, res) => {
-//   const { token } = req.query;
-//   const { role } = req.query;
-//   try {
-//     console.log("Verify Route2");
-//     let userIDMatchWithToken;
-//     let user;
-//     if (role == "student") {
-//       userIDMatchWithToken = await studentModel.findOne({
-//         verificationToken: token,
-//       });
-//       user = await studentModel.findOneAndUpdate(
-//         { verificationToken: token },
-//         { isVerified: true, verificationToken: null },
-//         { new: true }
-//       );
-//     } else {
-//       userIDMatchWithToken = await teacherModel.findOne({
-//         verificationToken: token,
-//       });
-//       user = await teacherModel.findOneAndUpdate(
-//         { verificationToken: token },
-//         { isVerified: true, verificationToken: null },
-//         { new: true }
-//       );
-//     }
-//     console.log(user);
-//     if (!user) {
-//       return res.status(400).json({ message: "Invalid or expired token" });
-//     }
-//     return res.redirect(
-//       `http://localhost:5173/SignUp?id=${userIDMatchWithToken._id}&role=${role}`
-//     );
-//   } catch (error) {
-//     console.error("Error during verification:", error);
-//     res.status(400).json({ error: "Verification failed" });
-//   }
-// })
+app.use("/api",chatRoutes)
 
 
 app.listen(PORT, () => {
