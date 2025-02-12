@@ -25,13 +25,13 @@ const createProfileInfo = async (req, res) => {
   console.log("Request Body:", req.body);
 //console.log("Uploaded File:", req.file)
 const {id}=req.params;
-  const {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image,selectStudent}=req.body
+  const {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image,selectStudent,rollNo}=req.body
   try {
     const matchID=await studentMoreInfo.findOne({ studentID:id})
     if(matchID){
   const updated = await studentMoreInfo.findOneAndUpdate(
         { studentID:id},
-        {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image,selectStudent}
+        {name,Bio, github,linkedin,leetcode,twitter,instagram,projects,skills,location,branch,selectYear,domain,image,selectStudent,rollNo}
           )
     }
     else{
@@ -52,6 +52,7 @@ const {id}=req.params;
     studentID:id,
     image,
     selectStudent,
+    rollNo
     })
     await profile.save();
     }

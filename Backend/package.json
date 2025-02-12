@@ -24,6 +24,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
     "path": "^0.12.7",
+    "pdf-parse": "^1.1.1",
     "react-chatbot-kit": "^2.2.2"
   }
 }

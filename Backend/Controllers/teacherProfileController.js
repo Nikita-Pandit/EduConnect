@@ -27,7 +27,7 @@ const getTeacherProfileInfo = async (req, res) => {
   }
 };
 
-const getTeacherInfo=async(req,res)=>{
+const getTeacherInfo = async (req, res) => {
   const { teacherId } = req.params;
   console.log(teacherId);
   try {
@@ -46,7 +46,7 @@ const getTeacherInfo=async(req,res)=>{
     console.error("Error fetching teacher:", error);
     res.status(500).json({ error: "Error fetching teacher" });
   }
-}
+};
 
 const createTeacherProfileInfo = async (req, res) => {
   console.log("Request Body:", req.body);
@@ -118,8 +118,7 @@ const getTeacherProfileImage = async (req, res) => {
   }
 };
 
-
-const rankTeacher=async(req,res)=>{
+const rankTeacher = async (req, res) => {
   const { studentId, teacherRank, viewTeacherId } = req.body;
   console.log("studentId", studentId);
   console.log("teacherRank", teacherRank);
@@ -161,53 +160,121 @@ const rankTeacher=async(req,res)=>{
     console.error("Error updating rank:", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
-}
+};
 
 //show piechart
-const showPiChart=async(req,res)=>{
+// const showPiChart = async (req, res) => {
+//   const { teacherID } = req.params;
+
+//   try {
+//     // Fetch teacher data by ID
+//     const teacher = await teacherMoreInfo.findOne({ teacherID });
+
+//     if (!teacher) {
+//       return res.status(404).json({ message: "Teacher not found" });
+//     }
+
+//     // Prepare data for pie chart
+//     const rankMap = teacher.rank;
+//     const rankCounts = Array(10).fill(0); // Array to count ranks 1–10
+//     const rankDetails = {}; // Object to store student IDs for each rank
+
+//     // Calculate rank distribution and details
+//     rankMap.forEach(async (rank, studentId) => {
+//       console.log("happy", studentId);
+//       const studentRoll = await studentMoreInfo.findOne({
+//         studentID: studentId,
+//       });
+//       console.log("studenteRoll", studentRoll);
+//       if (rank >= 1 && rank <= 10) {
+//         rankCounts[rank - 1] += 1; // Increment count for the rank
+//         if (!rankDetails[rank]) {
+//           rankDetails[rank] = [];
+//         }
+//         // rankDetails[rank].push(studentID); // Store student IDs for the rank
+//         console.log("roll number of the student", studentRoll.rollNo);
+//         rankDetails[rank].push(studentRoll.rollNo); // Store student IDs for the rank
+//       }
+//     });
+
+//     // Calculate percentages
+//     const totalRanks = Array.from(rankMap.values()).length;
+//     const rankPercentages = rankCounts.map((count) =>
+//       totalRanks > 0 ? (count / totalRanks) * 100 : 0
+//     );
+//     console.log("rankend details: ", rankDetails);
+//     // Return data
+//     res.status(200).json({
+//       rankPercentages,
+//       rankDetails,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching rank statistics:", error);
+//     res.status(500).json({ message: "Internal Server Error", error });
+//   }
+// };
+const showPiChart = async (req, res) => {
   const { teacherID } = req.params;
 
-    try {
-      // Fetch teacher data by ID
-      const teacher = await teacherMoreInfo.findOne({ teacherID });
-  
-      if (!teacher) {
-        return res.status(404).json({ message: "Teacher not found" });
-      }
-  
-      // Prepare data for pie chart
-      const rankMap = teacher.rank;
-      const rankCounts = Array(10).fill(0); // Array to count ranks 1–10
-      const rankDetails = {}; // Object to store student IDs for each rank
-  
-      // Calculate rank distribution and details
-      rankMap.forEach((rank, studentID) => {
-        if (rank >= 1 && rank <= 10) {
-          rankCounts[rank - 1] += 1; // Increment count for the rank
-          if (!rankDetails[rank]) {
-            rankDetails[rank] = [];
-          }
-          rankDetails[rank].push(studentID); // Store student IDs for the rank
-        }
-      });
-  
-      // Calculate percentages
-      const totalRanks = Array.from(rankMap.values()).length;
-      const rankPercentages = rankCounts.map((count) =>
-        totalRanks > 0 ? (count / totalRanks) * 100 : 0
-      );
-  
-      // Return data
-      res.status(200).json({
-        rankPercentages,
-        rankDetails,
-      });
-    } catch (error) {
-      console.error("Error fetching rank statistics:", error);
-      res.status(500).json({ message: "Internal Server Error", error });
+  try {
+    // Fetch teacher data by ID
+    const teacher = await teacherMoreInfo.findOne({ teacherID });
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
     }
-}
-const   showStudentCheckbox=async(req,res)=>{
+
+    // Prepare data for pie chart
+    const rankMap = teacher.rank;
+    const rankCounts = Array(10).fill(0); // Array to count ranks 1–10
+    const rankDetails = {}; // Object to store student IDs for each rank
+
+    // Calculate rank distribution and details
+    for (const [studentId, rank] of rankMap.entries()) {
+      console.log("happy", studentId);
+
+      // Fetch student roll number asynchronously
+      const studentRoll = await studentMoreInfo.findOne({ studentID: studentId });
+      console.log("studenteRoll", studentRoll);
+
+      if (rank >= 1 && rank <= 10) {
+        rankCounts[rank - 1] += 1; // Increment count for the rank
+        if (!rankDetails[rank]) {
+          rankDetails[rank] = [];
+        }
+
+        // Store roll number if available
+        if (studentRoll && studentRoll.rollNo) {
+          console.log("roll number of the student", studentRoll.rollNo);
+          rankDetails[rank].push(studentRoll.rollNo); // Store roll number for the rank
+        } else {
+          console.log("Roll number not found for student:", studentId);
+          rankDetails[rank].push("Unknown"); // Handle cases where roll number is missing
+        }
+      }
+    }
+
+    // Calculate percentages
+    const totalRanks = Array.from(rankMap.values()).length;
+    const rankPercentages = rankCounts.map((count) =>
+      totalRanks > 0 ? (count / totalRanks) * 100 : 0
+    );
+
+    console.log("rankend details: ", rankDetails);
+
+    // Return data
+    res.status(200).json({
+      rankPercentages,
+      rankDetails,
+    });
+  } catch (error) {
+    console.error("Error fetching rank statistics:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+};  
+
+
+const showStudentCheckbox = async (req, res) => {
   const { teacherID, studentID } = req.body;
   console.log("Teacher id for selecting student: ", teacherID);
   console.log("Student id for selecting student: ", studentID);
@@ -246,7 +313,7 @@ const   showStudentCheckbox=async(req,res)=>{
     console.error("Error selecting students:", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
-}
+};
 module.exports = {
   createTeacherProfileInfo,
   getTeacherProfileInfo,
@@ -254,5 +321,5 @@ module.exports = {
   getTeacherInfo,
   rankTeacher,
   showPiChart,
-  showStudentCheckbox
+  showStudentCheckbox,
 };

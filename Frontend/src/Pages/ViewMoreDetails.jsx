@@ -28,6 +28,7 @@ const ViewMoreDetails = () => {
     location: "",
     branch: "",
     selectYear: "",
+    rollNo:""
   });
   const fetchStudentName = async () => {
     try {
@@ -37,11 +38,7 @@ const ViewMoreDetails = () => {
       setStudentName(response.data.name);
       setStudentEmail(response.data.email);
       setStudentContact(response.data.contact);
-      // console.log(studentEmail) // Update student name from API response
-      // setProfile(prevProfile => ({
-      //   ...prevProfile,
-      //   name: response.data.name
-      // }));
+     
     } catch (error) {
       console.error("Error fetching student name:", error);
     }
@@ -84,7 +81,14 @@ const ViewMoreDetails = () => {
                 value={studentEmail}
                 placeholder="kiit mail"
               />
-
+              <input
+                type="text"
+                className="input-links bg-zinc-500"
+                value={profile.rollNo}
+                placeholder="KIIT Roll Number"
+                name="rollNo"
+                required
+              />
               <input
                 className="input-links  bg-zinc-500"
                 type="text"

@@ -21,7 +21,16 @@ const Projects = () => {
         });
         console.log("Data fetched:", response.data.allProfileDetails);
 
-        setData(response.data.allProfileDetails);
+  
+        // setData(response.data.allProfileDetails);
+
+         // Sort the data alphabetically by name
+         const sortedData = response.data.allProfileDetails.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        setData(sortedData);
+        
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }

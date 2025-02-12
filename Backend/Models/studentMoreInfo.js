@@ -36,8 +36,11 @@ selectStudent: {
   type: Map,
   of: Boolean, 
   default: new Map(),
+},
+rollNo:{
+  type:String,
+  required:true
 }
-
 })
 const studentMoreInfo=mongoose.models.studentMoreInfo || mongoose.model("studentMoreInfo",studentMoreInfoSchema)
 module.exports=studentMoreInfo

@@ -9,7 +9,6 @@ const Profile = () => {
   // const location = useLocation();
   const [isEditing, setIsEditing] = useState(false); // NEW STATE
   const [isFirstVisit, setIsFirstVisist] = useState(true);
-
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },
     { value: "Data Science", label: "Data Science" },
@@ -47,6 +46,7 @@ const Profile = () => {
     selectYear: "",
     image: "/images/default_image.jpg",
     selectStudent:{},
+    rollNo:""
   });
 
   const fetchStudentName = async () => {
@@ -145,6 +145,7 @@ const Profile = () => {
     }
   };
 
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -233,6 +234,16 @@ const Profile = () => {
                 className="input-links bg-zinc-500"
                 value={studentEmail}
                 placeholder="KIIT mail"
+              />
+              <input
+                type="text"
+                className="input-links bg-zinc-500"
+                value={profile.rollNo}
+                placeholder="KIIT Roll Number"
+                name="rollNo"
+                onChange={handleChange}
+                required
+                disabled={!isEditing && !isFirstVisit}
               />
               <input
                 className="input-links bg-zinc-500"
@@ -401,3 +412,9 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
+
+
+
+
