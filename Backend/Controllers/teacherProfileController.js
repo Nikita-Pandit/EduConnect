@@ -134,6 +134,8 @@ const rankTeacher = async (req, res) => {
       teacherID: { $ne: viewTeacherId }, // Ensure it's a different teacher
     });
 
+    const studentYear = await studentMoreInfo.findOne({ studentID:studentId });
+
     if (existingTeacher) {
       return res.status(400).json({
         message: "You have already given this rank to another teacher!",
@@ -155,6 +157,7 @@ const rankTeacher = async (req, res) => {
     res.status(200).json({
       message: "Rank updated successfully",
       teacher,
+      year:studentYear.selectYear
     });
   } catch (error) {
     console.error("Error updating rank:", error);

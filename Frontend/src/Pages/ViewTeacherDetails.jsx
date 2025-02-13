@@ -16,6 +16,7 @@ const ViewTeacherDetails = () => {
   const [teacherContact, setTeacherContact] = useState("");
   const [isRanked, setIsRanked] = useState(false);
   const [teacherRank, setTeacherRank] = useState(null);
+  const [studentYear, setStudentYear] = useState("");
   // const [teacherRank, setTeacherRank] = useState(0);
 
   const [profile, setProfile] = useState({
@@ -49,7 +50,6 @@ const ViewTeacherDetails = () => {
     }
   };
 
- 
   const fetchTeacherProfileInfo = async () => {
     try {
       const response = await axios.get(
@@ -74,20 +74,18 @@ const ViewTeacherDetails = () => {
       console.error("Error in fetching profile info:", error);
     }
   };
-
-  useEffect(() => {
-    fetchTeacherName();
-    fetchTeacherProfileInfo();
-  }, [viewTeacherId]);
-
   const saveRank = async (rank) => {
     try {
-      const response = await axios.post(`http://localhost:3002/api/teacherRank`, {
-        teacherRank: rank,
-        studentId: localStorage.getItem("studentId"),
-        viewTeacherId,
-      });
-  
+      const response = await axios.post(
+        `http://localhost:3002/api/teacherRank`,
+        {
+          teacherRank: rank,
+          studentId: localStorage.getItem("studentId"),
+          viewTeacherId,
+        }
+      );
+      console.log("year: ", response.data.year);
+      setStudentYear(response.data.year);
       console.log("Rank saved successfully:", response.data);
       setIsRanked(true);
       setTeacherRank(rank);
@@ -100,7 +98,12 @@ const ViewTeacherDetails = () => {
       }
     }
   };
-  
+
+  useEffect(() => {
+    fetchTeacherName();
+    fetchTeacherProfileInfo();
+    saveRank();
+  }, [viewTeacherId]);
 
   return (
     <>
@@ -199,27 +202,32 @@ const ViewTeacherDetails = () => {
                 </button>
               )}
             </div>*/}
-            <div className="mt-5 flex justify-center">
-              {isRanked ? (
-                <div>Rank given by you : {teacherRank}
-                 <button
+            {studentYear === "4th year" ? (
+              <div className="mt-5 flex justify-center">
+                {isRanked ? (
+                  <div>
+                    Rank given by you : {teacherRank}
+                    <button
+                      type="button"
+                      className="bg-yellow-500 text-white px-4 py-2 rounded-lg ml-4"
+                      onClick={() => setIsEditMode(true)}
+                    >
+                      Edit Rank
+                    </button>
+                  </div>
+                ) : (
+                  <button
                     type="button"
-                    className="bg-yellow-500 text-white px-4 py-2 rounded-lg ml-4"
-                    onClick={() => setIsEditMode(true)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                    onClick={() => setShowModal(true)}
                   >
-                    Edit Rank
+                    Rank this Teacher
                   </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                  onClick={() => setShowModal(true)}
-                >
-                  Rank this Teacher
-                </button>
-              )}
-            </div>
+                )}
+              </div>
+            ) : (
+              <div>Ranking is only for 4th year</div>
+            )}
           </div>
         </div>
       </form>
@@ -263,8 +271,8 @@ const ViewTeacherDetails = () => {
         </div>
       )}
 
-       {/* Modal for Editing Rank */}
-       {isEditMode && (
+      {/* Modal for Editing Rank */}
+      {isEditMode && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-bold mb-4">Edit your Rank</h2>
