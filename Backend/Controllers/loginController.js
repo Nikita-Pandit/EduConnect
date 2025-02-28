@@ -12,8 +12,9 @@ const loginController = async (req, res) => {
   console.log(password);
   try {
     const user =
-      (await studentModel.findOne({ email })) ||
-      (await teacherModel.findOne({ email }));
+    (await teacherModel.findOne({ email }))||
+      (await studentModel.findOne({ email })) 
+      
 
     if (!user) {
       console.log("User not found");

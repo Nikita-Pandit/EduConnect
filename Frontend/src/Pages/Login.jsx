@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const isEmailValid = email.includes("@");
-  const isPasswordValid = password.length >= 4;
+  const isPasswordValid = password.length >= 3;
   const isFormValid = isEmailValid && isPasswordValid;
 
   const handleSubmit = async (e) => {

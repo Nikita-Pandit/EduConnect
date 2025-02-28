@@ -134,7 +134,7 @@ const rankTeacher = async (req, res) => {
       teacherID: { $ne: viewTeacherId }, // Ensure it's a different teacher
     });
 
-    const studentYear = await studentMoreInfo.findOne({ studentID:studentId });
+    const studentYear = await studentMoreInfo.findOne({ studentID: studentId });
 
     if (existingTeacher) {
       return res.status(400).json({
@@ -157,7 +157,7 @@ const rankTeacher = async (req, res) => {
     res.status(200).json({
       message: "Rank updated successfully",
       teacher,
-      year:studentYear.selectYear
+      year: studentYear.selectYear,
     });
   } catch (error) {
     console.error("Error updating rank:", error);
@@ -237,7 +237,9 @@ const showPiChart = async (req, res) => {
       console.log("happy", studentId);
 
       // Fetch student roll number asynchronously
-      const studentRoll = await studentMoreInfo.findOne({ studentID: studentId });
+      const studentRoll = await studentMoreInfo.findOne({
+        studentID: studentId,
+      });
       console.log("studenteRoll", studentRoll);
 
       if (rank >= 1 && rank <= 10) {
@@ -274,18 +276,17 @@ const showPiChart = async (req, res) => {
     console.error("Error fetching rank statistics:", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
-};  
-
+};
 
 const showStudentCheckbox = async (req, res) => {
-  const { teacherID, studentID } = req.body;
+  const { teacherID, rollNo } = req.body;
   console.log("Teacher id for selecting student: ", teacherID);
-  console.log("Student id for selecting student: ", studentID);
+  console.log("Student id for selecting student: ", rollNo);
 
   try {
     // Check if this student is already selected by ANY teacher
     const existingStudent = await studentMoreInfo.findOne({
-      studentID,
+      rollNo,
       selectStudent: { $exists: true, $ne: {} }, // Ensure selectStudent is not empty
     });
 
@@ -296,7 +297,7 @@ const showStudentCheckbox = async (req, res) => {
     }
 
     // Find student and update selectStudent field
-    const student = await studentMoreInfo.findOne({ studentID });
+    const student = await studentMoreInfo.findOne({ rollNo });
 
     if (!student) {
       return res.status(404).json({ message: "Student not found" });
@@ -311,6 +312,7 @@ const showStudentCheckbox = async (req, res) => {
     res.status(200).json({
       message: "Student selected successfully",
       student,
+      
     });
   } catch (error) {
     console.error("Error selecting students:", error);
