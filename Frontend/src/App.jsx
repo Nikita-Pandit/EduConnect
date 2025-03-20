@@ -68,8 +68,8 @@ import Resetpassword from "./Pages/Resetpassword";
 import TeacherProfile from "./Pages/TeacherProfile";
 import ViewTeacherDetails from "./Pages/ViewTeacherDetails";
 import TeacherDashboard from "./Pages/TeacherDashboard";
+import StudentList from "./Pages/StudentList";
 import Chatbot from "./Components/Chatbot";
-
 
 function App() {
   // State to track login status
@@ -125,7 +125,7 @@ function App() {
           <Route path="/TeacherProfile" element={<TeacherProfile />} />
           <Route path="/ViewTeacherDetails" element={<ViewTeacherDetails />} />
           <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
-
+          <Route path="/StudentList" element={<StudentList />} />
         </Routes>
         {/* Conditionally render the Chatbot component based on login status */}
         {isLoggedIn && <Chatbot />}

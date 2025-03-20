@@ -1,5 +1,5 @@
 const { createTeacherProfileInfo, getTeacherProfileInfo, getTeacherProfileImage ,getTeacherInfo,rankTeacher,showPiChart,
-    showStudentCheckbox
+    showStudentCheckbox,getStudentRank
 } = require('../Controllers/teacherProfileController');
 const express = require("express");
 const multer = require("multer");
@@ -23,5 +23,6 @@ router.post("/teacherProfile/:teacherId/uploadImage", upload.single('image'), ge
 router.get("/teacher/:teacherId",getTeacherInfo)
 router.post("/teacherRank",rankTeacher)
 router.get("/teacher/rankStatistics/:teacherID",showPiChart)
- router.post("/teacher/studentCheckbox",showStudentCheckbox)
+router.post("/teacher/studentCheckbox",showStudentCheckbox)
+router.get("/teacher/rank/:teacherID",getStudentRank)
 module.exports = router;

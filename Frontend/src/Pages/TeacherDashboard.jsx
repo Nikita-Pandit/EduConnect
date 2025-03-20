@@ -853,8 +853,8 @@ const TeacherDashboard = () => {
   const [rankData, setRankData] = useState([]);
   const [rankDetails, setRankDetails] = useState({});
   const [hoveredRank, setHoveredRank] = useState(null);
-  const [checkedStudents, setCheckedStudents] = useState({});
-  const [supervisedStudents, setSupervisedStudents] = useState([]);
+  // const [checkedStudents, setCheckedStudents] = useState({});
+  // const [supervisedStudents, setSupervisedStudents] = useState([]);
 
   // Colors for pie chart divisions
   const COLORS = [
@@ -888,63 +888,64 @@ const TeacherDashboard = () => {
       } catch (error) {
         console.error("Error fetching rank statistics:", error);
       }
-    };
-
-    const fetchSupervisedStudents = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3002/api/supervisedstudents/${teacherID}`
-        );
-        console.log("Supervised students:", response.data.students);
-
-        setSupervisedStudents(response.data.students);
-
-        // ✅ **Mark all supervised students as checked**
-        const initialCheckedState = {};
-        response.data.students.forEach((student) => {
-          initialCheckedState[student.rollNo] = true;
-        });
-        setCheckedStudents(initialCheckedState);
-      } catch (error) {
-        console.error("Error fetching supervised students:", error);
-      }
-    };
-
-    fetchRankData();
-    fetchSupervisedStudents();
-  }, [teacherID]);
-
-  const confirmStudent = async (rollNo) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:3002/api/teacher/studentCheckbox`,
-        { teacherID, rollNo }
-      );
-
-      console.log(response.data.student);
-      alert(response.data.message);
-
-      const { name, rollNo: studentRollNo } = response.data.student;
-
-      setCheckedStudents((prevState) => ({
-        ...prevState,
-        [studentRollNo]: !prevState[studentRollNo], // Toggle checkbox state
-      }));
-
-      // ✅ **Update the supervised students list accordingly**
-      setSupervisedStudents((prevStudents) => {
-        if (!checkedStudents[studentRollNo]) {
-          return [...prevStudents, { name, rollNo: studentRollNo }];
-        } else {
-          return prevStudents.filter(
-            (student) => student.rollNo !== studentRollNo
-          );
-        }
-      });
-    } catch (error) {
-      alert(error.response?.data?.message || "Error selecting student");
     }
-  };
+  });
+
+  //   const fetchSupervisedStudents = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:3002/api/supervisedstudents/${teacherID}`
+  //       );
+  //       console.log("Supervised students:", response.data.students);
+
+  //       setSupervisedStudents(response.data.students);
+
+  //       // ✅ **Mark all supervised students as checked**
+  //       const initialCheckedState = {};
+  //       response.data.students.forEach((student) => {
+  //         initialCheckedState[student.rollNo] = true;
+  //       });
+  //       setCheckedStudents(initialCheckedState);
+  //     } catch (error) {
+  //       console.error("Error fetching supervised students:", error);
+  //     }
+  //   };
+
+  //   fetchRankData();
+  //   fetchSupervisedStudents();
+  // }, [teacherID]);
+
+  // const confirmStudent = async (rollNo) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:3002/api/teacher/studentCheckbox`,
+  //       { teacherID, rollNo }
+  //     );
+
+  //     console.log(response.data.student);
+  //     alert(response.data.message);
+
+  //     const { name, rollNo: studentRollNo } = response.data.student;
+
+  //     setCheckedStudents((prevState) => ({
+  //       ...prevState,
+  //       [studentRollNo]: !prevState[studentRollNo], // Toggle checkbox state
+  //     }));
+
+  //     // ✅ **Update the supervised students list accordingly**
+  //     setSupervisedStudents((prevStudents) => {
+  //       if (!checkedStudents[studentRollNo]) {
+  //         return [...prevStudents, { name, rollNo: studentRollNo }];
+  //       } else {
+  //         return prevStudents.filter(
+  //           (student) => student.rollNo !== studentRollNo
+  //         );
+  //       }
+  //     });
+  //   } catch (error) {
+  //     alert(error.response?.data?.message || "Error selecting student");
+  //   }
+  // };
 
   return (
     <div className="p-5 bg-zinc-1000">
@@ -1000,7 +1001,6 @@ const TeacherDashboard = () => {
               labelStyle={{ color: "yellow", fontWeight: "bold" }}
             />
           </PieChart>
-
           {hoveredRank && (
             <div className="p-4 bg-white shadow-md rounded-lg mt-4">
               <h2 className="text-lg font-bold text-black">
@@ -1025,14 +1025,20 @@ const TeacherDashboard = () => {
                     {/* ✅ Keep checkboxes ticked after refresh */}
                     <input
                       type="checkbox"
-                      checked={checkedStudents[rollNo] || false}
-                      onChange={() => confirmStudent(rollNo)}
+                      // checked={checkedStudents[rollNo] || false}
+                      // onChange={() => confirmStudent(rollNo)}
                     />
                   </li>
                 ))}
               </ul>
             </div>
           )}
+          <button
+            onClick={() => navigate("/StudentList")}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          >
+            MORE
+          </button>
         </div>
       </div>
     </div>

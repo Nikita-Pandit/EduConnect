@@ -312,13 +312,61 @@ const showStudentCheckbox = async (req, res) => {
     res.status(200).json({
       message: "Student selected successfully",
       student,
-      
     });
   } catch (error) {
     console.error("Error selecting students:", error);
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
+// const getStudentRank = async (req, res) => {
+//   const { teacherID} = req.body;
+//   console.log("Teacher id for selecting student: ", teacherID);
+//   console.log("Student id for selecting student: ", rollNo);
+
+//   try {
+//     // Check if this student is already selected by ANY teacher
+//     const currentTeacher = await teacherMoreInfo.findOne({
+//       teacherID,
+//        // Ensure selectStudent is not empty
+//     });
+
+//     if (currentTeacher) {
+//       return res.status(400).json({
+//         message: "sending the details of this tecaher",
+//         id:,
+//         rank:
+
+//       });
+//     }
+const getStudentRank = async (req, res) => {
+  const { teacherID } = req.params;
+  console.log("Teacher ID for selecting student for rank: ", teacherID);
+
+  try {
+    // Fetch the teacher's data from the teacherMoreInfo collection
+    const currentTeacher = await teacherMoreInfo.findOne({
+      teacherID,
+    });
+
+    if (currentTeacher && currentTeacher.rank) {
+      // Convert the Map object to a plain object with student IDs as keys and ranks as values
+      const rankObject = Object.fromEntries(currentTeacher.rank);
+      console.log("rank ", rankObject);
+      return res.status(200).json({
+        message: "Sending the rank details of this teacher",
+        rank: rankObject, // { "studentID1": rank1, "studentID2": rank2, ... }
+      });
+    } else {
+      return res.status(404).json({
+        message: "Teacher not found or no ranking data available",
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching teacher data:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   createTeacherProfileInfo,
   getTeacherProfileInfo,
@@ -327,4 +375,5 @@ module.exports = {
   rankTeacher,
   showPiChart,
   showStudentCheckbox,
+  getStudentRank,
 };
