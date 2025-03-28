@@ -123,6 +123,169 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
   }
 });
 
+
+
+// // POST endpoint to add a student to teacher's supervision
+// app.post('/api/teacher/addStudent', async (req, res) => {
+//   const { teacherID, rollNo } = req.body;
+// console.log("teacherID in addStudent",teacherID)
+// console.log("rollNo in addStudent",rollNo)
+//   try {
+//     // Validate input
+//     if (!teacherID || !rollNo) {
+//       return res.status(400).json({ message: 'Teacher ID and Roll Number are required' });
+//     }
+
+//     // Check if teacher exists
+//     const teacher = await teacherMoreInfo.findOne({ teacherID });
+//     if (!teacher) {
+//       return res.status(404).json({ message: 'Teacher not found' });
+//     }
+
+//     // Check if student exists
+//     const student = await studentMoreInfo.findOne({ rollNo });
+//     if (!student) {
+//       return res.status(404).json({ message: 'Student not found' });
+//     }
+
+//     // Check if student is already supervised by another teacher
+//     const existingTeacher = await teacherMoreInfo.findOne({
+//       [`selectStudent.${rollNo}`]: true
+//     });
+
+//     console.log("existingStudent", existingTeacher);
+    
+//     if (existingTeacher) {
+//       return res.status(400).json({ 
+//         message: `Student is already supervised by ${existingTeacher.name}`
+//       });
+//     }
+
+//     // Add student to teacher's supervision
+//     await teacherMoreInfo.findOneAndUpdate(
+//       { teacherID },
+//       { 
+//         $set: { 
+//           [`selectStudent.${rollNo}`]: true 
+//         } 
+//       },
+//       { new: true }
+//     );
+
+//     // Add teacher reference to student (optional)
+//     await studentMoreInfo.findOneAndUpdate(
+//       { rollNo },
+//       { $set: { teacherID } },
+//       { new: true }
+//     );
+
+//     res.json({ 
+//       message: 'Student added successfully',
+//       student: {
+//         name: student.name,
+//         rollNo: student.rollNo
+//       }
+//     });
+//   } catch (error) {
+//     console.error('Error adding student:', error);
+//     res.status(500).json({ message: 'Error adding student' });
+//   }
+// });
+
+
+
+
+
+app.post('/api/teacher/removeStudent', async (req, res) => {
+  const { teacherID, rollNo } = req.body;
+
+  try {
+    // Validate input
+    if (!teacherID || !rollNo) {
+      return res.status(400).json({ message: 'Teacher ID and Roll Number are required' });
+    }
+
+    // Check if teacher exists
+    const teacher = await teacherMoreInfo.findOne({ teacherID });
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+
+    // Check if student exists
+    const student = await studentMoreInfo.findOne({ rollNo });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+
+ 
+
+    // Remove teacher reference from student (optional)
+ 
+
+    res.json({ 
+      message: 'Student removed successfully',
+      student
+    });
+  } catch (error) {
+    console.error('Error removing student:', error);
+    res.status(500).json({ message: 'Error removing student' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // GET endpoint to fetch supervised students
+// app.get('/api/teacher/supervisedstudents/:teacherID', async (req, res) => {
+//   try {
+//     const teacher = await teacherMoreInfo.findOne({ 
+//       teacherID: req.params.teacherID 
+//     });
+
+//     if (!teacher) {
+//       return res.status(404).json({ message: 'Teacher not found' });
+//     }
+
+//     // Get all students where selectStudent is true
+//     const supervisedStudents = [];
+//     if (teacher.selectStudent) {
+//       for (const [rollNo, isSelected] of teacher.selectStudent) {
+//         if (isSelected) {
+//           const student = await studentMoreInfo.findOne({ rollNo });
+//           if (student) {
+//             supervisedStudents.push({
+//               name: student.name,
+//               rollNo: student.rollNo
+//             });
+//           }
+//         }
+//       }
+//     }
+
+//     res.json({ students: supervisedStudents });
+//   } catch (error) {
+//     console.error('Error fetching supervised students:', error);
+//     res.status(500).json({ message: 'Error fetching supervised students' });
+//   }
+// });
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

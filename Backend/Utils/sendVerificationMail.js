@@ -5,12 +5,12 @@ const sendVerificationMail = async (email,token,role)=> {
         const transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
-                user: "2247064@kiit.ac.in",
-                pass: "cahjxqvjzmopdqyc",
+                user: "shahsimran813@gmail.com",
+                pass: "alibdvbdiurmhzxi",
             },
         });
         const mailOptions = {
-            from: "2247064@kiit.ac.in",
+            from: "shahsimran813@gmail.com",
             to: email,
             subject: "Verify Your Email",
             html:`

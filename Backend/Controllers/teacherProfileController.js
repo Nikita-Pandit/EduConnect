@@ -134,7 +134,9 @@ const rankTeacher = async (req, res) => {
       teacherID: { $ne: viewTeacherId }, // Ensure it's a different teacher
     });
 
-    const studentYear = await studentMoreInfo.findOne({ studentID: studentId });
+    // const studentYear = await studentMoreInfo.findOne({ studentID: studentId });
+     
+    const studentYear = await studentMoreInfo.findOne({ studentID:studentId });
 
     if (existingTeacher) {
       return res.status(400).json({
@@ -304,6 +306,8 @@ const showStudentCheckbox = async (req, res) => {
     }
 
     // Ensure selectStudent exists and is a Map
+
+
     student.selectStudent = student.selectStudent || new Map();
     student.selectStudent.set(teacherID, true); // Add teacher as key with value true
 
