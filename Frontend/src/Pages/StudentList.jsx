@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 
 const StudentList = () => {
@@ -9,8 +8,6 @@ const StudentList = () => {
   const [studentDetailsContainer, setStudentDetailsContainer] = useState([]);
   const [checkedStudents, setCheckedStudents] = useState({});
   const [supervisedStudents, setSupervisedStudents] = useState([]);
-  const [initialCheckedState] = useState({});
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,21 +24,32 @@ const StudentList = () => {
 
     const fetchSupervisedStudents = async () => {
       try {
+        // Get from localStorage first
+        const storedStudents = localStorage.getItem(`supervisedStudents_${teacherID}`);
+        const storedChecked = localStorage.getItem(`checkedStudents_${teacherID}`);
+        
+        if (storedStudents && storedChecked) {
+          setSupervisedStudents(JSON.parse(storedStudents));
+          setCheckedStudents(JSON.parse(storedChecked));
+          return;
+        }
+
+        // Fallback to API if not in localStorage
         const response = await axios.get(
           `http://localhost:3002/api/supervisedstudents/${teacherID}`
         );
-        setSupervisedStudents(response.data.students);
-
-        // Initialize checkbox state
+        const students = response.data.students || [];
+        
         const initialCheckedState = {};
-        response.data.students.forEach((student) => {
+        students.forEach((student) => {
           initialCheckedState[student.rollNo] = true;
         });
 
+        setSupervisedStudents(students);
         setCheckedStudents(initialCheckedState);
-
-        // ✅ Only one call to `handleCheckedStudentsChange`
-        handleCheckedStudentsChange(initialCheckedState);
+        
+        localStorage.setItem(`supervisedStudents_${teacherID}`, JSON.stringify(students));
+        localStorage.setItem(`checkedStudents_${teacherID}`, JSON.stringify(initialCheckedState));
       } catch (error) {
         console.error("Error fetching supervised students:", error);
       }
@@ -49,12 +57,7 @@ const StudentList = () => {
 
     fetchStudentRank();
     fetchSupervisedStudents();
-  }, [teacherID]); // ✅ No unnecessary nested function calls
-  // ✅ No unnecessary re-renders
-
-  useEffect(() => {
-    console.log("Updated checkedStudents list:", checkedStudents);
-  }, [checkedStudents]); // This runs whenever checkedStudents changes
+  }, [teacherID]);
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
@@ -76,18 +79,15 @@ const StudentList = () => {
         })
       );
 
-      console.log("details of the students", studentDetails);
       setStudentDetailsContainer(
         studentDetails.filter((detail) => detail !== null)
       );
     };
 
-    fetchStudentDetails();
+    if (Object.keys(studentIdContainer).length > 0) {
+      fetchStudentDetails();
+    }
   }, [studentIdContainer]);
-
-  useEffect(() => {
-    console.log("Updated studentdetailscontainer :", studentDetailsContainer);
-  }, [studentDetailsContainer]);
 
   const confirmStudent = async (rollNo) => {
     try {
@@ -96,42 +96,41 @@ const StudentList = () => {
         : "http://localhost:3002/api/teacher/studentCheckbox";
 
       const response = await axios.post(endpoint, { teacherID, rollNo });
-
       alert(response.data.message);
 
-      setCheckedStudents((prevState) => ({
-        ...prevState,
-        [rollNo]: !prevState[rollNo],
-      }));
+      // Update checked state
+      const newCheckedState = {
+        ...checkedStudents,
+        [rollNo]: !checkedStudents[rollNo]
+      };
+      setCheckedStudents(newCheckedState);
+      localStorage.setItem(`checkedStudents_${teacherID}`, JSON.stringify(newCheckedState));
 
-      setSupervisedStudents((prevStudents) => {
-        let updatedStudents;
-        if (!checkedStudents[rollNo]) {
-          updatedStudents = [
-            ...prevStudents,
-            { name: response.data.student.name, rollNo },
-          ];
-        } else {
-          updatedStudents = prevStudents.filter(
-            (student) => student.rollNo !== rollNo
-          );
-        }
-        return updatedStudents;
-      });
+      // Update supervised students
+      let updatedStudents;
+      if (!checkedStudents[rollNo]) {
+        // Adding student
+        const studentDetails = studentDetailsContainer.find(s => s.roll === rollNo);
+        updatedStudents = [
+          ...supervisedStudents,
+          { name: studentDetails?.name || rollNo, rollNo }
+        ];
+      } else {
+        // Removing student
+        updatedStudents = supervisedStudents.filter(
+          (student) => student.rollNo !== rollNo
+        );
+      }
+      
+      setSupervisedStudents(updatedStudents);
+      localStorage.setItem(`supervisedStudents_${teacherID}`, JSON.stringify(updatedStudents));
+
     } catch (error) {
       alert(
         error.response?.data?.message || "Error updating student selection"
       );
     }
   };
-
-  useEffect(() => {
-    console.log("remove student", checkedStudents);
-  }, [checkedStudents]);
-
-  // useEffect(()=>{
-  // console.log("")
-  // },[supervisedStudents])
 
   return (
     <div className="p-4">

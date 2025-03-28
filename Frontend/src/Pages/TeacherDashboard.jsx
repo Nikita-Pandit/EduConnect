@@ -9,7 +9,6 @@ const TeacherDashboard = () => {
   const [rankData, setRankData] = useState([]);
   const [rankDetails, setRankDetails] = useState({});
   const [hoveredRank, setHoveredRank] = useState(null);
-  const [checkedStudents, setCheckedStudents] = useState({});
   const [supervisedStudents, setSupervisedStudents] = useState([]);
 
   const COLORS = [
@@ -29,12 +28,12 @@ const TeacherDashboard = () => {
     const fetchRankData = async () => {
       try {
         const response = await axios.get(
-          ` http://localhost:3002/api/teacher/rankStatistics/${teacherID}`
+          `http://localhost:3002/api/teacher/rankStatistics/${teacherID}`
         );
         const { rankPercentages, rankDetails } = response.data;
 
         const formattedData = rankPercentages.map((percentage, index) => ({
-          name: " Rank ${index + 1}",
+          name: `Rank ${index + 1}`,
           value: percentage,
         }));
 
@@ -47,18 +46,20 @@ const TeacherDashboard = () => {
 
     const fetchSupervisedStudents = async () => {
       try {
+        // Get from localStorage first
+        const storedStudents = localStorage.getItem(`supervisedStudents_${teacherID}`);
+        if (storedStudents) {
+          setSupervisedStudents(JSON.parse(storedStudents));
+          return;
+        }
+
+        // Fallback to API if not in localStorage
         const response = await axios.get(
           `http://localhost:3002/api/supervisedstudents/${teacherID}`
         );
-        console.log("Supervised students:", response.data.students);
-
-        setSupervisedStudents(response.data.students);
-
-        const initialCheckedState = {};
-        response.data.students.forEach((student) => {
-          initialCheckedState[student.rollNo] = true;
-        });
-        setCheckedStudents(initialCheckedState);
+        const students = response.data.students || [];
+        setSupervisedStudents(students);
+        localStorage.setItem(`supervisedStudents_${teacherID}`, JSON.stringify(students));
       } catch (error) {
         console.error("Error fetching supervised students:", error);
       }
@@ -142,12 +143,6 @@ const TeacherDashboard = () => {
                     >
                       View More Details
                     </button>
-                    <input
-                      type="checkbox"
-                      checked={checkedStudents[rollNo] || false}
-                      onChange={() => {}}
-                      disabled
-                    />
                   </li>
                 ))}
               </ul>
@@ -166,4 +161,3 @@ const TeacherDashboard = () => {
 };
 
 export default TeacherDashboard;
-

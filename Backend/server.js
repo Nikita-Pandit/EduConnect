@@ -68,36 +68,8 @@ app.use("/api", searchTeachersRoutes);
 app.use("/api", verifyEmailRoutes);
 app.use("/api", chatRoutes);
 
-// app.get("/api/student/:studentID/rollNumber", async (req, res) => {
 
-//   const { studentID } = req.params;
-//   console.log("student id in server to check roll number: ",studentID);
-//   try {
-//     const student = await teacherMoreInfo.findById();
-//     if (student) {
-//       res.json({ rollNumber: student.rollNumber });
-//     } else {
-//       res.status(404).json({ message: "Student not found" });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: "Error fetching roll number" });
-//   }
-// });
-// app.get("/api/supervisedstudents", async (req, res) => {
 
-//   const { teacherID } = req.params;
-//   console.log("teacher id is ",teacherID);
-//   try {
-//     const student = await studentMoreInfo.findById();
-//     if (student) {
-//       res.json({ rollNumber: student.rollNumber });
-//     } else {
-//       res.status(404).json({ message: "Student not found" });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: "Error fetching roll number" });
-//   }
-// });
 app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
   console.log("entere ssupervisedstidents");
   const { teacherID } = req.params;
@@ -123,78 +95,7 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
   }
 });
 
-
-
-// // POST endpoint to add a student to teacher's supervision
-// app.post('/api/teacher/addStudent', async (req, res) => {
-//   const { teacherID, rollNo } = req.body;
-// console.log("teacherID in addStudent",teacherID)
-// console.log("rollNo in addStudent",rollNo)
-//   try {
-//     // Validate input
-//     if (!teacherID || !rollNo) {
-//       return res.status(400).json({ message: 'Teacher ID and Roll Number are required' });
-//     }
-
-//     // Check if teacher exists
-//     const teacher = await teacherMoreInfo.findOne({ teacherID });
-//     if (!teacher) {
-//       return res.status(404).json({ message: 'Teacher not found' });
-//     }
-
-//     // Check if student exists
-//     const student = await studentMoreInfo.findOne({ rollNo });
-//     if (!student) {
-//       return res.status(404).json({ message: 'Student not found' });
-//     }
-
-//     // Check if student is already supervised by another teacher
-//     const existingTeacher = await teacherMoreInfo.findOne({
-//       [`selectStudent.${rollNo}`]: true
-//     });
-
-//     console.log("existingStudent", existingTeacher);
-    
-//     if (existingTeacher) {
-//       return res.status(400).json({ 
-//         message: `Student is already supervised by ${existingTeacher.name}`
-//       });
-//     }
-
-//     // Add student to teacher's supervision
-//     await teacherMoreInfo.findOneAndUpdate(
-//       { teacherID },
-//       { 
-//         $set: { 
-//           [`selectStudent.${rollNo}`]: true 
-//         } 
-//       },
-//       { new: true }
-//     );
-
-//     // Add teacher reference to student (optional)
-//     await studentMoreInfo.findOneAndUpdate(
-//       { rollNo },
-//       { $set: { teacherID } },
-//       { new: true }
-//     );
-
-//     res.json({ 
-//       message: 'Student added successfully',
-//       student: {
-//         name: student.name,
-//         rollNo: student.rollNo
-//       }
-//     });
-//   } catch (error) {
-//     console.error('Error adding student:', error);
-//     res.status(500).json({ message: 'Error adding student' });
-//   }
-// });
-
-
-
-
+// ... (previous imports remain the same)
 
 app.post('/api/teacher/removeStudent', async (req, res) => {
   const { teacherID, rollNo } = req.body;
@@ -217,11 +118,11 @@ app.post('/api/teacher/removeStudent', async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-
- 
-
-    // Remove teacher reference from student (optional)
- 
+    // Remove teacher from student's selectStudent map
+    if (student.selectStudent && student.selectStudent.has(teacherID)) {
+      student.selectStudent.delete(teacherID);
+      await student.save();
+    }
 
     res.json({ 
       message: 'Student removed successfully',
@@ -233,58 +134,7 @@ app.post('/api/teacher/removeStudent', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // GET endpoint to fetch supervised students
-// app.get('/api/teacher/supervisedstudents/:teacherID', async (req, res) => {
-//   try {
-//     const teacher = await teacherMoreInfo.findOne({ 
-//       teacherID: req.params.teacherID 
-//     });
-
-//     if (!teacher) {
-//       return res.status(404).json({ message: 'Teacher not found' });
-//     }
-
-//     // Get all students where selectStudent is true
-//     const supervisedStudents = [];
-//     if (teacher.selectStudent) {
-//       for (const [rollNo, isSelected] of teacher.selectStudent) {
-//         if (isSelected) {
-//           const student = await studentMoreInfo.findOne({ rollNo });
-//           if (student) {
-//             supervisedStudents.push({
-//               name: student.name,
-//               rollNo: student.rollNo
-//             });
-//           }
-//         }
-//       }
-//     }
-
-//     res.json({ students: supervisedStudents });
-//   } catch (error) {
-//     console.error('Error fetching supervised students:', error);
-//     res.status(500).json({ message: 'Error fetching supervised students' });
-//   }
-// });
-
+// ... (rest of the server code remains the same)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
