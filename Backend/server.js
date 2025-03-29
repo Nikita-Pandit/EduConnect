@@ -68,8 +68,6 @@ app.use("/api", searchTeachersRoutes);
 app.use("/api", verifyEmailRoutes);
 app.use("/api", chatRoutes);
 
-
-
 app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
   console.log("entere ssupervisedstidents");
   const { teacherID } = req.params;
@@ -85,7 +83,7 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
     ); // Only fetch name & rollNumber
     console.log("*****************************************8", students);
     if (students.length > 0) {
-      res.json({students});
+      res.json({ students });
     } else {
       res.status(404).json({ message: "No students under supervision" });
     }
@@ -94,28 +92,30 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
     res.status(500).json({ message: "Error fetching data" });
   }
 });
-
+//checkbox
 // ... (previous imports remain the same)
 
-app.post('/api/teacher/removeStudent', async (req, res) => {
+app.post("/api/teacher/removeStudent", async (req, res) => {
   const { teacherID, rollNo } = req.body;
 
   try {
     // Validate input
     if (!teacherID || !rollNo) {
-      return res.status(400).json({ message: 'Teacher ID and Roll Number are required' });
+      return res
+        .status(400)
+        .json({ message: "Teacher ID and Roll Number are required" });
     }
 
     // Check if teacher exists
     const teacher = await teacherMoreInfo.findOne({ teacherID });
     if (!teacher) {
-      return res.status(404).json({ message: 'Teacher not found' });
+      return res.status(404).json({ message: "Teacher not found" });
     }
 
     // Check if student exists
     const student = await studentMoreInfo.findOne({ rollNo });
     if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
+      return res.status(404).json({ message: "Student not found" });
     }
 
     // Remove teacher from student's selectStudent map
@@ -124,17 +124,49 @@ app.post('/api/teacher/removeStudent', async (req, res) => {
       await student.save();
     }
 
-    res.json({ 
-      message: 'Student removed successfully',
-      student
+    res.json({
+      message: "Student removed successfully",
+      student,
     });
   } catch (error) {
-    console.error('Error removing student:', error);
-    res.status(500).json({ message: 'Error removing student' });
+    console.error("Error removing student:", error);
+    res.status(500).json({ message: "Error removing student" });
   }
 });
 
 // ... (rest of the server code remains the same)
+
+//4th year
+// Add this to your server.js file (or wherever you have your routes)
+
+app.get("/api/student/unique/:studentId", async (req, res) => {
+  const { studentId } = req.params;
+  console.log("happy11111", studentId);
+  try {
+    // Validate input
+    if (!studentId) {
+      return res.status(400).json({ message: "Student ID is required" });
+    }
+
+    // Find the student in studentMoreInfo collection
+    const student = await studentMoreInfo.findOne({ studentID: studentId });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Return the student's year (selectYear) along with other basic info
+    res.json({
+      name: student.name,
+      roll: student.rollNo,
+      selectYear: student.selectYear,
+      // You can include other fields if needed
+    });
+  } catch (error) {
+    console.error("Error fetching student details:", error);
+    res.status(500).json({ message: "Error fetching student details" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

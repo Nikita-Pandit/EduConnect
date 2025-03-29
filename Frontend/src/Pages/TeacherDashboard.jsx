@@ -123,31 +123,6 @@ const TeacherDashboard = () => {
               labelStyle={{ color: "yellow", fontWeight: "bold" }}
             />
           </PieChart>
-          {hoveredRank && (
-            <div className="p-4 bg-white shadow-md rounded-lg mt-4">
-              <h2 className="text-lg font-bold text-black">
-                Students Who Gave Rank {hoveredRank}:
-              </h2>
-              <ul className="list-disc pl-5 text-black">
-                {rankDetails[hoveredRank]?.map((rollNo, idx) => (
-                  <li
-                    key={idx}
-                    className="text-black flex items-center justify-between"
-                  >
-                    {rollNo}
-                    <button
-                      className="ml-4 px-3 py-1 bg-blue-500 text-white rounded text-sm"
-                      onClick={() =>
-                        navigate("/ViewMoreDetails", { state: { rollNo } })
-                      }
-                    >
-                      View More Details
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
           <button
             onClick={() => navigate("/StudentList")}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"

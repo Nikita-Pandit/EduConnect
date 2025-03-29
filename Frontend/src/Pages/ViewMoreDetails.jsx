@@ -9,7 +9,8 @@ const ViewMoreDetails = () => {
   const location = useLocation();
   const id =
     location?.state?.studentID || localStorage.getItem("studentId") || "defaultID";
-  // localStorage.setItem("userId", id);
+    console.log("id in view more details: ",id);
+  //localStorage.setItem("userId", id);
   console.log(id);
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");

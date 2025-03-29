@@ -167,57 +167,7 @@ const rankTeacher = async (req, res) => {
   }
 };
 
-//show piechart
-// const showPiChart = async (req, res) => {
-//   const { teacherID } = req.params;
 
-//   try {
-//     // Fetch teacher data by ID
-//     const teacher = await teacherMoreInfo.findOne({ teacherID });
-
-//     if (!teacher) {
-//       return res.status(404).json({ message: "Teacher not found" });
-//     }
-
-//     // Prepare data for pie chart
-//     const rankMap = teacher.rank;
-//     const rankCounts = Array(10).fill(0); // Array to count ranks 1–10
-//     const rankDetails = {}; // Object to store student IDs for each rank
-
-//     // Calculate rank distribution and details
-//     rankMap.forEach(async (rank, studentId) => {
-//       console.log("happy", studentId);
-//       const studentRoll = await studentMoreInfo.findOne({
-//         studentID: studentId,
-//       });
-//       console.log("studenteRoll", studentRoll);
-//       if (rank >= 1 && rank <= 10) {
-//         rankCounts[rank - 1] += 1; // Increment count for the rank
-//         if (!rankDetails[rank]) {
-//           rankDetails[rank] = [];
-//         }
-//         // rankDetails[rank].push(studentID); // Store student IDs for the rank
-//         console.log("roll number of the student", studentRoll.rollNo);
-//         rankDetails[rank].push(studentRoll.rollNo); // Store student IDs for the rank
-//       }
-//     });
-
-//     // Calculate percentages
-//     const totalRanks = Array.from(rankMap.values()).length;
-//     const rankPercentages = rankCounts.map((count) =>
-//       totalRanks > 0 ? (count / totalRanks) * 100 : 0
-//     );
-//     console.log("rankend details: ", rankDetails);
-//     // Return data
-//     res.status(200).json({
-//       rankPercentages,
-//       rankDetails,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching rank statistics:", error);
-//     res.status(500).json({ message: "Internal Server Error", error });
-//   }
-// };
 const showPiChart = async (req, res) => {
   const { teacherID } = req.params;
 
@@ -322,26 +272,7 @@ const showStudentCheckbox = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
-// const getStudentRank = async (req, res) => {
-//   const { teacherID} = req.body;
-//   console.log("Teacher id for selecting student: ", teacherID);
-//   console.log("Student id for selecting student: ", rollNo);
 
-//   try {
-//     // Check if this student is already selected by ANY teacher
-//     const currentTeacher = await teacherMoreInfo.findOne({
-//       teacherID,
-//        // Ensure selectStudent is not empty
-//     });
-
-//     if (currentTeacher) {
-//       return res.status(400).json({
-//         message: "sending the details of this tecaher",
-//         id:,
-//         rank:
-
-//       });
-//     }
 const getStudentRank = async (req, res) => {
   const { teacherID } = req.params;
   console.log("Teacher ID for selecting student for rank: ", teacherID);
@@ -381,3 +312,4 @@ module.exports = {
   showStudentCheckbox,
   getStudentRank,
 };
+

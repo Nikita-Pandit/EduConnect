@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -17,8 +15,9 @@ const ViewTeacherDetails = () => {
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherContact, setTeacherContact] = useState("");
   const [isRanked, setIsRanked] = useState(false);
+  const [studentYear, setStudentYear] = useState(null);
   const [teacherRank, setTeacherRank] = useState(null);
-  // const [teacherRank, setTeacherRank] = useState(0);
+  const [showRestrictionMessage, setShowRestrictionMessage] = useState(false);
 
   const [profile, setProfile] = useState({
     name: "",
@@ -33,6 +32,29 @@ const ViewTeacherDetails = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const fetchStudentYear = async () => {
+    console.log("inside fetchstudentyear");
+    try {
+      const studentId = localStorage.getItem("studentId");
+      console.log("yooy", studentId);
+      // If studentId is null or undefined, stop execution
+      if (!studentId) {
+        console.error("No student ID found in localStorage");
+        return;
+      }
+      const response = await axios.get(
+        `http://localhost:3002/api/student/unique/${studentId}`
+      );
+      console.log("Response from backend:", response.data);
+      setStudentYear(response.data.selectYear);
+    } catch (error) {
+      console.error("Error fetching student year:", error);
+    }
+  };
+  useEffect(() => {
+    console.log("studentyear", studentYear);
+  }, [studentYear]);
 
   const fetchTeacherName = async () => {
     try {
@@ -51,7 +73,6 @@ const ViewTeacherDetails = () => {
     }
   };
 
- 
   const fetchTeacherProfileInfo = async () => {
     try {
       const response = await axios.get(
@@ -78,19 +99,29 @@ const ViewTeacherDetails = () => {
   };
 
   useEffect(() => {
+    fetchStudentYear();
     fetchTeacherName();
     fetchTeacherProfileInfo();
   }, [viewTeacherId]);
 
   const saveRank = async (rank) => {
     try {
-      const response = await axios.post(`http://localhost:3002/api/teacherRank`, {
-        teacherRank: rank,
-        studentId: localStorage.getItem("studentId"),
-        viewTeacherId,
-      });
-  
+      if (studentYear !== "4th year") {
+         alert("Ranking is only allowed for 4th year students");
+        return;
+      }
+
+      const response = await axios.post(
+        `http://localhost:3002/api/teacherRank`,
+        {
+          teacherRank: rank,
+          studentId: localStorage.getItem("studentId"),
+          viewTeacherId,
+        }
+      );
+
       console.log("Rank saved successfully:", response.data);
+      console.log("student year:", response.data.year);
       setIsRanked(true);
       setTeacherRank(rank);
       setShowModal(false);
@@ -102,7 +133,21 @@ const ViewTeacherDetails = () => {
       }
     }
   };
-  
+
+  // const handleRankClick = () => {
+  //   if (studentYear !== "4th year") {
+  //    // alert("Ranking is only allowed for 4th year students");
+  //     return true;
+  //   }
+  //   setShowModal(true);
+  // };
+  const handleRankClick = () => {
+    if (studentYear !== "4th year") {
+      setShowRestrictionMessage(true); // Show message for non-4th-year students
+      return;
+    }
+    setShowModal(true); // Open ranking modal for 4th-year students
+  };
 
   return (
     <>
@@ -187,34 +232,72 @@ const ViewTeacherDetails = () => {
               ></textarea>
             </div>
 
-
             <div className="mt-5 flex justify-center">
-              {isRanked ? (
-                <div>Rank given by you : {teacherRank}
-                 <button
-                    type="button"
-                    className="bg-yellow-500 text-white px-4 py-2 rounded-lg ml-4"
-                    onClick={() => setIsEditMode(true)}
-                  >
-                    Edit Rank
-                  </button>
+              {/* {isRanked ? (
+                <div>
+                  Rank given by you : {teacherRank}
+                  {studentYear === "4th year" && (
+                    <button
+                      type="button"
+                      className="bg-yellow-500 text-white px-4 py-2 rounded-lg ml-4"
+                      onClick={() => setIsEditMode(true)}
+                    >
+                      Edit Rank
+                    </button>
+                  )}
                 </div>
-              ) : (
-                <button
+              ) : studentYear === "4th year" ? ( 
+                <button 
                   type="button"
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-                  onClick={() => setShowModal(true)}
+                 // onClick={handleRankClick}
+                 onClick={() => setShowModal(true)}
                 >
                   Rank this Teacher
                 </button>
-              )}
+              ):
+              (
+                <p className="text-red-500 font-bold text-lg">
+                  Ranking is only allowed for 4th-year students.
+                </p>
+              )
+            } */}
+             {isRanked ? (
+      <div>
+        Rank given by you: {teacherRank}
+        {studentYear === "4th year" && (
+          <button
+            type="button"
+            className="bg-yellow-500 text-white px-4 py-2 rounded-lg ml-4"
+            onClick={() => setIsEditMode(true)}
+          >
+            Edit Rank
+          </button>
+        )}
+      </div>
+    ) : showRestrictionMessage ? (
+      <p className="text-white font-semibold text-lg">
+  Ranking is only allowed for 4th-year students.
+</p>
+
+    ) : (
+      <button
+        type="button"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        onClick={handleRankClick}
+      >
+        Rank this Teacher
+      </button>
+    )}
             </div>
+
+
           </div>
         </div>
       </form>
 
       {/* Modal for Ranking */}
-      {showModal && (
+      {showModal && studentYear === "4th year" && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-bold mb-4">Rank this Teacher</h2>
@@ -223,15 +306,10 @@ const ViewTeacherDetails = () => {
                 <button
                   key={num}
                   className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center hover:bg-blue-500 hover:text-white"
-                  // onClick={() => {
-                  //   console.log(`Rank given: ${num}`);
-                  //   setShowModal(false);
-                  //   setTeacherRank(num);
-                  //   saveRank();
-                  // }}
                   onClick={async () => {
                     try {
-                      await saveRank(num);
+                  await saveRank(num);
+                     
                       setShowModal(false);
                     } catch (error) {
                       console.error("Error in ranking:", error);
@@ -252,8 +330,8 @@ const ViewTeacherDetails = () => {
         </div>
       )}
 
-       {/* Modal for Editing Rank */}
-       {isEditMode && (
+      {/* Modal for Editing Rank */}
+      {isEditMode && studentYear === "4th year" && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-bold mb-4">Edit your Rank</h2>
@@ -289,5 +367,3 @@ const ViewTeacherDetails = () => {
 };
 
 export default ViewTeacherDetails;
-
-
