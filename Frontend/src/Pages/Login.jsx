@@ -70,7 +70,7 @@ const Login = () => {
     <>
       <ToastContainer />
       <div className="flex items-center justify-center min-h-screen bg-[#090c1b]">
-        <div className="relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-purple-500 text-white">
+        <div className="relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-[#E1C3FF] text-white">
           <button
             className="absolute top-4 right-4 text-purple-400"
             onClick={handleClose} // Navigate to the home page
@@ -131,7 +131,8 @@ const Login = () => {
             {/* Login Button with Loading State */}
             <button
               type="submit"
-              className="w-full px-5 py-2 bg-[#6D0BCF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#5A00A1]"
+              className="w-full px-5 py-2 bg-[#6D0BCF] border-[1.5px] border-[#E1C3FF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#46008B] hover:border-[#9B30FF]"
+
               disabled={!isFormValid || loading}
             >
               {loading ? "Logging in..." : "Login"}
