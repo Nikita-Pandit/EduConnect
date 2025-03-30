@@ -8,12 +8,44 @@ const TeacherProfile = () => {
   const [isEditing, setIsEditing] = useState(false); // NEW STATE
   const [isFirstVisit, setIsFirstVisit] = useState(true);
 
+  // const domainOptions = [
+  //   { value: "Web Development", label: "Web Development" },
+  //   { value: "Data Science", label: "Data Science" },
+  //   { value: "Machine Learning", label: "Machine Learning" },
+  //   { value: "App Development", label: "App Development" },
+  //   { value: "UI/UX Design", label: "UI/UX Design" },
+  // ];
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },
     { value: "Data Science", label: "Data Science" },
     { value: "Machine Learning", label: "Machine Learning" },
     { value: "App Development", label: "App Development" },
     { value: "UI/UX Design", label: "UI/UX Design" },
+    { value: "Cybersecurity", label: "Cybersecurity" },
+    { value: "Cloud Computing", label: "Cloud Computing" },
+    { value: "Blockchain", label: "Blockchain" },
+    { value: "Game Development", label: "Game Development" },
+    { value: "DevOps", label: "DevOps" },
+    { value: "Embedded Systems", label: "Embedded Systems" },
+    { value: "Internet of Things", label: "Internet of Things" },
+    { value: "Artificial Intelligence", label: "Artificial Intelligence" },
+    { value: "Big Data", label: "Big Data" },
+    { value: "Quantum Computing", label: "Quantum Computing" },
+    { value: "AR/VR", label: "AR/VR" },
+    { value: "Bioinformatics", label: "Bioinformatics" },
+    { value: "Networking", label: "Networking" },
+    { value: "Database Administration", label: "Database Administration" },
+    { value: "Software Testing", label: "Software Testing" },
+    { value: "Game AI", label: "Game AI" },
+    { value: "Robotics", label: "Robotics" },
+    { value: "Full Stack Development", label: "Full Stack Development" },
+    { value: "Microservices Architecture", label: "Microservices Architecture" },
+    { value: "IT Support", label: "IT Support" },
+    { value: "E-commerce Development", label: "E-commerce Development" },
+    { value: "Cloud Security", label: "Cloud Security" },
+    { value: "Penetration Testing", label: "Penetration Testing" },
+    { value: "Cryptography", label: "Cryptography" },
+    { value: "Software Architecture", label: "Software Architecture" },
   ];
 
   const handleDomainChange = (selectedOptions) => {

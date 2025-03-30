@@ -10,9 +10,9 @@ const studentMoreInfoSchema=new mongoose.Schema({
   twitter:String,
   instagram:String,
   projects:String,
- skills:{
- type:String,
-},
+  skills: {
+    type: [String], // Change from 'type: String' to 'type: [String]'
+  },
 domain:{
   type:[String] //Array of strings
 },

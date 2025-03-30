@@ -1,61 +1,53 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa"; // Icons
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
 
-  const isEmailValid = email.includes("@");
-  const isPasswordValid = password.length >= 3;
+  // Form validation logic
+  const isEmailValid = email.trim() !== "";
+  const isPasswordValid = password.trim() !== "";
   const isFormValid = isEmailValid && isPasswordValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true); // Start loading
 
     try {
-      const response = await axios.post("http://localhost:3002/api/Login", {
-        email,
-        password,
-      });
-console.log(response)
-      if (response.data.userMoreDetails.studentID) {
-        const id = response.data.userMoreDetails.studentID 
-        console.log("login id",id)
-        localStorage.setItem("studentId",id) 
-        console.log("Id in login: ",id);
-          toast.success("Login Successful");
-          setTimeout(() => {
-            navigate("/Profile", { state: { id } });
-          }, 7000);
-      }
-      else{
-          const id = response.data.userMoreDetails.teacherID 
-          localStorage.setItem("teacherId",id) 
-          console.log("Id in login: ",id);
-            toast.success("Login Successful");
-            setTimeout(() => {
-              navigate("/TeacherProfile", { state: { id } });
-            }, 7000);
+      console.log("Email:", email);
+      console.log("Password:", password);
+
+      const response = await axios.post("http://localhost:3002/api/Login", { email, password });
+
+      console.log(response);
+      toast.success("Login Successful");
+
+      const userDetails = response.data.userMoreDetails;
+      if (userDetails.studentID) {
+        localStorage.setItem("studentId", userDetails.studentID);
+        setTimeout(() => navigate("/Profile", { state: { id: userDetails.studentID } }), 2000);
+      } else {
+        localStorage.setItem("teacherId", userDetails.teacherID);
+        setTimeout(() => navigate("/TeacherDashboard", { state: { id: userDetails.teacherID } }), 2000);
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        toast.error("Invalid credentials. Please try again.");
-      } else {
-        toast.error("An error occurred. Please try again later.");
-      }
+      toast.error("Invalid credentials. Please try again.");
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading
     }
   };
 
+  // Forgot Password Functionality
   const handleForgotPassword = async () => {
     if (!isEmailValid) {
       toast.error("Please enter a valid email to reset your password.");
@@ -73,75 +65,69 @@ console.log(response)
   return (
     <>
       <ToastContainer />
-      <div className="flex form-container items-center justify-center min-h-screen">
-        <div className="border-2 bg-zinc-700 rounded-md p-5 border-blue-300">
-          <form
-            onSubmit={handleSubmit}
-            className="form p-5 flex items-center justify-center flex-col space-y-4"
-          >
-            <h1 className="text-3xl text-white">Log in</h1>
-            <input
-              className="input-field bg-zinc-500 p-3 text-white"
-              type="email"
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              value={email}
-            />
-            {!isEmailValid && email && (
-              <small className="text-red-500">Please enter a valid email.</small>
-            )}
-            <div className="relative w-full">
+      <div className="flex items-center justify-center min-h-screen bg-[#090c1b]">
+        <div className="relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-purple-500 text-white">
+          <button className="absolute top-4 right-4 text-purple-400">✖</button>
+          <h1 className="text-2xl font-bold text-[#E1C3FF] text-center">LOGIN</h1>
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-6">
+            {/* Email Input */}
+            <div className="relative">
+              <FaEnvelope className="absolute right-3 top-3 text-[#E1C3FF] text-lg" />
               <input
-                className="input-field bg-zinc-500 p-3 text-white w-full"
-                type={showPassword ? "text" : "password"}
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                value={password}
+                type="email"
+                className="w-full p-2 bg-transparent border-b border-[#E1C3FF] text-white outline-none focus:border-purple-500 transition peer"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
+              <label className={`absolute left-0 text-[#E1C3FF] transition-all duration-300 ${email ? "top-[-16px] text-sm" : "top-2"} peer-focus:top-[-16px] peer-focus:text-sm`}>
+                Email
+              </label>
+            </div>
+
+            {/* Password Input */}
+            <div className="relative">
               <button
                 type="button"
+                className="absolute right-3 top-3 text-[#E1C3FF] text-lg"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-white"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full p-2 bg-transparent border-b border-[#E1C3FF] text-white outline-none focus:border-purple-500 transition peer"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+              <label className={`absolute left-0 text-[#E1C3FF] transition-all duration-300 ${password ? "top-[-16px] text-sm" : "top-2"} peer-focus:top-[-16px] peer-focus:text-sm`}>
+                Password
+              </label>
+            </div>
+
+            {/* Remember Me & Forgot Password */}
+            <div className="flex justify-between text-sm">
+              <label className="flex items-center">
+                <input type="checkbox" className="mr-2" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
+                Remember Me
+              </label>
+              <button type="button" className="text-purple-400 no-underline" onClick={handleForgotPassword}>
+                Forgot Password?
               </button>
             </div>
-            {!isPasswordValid && password && (
-              <small className="text-red-500">
-                Password must be at least 4 characters long.
-              </small>
-            )}
-            <label className="text-white">
-              <input
-                type="checkbox"
-                className="mr-2"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-              />
-              Remember Me
-            </label>
+
+            {/* Login Button with Loading State */}
             <button
               type="submit"
-              className="px-5 py-2 bg-blue-500 rounded-lg text-white"
+              className="w-1/2 px-5 py-2 bg-purple-500 rounded-lg text-white font-bold"
               disabled={!isFormValid || loading}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              className="text-blue-500 underline mt-2"
-            >
-              Forgot password?
-            </button>
           </form>
-          <p className="text-center mt-5 text-white">
-            Don't have an account?
-            <span className="text-blue-500">
-              <Link to="/SignUp">&nbsp;SignUp</Link>
-            </span>
+
+          {/* Register Link */}
+          <p className="text-center text-sm mt-4">
+            Don't have an account? <Link to="/SignUp" className="text-purple-400 no-underline">Register</Link>
           </p>
         </div>
       </div>

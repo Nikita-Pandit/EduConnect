@@ -367,3 +367,5 @@ const ViewTeacherDetails = () => {
 };
 
 export default ViewTeacherDetails;
+
+

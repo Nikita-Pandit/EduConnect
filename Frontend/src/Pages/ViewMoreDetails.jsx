@@ -186,6 +186,16 @@ const ViewMoreDetails = () => {
               ></textarea>
             </div>
 
+             <h1 className="text-2xl text-start mt-3  mb-2">Domain</h1>
+            <div>
+              <textarea
+                className="bg-zinc-600 outline-none w-full border-2 rounded-md"
+                name="domain"
+                value={profile.domain}
+                required
+                id=""
+              ></textarea>
+            </div>
             <h1 className="text-2xl text-start mt-3  mb-2">Skills</h1>
             <div>
               <textarea
@@ -196,17 +206,7 @@ const ViewMoreDetails = () => {
                 id=""
               ></textarea>
             </div>
-
-            <h1 className="text-2xl text-start mt-3  mb-2">Domain</h1>
-            <div>
-              <textarea
-                className="bg-zinc-600 outline-none w-full border-2 rounded-md"
-                name="domain"
-                value={profile.domain}
-                required
-                id=""
-              ></textarea>
-            </div>
+            
           </div>
         </div>
       </form>
@@ -215,3 +215,5 @@ const ViewMoreDetails = () => {
 };
 
 export default ViewMoreDetails;
+
+

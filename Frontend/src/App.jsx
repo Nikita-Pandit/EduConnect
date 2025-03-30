@@ -62,7 +62,7 @@ import Projects from "./Pages/Projects";
 import ResearchDoubts from "./Pages/ResearchDoubts";
 import ViewMoreDetails from "./Pages/ViewMoreDetails";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import StudentHeader from "./Components/StudentsHeader";
+import Headers from "./Components/Headers";
 import Footer from "./Components/Footer";
 import Resetpassword from "./Pages/Resetpassword";
 import TeacherProfile from "./Pages/TeacherProfile";
@@ -70,6 +70,7 @@ import ViewTeacherDetails from "./Pages/ViewTeacherDetails";
 import TeacherDashboard from "./Pages/TeacherDashboard";
 import StudentList from "./Pages/StudentList";
 import Chatbot from "./Components/Chatbot";
+import StudentDashboard from "./Pages/StudentDashboard";
 
 function App() {
   // State to track login status
@@ -112,7 +113,7 @@ function App() {
   return (
     <>
       <Router>
-        <StudentHeader onLogout={handleLogout} />
+        <Headers onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/SignUp" element={<SignUp onLogin={handleLogin} />} />
@@ -126,6 +127,7 @@ function App() {
           <Route path="/ViewTeacherDetails" element={<ViewTeacherDetails />} />
           <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
           <Route path="/StudentList" element={<StudentList />} />
+          <Route path="/StudentDashboard" element={<StudentDashboard />} />
         </Routes>
         {/* Conditionally render the Chatbot component based on login status */}
         {isLoggedIn && <Chatbot />}

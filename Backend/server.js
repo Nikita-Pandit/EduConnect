@@ -68,6 +68,45 @@ app.use("/api", searchTeachersRoutes);
 app.use("/api", verifyEmailRoutes);
 app.use("/api", chatRoutes);
 
+// Add this endpoint to your existing server.js file
+app.post("/api/studentCheckbox", async (req, res) => {
+  const { teacherID, rollNo } = req.body;
+  console.log("Teacher id for selecting student: ", teacherID);
+  console.log("Student id for selecting student: ", rollNo);
+
+  try {
+    // Find student and update selectStudent field
+    const student = await studentMoreInfo.findOne({ rollNo });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Ensure selectStudent exists and is a Map
+    student.selectStudent = student.selectStudent || new Map();
+    
+    // Check if student is already selected by another teacher
+    if (student.selectStudent.size > 0 && !student.selectStudent.has(teacherID)) {
+      return res.status(400).json({
+        message: "This student has already been selected by another teacher!",
+      });
+    }
+
+    student.selectStudent.set(teacherID, true); // Add teacher as key with value true
+    await student.save();
+
+    res.status(200).json({
+      message: "Student selected successfully",
+      student,
+    });
+  } catch (error) {
+    console.error("Error selecting students:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+});
+
+// Keep all your existing endpoints
+
 app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
   console.log("entere ssupervisedstidents");
   const { teacherID } = req.params;
@@ -165,6 +204,57 @@ app.get("/api/student/unique/:studentId", async (req, res) => {
   } catch (error) {
     console.error("Error fetching student details:", error);
     res.status(500).json({ message: "Error fetching student details" });
+  }
+});
+
+// **********************************************************************************************************************************
+
+// Get teacher rankings for a specific student
+app.get("/api/teacherRanks/:studentId", async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    
+    // Find all teachers who have ranked this student
+    const teachers = await teacherMoreInfo.find({
+      [`rank.${studentId}`]: { $exists: true }
+    });
+
+    const rankedTeachers = teachers.map(teacher => ({
+      name: teacher.name,
+      rank: teacher.rank.get(studentId)
+    }));
+
+    res.json(rankedTeachers);
+  } catch (error) {
+    console.error("Error fetching teacher rankings:", error);
+    res.status(500).json({ message: "Error fetching teacher rankings" });
+  }
+});
+
+// Get teachers who have selected this student
+app.get("/api/selectedTeachers/:studentId", async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    
+    // Find the student
+    const student = await studentMoreInfo.findOne({ studentID: studentId });
+    
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Get teacher IDs who have selected this student
+    const teacherIds = Array.from(student.selectStudent?.keys() || []);
+    
+    // Get teacher names
+    const teachers = await teacherMoreInfo.find({
+      teacherID: { $in: teacherIds }
+    }, "name teacherID");
+
+    res.json(teachers);
+  } catch (error) {
+    console.error("Error fetching selected teachers:", error);
+    res.status(500).json({ message: "Error fetching selected teachers" });
   }
 });
 

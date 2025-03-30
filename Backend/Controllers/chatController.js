@@ -14,15 +14,23 @@ const chatWithAI = async (req, res) => {
 
     // Fetch all teacher details
     const teachers = await teacherModel.find({}, "name email contact");
-    const teacherInfos = await teacherMoreInfo.find({}, "teacherID Bio github linkedin twitter domain location rank");
+    const teacherInfos = await teacherMoreInfo.find(
+      {},
+      "teacherID Bio github linkedin twitter domain location rank"
+    );
 
     // Fetch all student details
     const students = await studentModel.find({}, "name email contact");
-    const studentInfos = await studentMoreInfo.find({}, "studentID Bio github linkedin twitter domain location branch selectYear projects");
+    const studentInfos = await studentMoreInfo.find(
+      {},
+      "studentID Bio github linkedin twitter domain location branch selectYear projects"
+    );
 
     // Map teachers with additional info
     const teachersData = teachers.map((teacher) => {
-      const additionalInfo = teacherInfos.find(info => info.teacherID === teacher._id.toString());
+      const additionalInfo = teacherInfos.find(
+        (info) => info.teacherID === teacher._id.toString()
+      );
       return {
         name: teacher.name,
         email: teacher.email,
@@ -39,7 +47,9 @@ const chatWithAI = async (req, res) => {
 
     // Map students with additional info
     const studentsData = students.map((student) => {
-      const additionalInfo = studentInfos.find(info => info.studentID === student._id.toString());
+      const additionalInfo = studentInfos.find(
+        (info) => info.studentID === student._id.toString()
+      );
       return {
         name: student.name,
         email: student.email,
@@ -57,11 +67,34 @@ const chatWithAI = async (req, res) => {
     });
 
     // Determine if the query is about teachers or students
-    const isTeacherQuery = ["teacher", "teach", "professor", "email", "contact", "rank", "domain", "location"].some((word) => message.toLowerCase().includes(word)) ||
-      teachersData.some(teacher => message.toLowerCase().includes(teacher.name.toLowerCase()));
+    const isTeacherQuery =
+      [
+        "teacher",
+        "teach",
+        "professor",
+        "email",
+        "contact",
+        "rank",
+        "domain",
+        "location",
+      ].some((word) => message.toLowerCase().includes(word)) ||
+      teachersData.some((teacher) =>
+        message.toLowerCase().includes(teacher.name.toLowerCase())
+      );
 
-    const isStudentQuery = ["student", "projects", "branch", "year", "linkedin", "github", "skills"].some((word) => message.toLowerCase().includes(word)) ||
-      studentsData.some(student => message.toLowerCase().includes(student.name.toLowerCase()));
+    const isStudentQuery =
+      [
+        "student",
+        "projects",
+        "branch",
+        "year",
+        "linkedin",
+        "github",
+        "skills",
+      ].some((word) => message.toLowerCase().includes(word)) ||
+      studentsData.some((student) =>
+        message.toLowerCase().includes(student.name.toLowerCase())
+      );
 
     let prompt;
 
@@ -70,9 +103,12 @@ const chatWithAI = async (req, res) => {
       prompt = `
         You are an AI assistant that provides information about teachers.
         The available teachers and their details are:
-        ${teachersData.map(teacher => 
-          `Name: ${teacher.name}, Email: ${teacher.email}, Contact: ${teacher.contact}, Bio: ${teacher.Bio}, Expertise: ${teacher.domain}, Location: ${teacher.location}, Rank: ${teacher.rank}, LinkedIn: ${teacher.linkedin}, GitHub: ${teacher.github}`
-        ).join("\n")}
+        ${teachersData
+          .map(
+            (teacher) =>
+              `Name: ${teacher.name}, Email: ${teacher.email}, Contact: ${teacher.contact}, Bio: ${teacher.Bio}, Expertise: ${teacher.domain}, Location: ${teacher.location}, Rank: ${teacher.rank}, LinkedIn: ${teacher.linkedin}, GitHub: ${teacher.github}`
+          )
+          .join("\n")}
 
         User Query: "${message}"
 
@@ -83,9 +119,12 @@ const chatWithAI = async (req, res) => {
       prompt = `
         You are an AI assistant that provides information about students.
         The available students and their details are:
-        ${studentsData.map(student => 
-          `Name: ${student.name}, Email: ${student.email}, Contact: ${student.contact}, Bio: ${student.Bio}, Branch: ${student.branch}, Year: ${student.selectYear}, Projects: ${student.projects}, Location: ${student.location}, LinkedIn: ${student.linkedin}, GitHub: ${student.github}`
-        ).join("\n")}
+        ${studentsData
+          .map(
+            (student) =>
+              `Name: ${student.name}, Email: ${student.email}, Contact: ${student.contact}, Bio: ${student.Bio}, Branch: ${student.branch}, Year: ${student.selectYear}, Projects: ${student.projects}, Location: ${student.location}, LinkedIn: ${student.linkedin}, GitHub: ${student.github}`
+          )
+          .join("\n")}
 
         User Query: "${message}"
 
@@ -97,7 +136,7 @@ const chatWithAI = async (req, res) => {
     }
 
     // Call Gemini AI API
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
     const result = await model.generateContent(prompt);
     const response = result.response.candidates[0].content.parts[0].text;
 
@@ -109,6 +148,3 @@ const chatWithAI = async (req, res) => {
 };
 
 module.exports = { chatWithAI };
-
-
-

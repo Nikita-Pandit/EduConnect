@@ -80,7 +80,12 @@ const SignUp = () => {
       )}
 
       <div className='flex form-container items-center justify-center'>
-        <div className={`border-2 bg-zinc-700 rounded-md p-5 border-blue-300 ${loading ? 'filter blur-sm' : ''}`}>
+        {/* <div className={`border-2 bg-#091024 rounded-md p-5 border-blue-300 ${loading ? 'filter blur-sm' : ''}`}> */}
+        <div
+  className={`border-2 rounded-md p-5 border-blue-300 ${loading ? 'filter blur-sm' : ''}`}
+  style={{ backgroundColor: "#091024" }}
+>
+
           <form onSubmit={handleSubmit} className='form flex items-center justify-center flex-col space-y-4'>
             <h1 className='text-3xl'>Sign Up</h1>
             <input 
