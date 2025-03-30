@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,63 +61,77 @@ const Login = () => {
     }
   };
 
+  // Close the login form and navigate to the home page
+  const handleClose = () => {
+    navigate("/"); // Navigate to the home page
+  };
+
   return (
     <>
       <ToastContainer />
       <div className="flex items-center justify-center min-h-screen bg-[#090c1b]">
         <div className="relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-purple-500 text-white">
-          <button className="absolute top-4 right-4 text-purple-400">✖</button>
-          <h1 className="text-2xl font-bold text-[#E1C3FF] text-center">LOGIN</h1>
+          <button
+            className="absolute top-4 right-4 text-purple-400"
+            onClick={handleClose} // Navigate to the home page
+          >
+            ✖
+          </button>
+          <h1 className="text-2xl font-bold text-[#E1C3FF] text-left">LOGIN</h1>
           <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-6">
+            
             {/* Email Input */}
             <div className="relative">
-              <FaEnvelope className="absolute right-3 top-3 text-[#E1C3FF] text-lg" />
+              <FaEnvelope className="absolute right-3 top-3 text-[#9B30FF] text-lg" />
               <input
                 type="email"
-                className="w-full p-2 bg-transparent border-b border-[#E1C3FF] text-white outline-none focus:border-purple-500 transition peer"
+                className="w-full p-2 pl-2 bg-transparent border-b border-[#E1C3FF] text-white outline-none focus:border-purple-500 transition placeholder-[#9B30FF]"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                placeholder="  Email"
+                autoComplete="email"
               />
-              <label className={`absolute left-0 text-[#E1C3FF] transition-all duration-300 ${email ? "top-[-16px] text-sm" : "top-2"} peer-focus:top-[-16px] peer-focus:text-sm`}>
-                Email
-              </label>
             </div>
 
             {/* Password Input */}
             <div className="relative">
               <button
                 type="button"
-                className="absolute right-3 top-3 text-[#E1C3FF] text-lg"
+                className="absolute right-3 top-3 text-[#9B30FF] text-lg"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full p-2 bg-transparent border-b border-[#E1C3FF] text-white outline-none focus:border-purple-500 transition peer"
+                className="w-full p-2 pl-2 bg-transparent border-b border-[#E1C3FF] text-white outline-none focus:border-purple-500 transition placeholder-[#9B30FF]"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                placeholder="  Password"
+                autoComplete="current-password"
               />
-              <label className={`absolute left-0 text-[#E1C3FF] transition-all duration-300 ${password ? "top-[-16px] text-sm" : "top-2"} peer-focus:top-[-16px] peer-focus:text-sm`}>
-                Password
-              </label>
             </div>
 
-            {/* Remember Me & Forgot Password */}
+            {/* Forgot Password & Remember Me */}
             <div className="flex justify-between text-sm">
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
-                Remember Me
-              </label>
-              <button type="button" className="text-purple-400 no-underline" onClick={handleForgotPassword}>
+              <button type="button" className="text-white no-underline" onClick={handleForgotPassword}>
                 Forgot Password?
               </button>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="mr-2 w-4 h-4 accent-[#9B30FF]"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
+                Remember Me
+              </label>
             </div>
 
             {/* Login Button with Loading State */}
             <button
               type="submit"
-              className="w-1/2 px-5 py-2 bg-purple-500 rounded-lg text-white font-bold"
+              className="w-full px-5 py-2 bg-[#6D0BCF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#5A00A1]"
               disabled={!isFormValid || loading}
             >
               {loading ? "Logging in..." : "Login"}
@@ -127,7 +140,7 @@ const Login = () => {
 
           {/* Register Link */}
           <p className="text-center text-sm mt-4">
-            Don't have an account? <Link to="/SignUp" className="text-purple-400 no-underline">Register</Link>
+            Don't have an account? <Link to="/SignUp" className="text-white no-underline font-bold ">Register</Link>
           </p>
         </div>
       </div>
