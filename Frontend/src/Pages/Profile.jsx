@@ -232,10 +232,12 @@ const Profile = () => {
     image: "/images/default_image.jpg",
     selectStudent: {},
     rollNo: "",
+    CGPA:""
   });
 
   const fetchStudentName = async () => {
     try {
+      console.log("id in profile",id);
       const response = await axios.get(
         `http://localhost:3002/api/student/${id}`
       );
@@ -468,6 +470,16 @@ const Profile = () => {
                 required
                 name="branch"
                 value={profile.branch}
+                disabled={!isEditing && !isFirstVisit}
+              />
+              <input
+                type="number"
+                className="input-links bg-zinc-500"
+                placeholder="CGPA"
+                onChange={handleChange}
+                required
+                name="CGPA"
+                value={profile.CGPA}
                 disabled={!isEditing && !isFirstVisit}
               />
               <select

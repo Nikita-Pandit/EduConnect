@@ -29,7 +29,8 @@ const ViewMoreDetails = () => {
     location: "",
     branch: "",
     selectYear: "",
-    rollNo:""
+    rollNo:"",
+    CGPA:"",
   });
   const fetchStudentName = async () => {
     try {
@@ -112,6 +113,14 @@ const ViewMoreDetails = () => {
                 required
                 name="branch"
                 value={profile.branch}
+              />
+              <input
+                type="number"
+                className="input-links  bg-zinc-500"
+                placeholder="CGPA"
+                required
+                name="CGPA"
+                value={profile.CGPA}
               />
               <input
                 type="text"

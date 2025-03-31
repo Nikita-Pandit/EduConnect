@@ -1,6 +1,6 @@
 const teacherMoreInfo = require("../Models/teacherMoreInfo");
 
-const getResearchDoubtsController = async (req, res) => {
+const getSupervisorsController = async (req, res) => {
   const { name, domain, studentId } = req.query;
 
   try {
@@ -36,7 +36,7 @@ const getResearchDoubtsController = async (req, res) => {
     // Send the response with the fetched data
     res.status(200).json({ success: true, allProfileDetails });
   } catch (error) {
-    console.error("Error in getResearchDoubtsController:", error.message);
+    console.error("Error in getSupervisorsController:", error.message);
     res.status(500).json({
       success: false,
       message: "An error occurred while fetching the profile info.",
@@ -45,4 +45,4 @@ const getResearchDoubtsController = async (req, res) => {
   }
 };
 
-module.exports = { getResearchDoubtsController };
+module.exports = { getSupervisorsController };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Projects = () => {
+const Students = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [branch, setBranch] = useState("");
@@ -12,7 +12,7 @@ const Projects = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3002/api/Project`, {
+        const response = await axios.get(`http://localhost:3002/api/Students`, {
           params: {
             branch: branch,
             year: year,
@@ -128,4 +128,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Students;

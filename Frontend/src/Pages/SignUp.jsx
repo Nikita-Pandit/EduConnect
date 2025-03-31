@@ -103,7 +103,7 @@ const SignUp = () => {
 
           <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
             <h1 className="text-2xl font-bold text-[#E1C3FF] text-left">
-              Sign Up
+              Register
             </h1>
 
             {/* Name Input */}
@@ -216,7 +216,7 @@ const SignUp = () => {
               className="w-full px-5 py-2 bg-[#6D0BCF] border-[1.5px] border-[#E1C3FF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#46008B] hover:border-[#9B30FF]"
               disabled={loading}
             >
-              {loading ? "Signing up..." : "Sign up"}
+              {loading ? "Registering..." : "Register"}
             </button>
           </form>
           <p className="text-center text-sm mt-4 text-white">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ResearchDoubts = () => {
+const Supervisors = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -16,7 +16,7 @@ const ResearchDoubts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3002/api/ResearchDoubts", {
+        const response = await axios.get("http://localhost:3002/api/Supervisors", {
           params: { name, domain, studentId },
         });
 
@@ -134,4 +134,4 @@ const ResearchDoubts = () => {
   );
 };
 
-export default ResearchDoubts;
+export default Supervisors;

@@ -1,6 +1,6 @@
 const studentMoreInfo = require("../Models/studentMoreInfo");
 
-const getProjectController = async (req, res) => {
+const getStudentsController = async (req, res) => {
   const { branch, year, domain } = req.query;
   console.log("Branch:", branch);
   console.log("Year:", year);
@@ -35,7 +35,7 @@ const getProjectController = async (req, res) => {
     // Send the response with the fetched data
     res.status(200).json({ success: true, allProfileDetails });
   } catch (error) {
-    console.error("Error in getProjectController:", error.message);
+    console.error("Error in getStudentsController:", error.message);
     res.status(500).json({
       success: false,
       message: "An error occurred while fetching the profile info.",
@@ -44,4 +44,4 @@ const getProjectController = async (req, res) => {
   }
 };
 
-module.exports = { getProjectController };
+module.exports = { getStudentsController };

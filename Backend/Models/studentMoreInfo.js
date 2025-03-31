@@ -40,6 +40,10 @@ selectStudent: {
 rollNo:{
   type:String,
   required:true
+},
+CGPA:{
+  type:Number,
+ required:true
 }
 })
 const studentMoreInfo=mongoose.models.studentMoreInfo || mongoose.model("studentMoreInfo",studentMoreInfoSchema)

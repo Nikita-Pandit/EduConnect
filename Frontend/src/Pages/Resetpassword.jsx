@@ -36,13 +36,23 @@ const ResetPassword = () => {
     }
   };
 
+   // Close the login form and navigate to the home page
+   const handleClose = () => {
+    navigate("/"); // Navigate to the home page
+  };
+
   return (
     <>
       <ToastContainer />
       <div className="flex items-center justify-center min-h-screen bg-[#090c1b] relative">
-      
 
         <div className="relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-[#E1C3FF] text-white">
+        <button
+            className="absolute top-4 right-4 text-purple-400"
+            onClick={handleClose} // Navigate to the home page
+          >
+            ✖
+          </button>
           <h1 className="text-2xl font-bold text-[#E1C3FF] text-left">
             Reset Password
           </h1>
