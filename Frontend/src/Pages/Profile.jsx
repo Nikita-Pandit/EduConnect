@@ -255,25 +255,25 @@ const Profile = () => {
 
 
 
-  const fetchProfileInfo = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3002/api/Profile/${id}`
-      );
-      if (response.data.success) {
-        setProfile({
-          ...response.data.moreInfo,
-          skills: Array.isArray(response.data.moreInfo.skills)
-            ? response.data.moreInfo.skills
-            : [], // Ensures `skills` is always an array
-        });
-        setIsFirstVisit(false);
-        setIsEditing(false);
-      }
-    } catch (error) {
-      console.error("Error in fetching profile info:", error);
-    }
-  };
+  // const fetchProfileInfo = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3002/api/Profile/${id}`
+  //     );
+  //     if (response.data.success) {
+  //       setProfile({
+  //         ...response.data.moreInfo,
+  //         skills: Array.isArray(response.data.moreInfo.skills)
+  //           ? response.data.moreInfo.skills
+  //           : [], // Ensures `skills` is always an array
+  //       });
+  //       setIsFirstVisit(false);
+  //       setIsEditing(false);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in fetching profile info:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchProfileInfo = async () => {
@@ -350,302 +350,108 @@ const Profile = () => {
       toast.error("Failed to upload image.");
     }
   };
-
   const customStyles = {
-    control: (base) => ({
-      ...base,
-      backgroundColor: "#374151",
-      color: "#FFFFFF",
-      border: "2px solid rgb(80, 158, 179)",
-      borderRadius: "10px",
-      padding: "10px",
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: '#0d1126',
+      borderColor: state.isFocused ? '#9B30FF' : '#9B30FF',
+      boxShadow: state.isFocused ? '0 0 0 1px #9B30FF' : 'none',
+      '&:hover': {
+        borderColor: '#9B30FF',
+        boxShadow: '0 0 10px rgba(155, 48, 255, 0.2)'
+      },
+      minHeight: '40px',
+      borderRadius: '6px',
     }),
-    menu: (base) => ({
-      ...base,
-      backgroundColor: "#71717A",
-      color: "#FFFFFF",
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected 
+        ? '#6D0BCF' 
+        : state.isFocused 
+          ? '#3D306F' 
+          : '#0B142C',
+      color: state.isSelected ? 'white' : '#E1C3FF',
+      '&:active': {
+        backgroundColor: '#46008B'
+      },
+      padding: '8px 12px',
     }),
-    option: (base, state) => ({
-      ...base,
-      backgroundColor: state.isFocused ? "#374151" : "#1F2937",
-      color: "#FFFFFF",
-      "&:active": {
-        backgroundColor: "#4B5563",
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: '#0B142C',
+      border: '1px solid #9B30FF',
+      borderRadius: '6px',
+      boxShadow: '0 4px 6px rgba(155, 48, 255, 0.2)',
+      zIndex: 9999,
+    }),
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: '#3D306F',
+      borderRadius: '4px',
+    }),
+    multiValueLabel: (provided) => ({
+      ...provided,
+      color: 'white',
+      padding: '2px 6px',
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      color: '#E1C3FF',
+      ':hover': {
+        backgroundColor: '#46008B',
+        color: 'white',
       },
     }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: "#71717A",
-      color: "#FFFFFF",
-      borderRadius: "0.375rem",
+    input: (provided) => ({
+      ...provided,
+      color: 'white',
     }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: "#FFFFFF",
+    placeholder: (provided) => ({
+      ...provided,
+      color: '#E1C3FF',
+      opacity: 0.7,
     }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: "#FFFFFF",
-      "&:hover": {
-        backgroundColor: "#4B5563",
-        color: "#FFFFFF",
+    singleValue: (provided) => ({
+      ...provided,
+      color: '#E1C3FF',
+    }),
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      backgroundColor: '#9B30FF',
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: '#9B30FF',
+      '&:hover': {
+        color: '#B24AFF',
+      },
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: '#9B30FF',
+      '&:hover': {
+        color: '#B24AFF',
       },
     }),
   };
 
-  // return (
-  //   <>
-  //     <form onSubmit={handleSave}>
-  //       <ToastContainer />
-  //       <div className="profile-container p-5 bg-zinc-700 flex">
-  //         <div className="left-profile p-3 mt-10">
-  //           <h4 className="student-name">
-  //             {studentName ? `Welcome, ${studentName}` : "Loading..."}
-  //           </h4>
-  //           <div className="flex items-center justify-center mt-3 mb-3">
-  //             <img
-  //               src={
-  //                 profile.image.startsWith("/uploads/")
-  //                   ? `http://localhost:3002${profile.image}`
-  //                   : `http://localhost:3002/images/default_image.jpg`
-  //               }
-  //               alt="Profile"
-  //               className="profile-image object-contain rounded-lg"
-  //               onClick={() =>
-  //                 (isEditing || isFirstVisit) &&
-  //                 document.getElementById("imageUpload").click()
-  //               }
-  //               style={{
-  //                 width: "180px",
-  //                 height: "180px",
-  //                 cursor: isEditing ? "pointer" : "default",
-  //               }}
-  //             />
-  //             <input
-  //               type="file"
-  //               id="imageUpload"
-  //               style={{ display: "none" }}
-  //               onChange={handleImageChange}
-  //               disabled={!isEditing && !isFirstVisit} // Disable file input if not in editing mode
-  //             />
-  //           </div>
-  //           <div className="flex flex-col gap-3">
-  //             <input
-  //               type="email"
-  //               className="input-links bg-zinc-500"
-  //               value={studentEmail}
-  //               placeholder="KIIT mail"
-  //             />
-  //             <input
-  //               type="text"
-  //               className="input-links bg-zinc-500"
-  //               value={profile.rollNo}
-  //               placeholder="KIIT Roll Number"
-  //               name="rollNo"
-  //               onChange={handleChange}
-  //               required
-  //               disabled={!isEditing && !isFirstVisit}
-  //             />
-  //             <input
-  //               className="input-links bg-zinc-500"
-  //               type="text"
-  //               placeholder="Location"
-  //               onChange={handleChange}
-  //               required
-  //               name="location"
-  //               value={profile.location}
-  //               disabled={!isEditing && !isFirstVisit}
-  //             />
-  //             <input
-  //               type="tel"
-  //               className="input-links bg-zinc-500"
-  //               value={studentContact}
-  //               placeholder="Contact"
-  //             />
-  //             <input
-  //               type="text"
-  //               className="input-links bg-zinc-500"
-  //               placeholder="Branch"
-  //               onChange={handleChange}
-  //               required
-  //               name="branch"
-  //               value={profile.branch}
-  //               disabled={!isEditing && !isFirstVisit}
-  //             />
-  //             <input
-  //               type="number"
-  //               className="input-links bg-zinc-500"
-  //               placeholder="CGPA"
-  //               onChange={handleChange}
-  //               required
-  //               name="CGPA"
-  //               value={profile.CGPA}
-  //               disabled={!isEditing && !isFirstVisit}
-  //             />
-  //             <select
-  //               value={profile.selectYear}
-  //               onChange={handleChange}
-  //               name="selectYear"
-  //               id="year"
-  //               required
-  //               className="input-links bg-zinc-500"
-  //               disabled={!isEditing && !isFirstVisit}
-  //             >
-  //               <option value="">Select Year</option>
-  //               <option value="1st year">1st Year</option>
-  //               <option value="2nd year">2nd Year</option>
-  //               <option value="3rd year">3rd Year</option>
-  //               <option value="4th year">4th Year</option>
-  //             </select>
-  //           </div>
-  //         </div>
-
-  //         <div className="bg-zinc-500 border-2 rounded-md outline-none w-full right-profile-info p-5">
-  //           <h1 className="text-3xl text-start mb-3">Write short bio</h1>
-  //           <textarea
-  //             className="outline-none bg-zinc-700 w-full border-2 rounded-md"
-  //             onChange={handleChange}
-  //             name="Bio"
-  //             value={profile.Bio}
-  //             required
-  //             disabled={!isEditing && !isFirstVisit}
-  //           ></textarea>
-  //           <h1 className="text-2xl text-start mt-3 mb-2">
-  //             Social media links
-  //           </h1>
-  //           <div className="border-blue-300 flex flex-row bg-zinc-700 p-5 border-2 rounded-md outline-none">
-  //             <div className="space-y-5 ml-20">
-  //               <input
-  //                 placeholder="Github Link"
-  //                 className="input-links bg-zinc-500"
-  //                 name="github"
-  //                 onChange={handleChange}
-  //                 value={profile.github}
-  //                 disabled={!isEditing && !isFirstVisit}
-  //               />
-  //               <input
-  //                 placeholder="LinkedIn Link"
-  //                 className="input-links bg-zinc-500"
-  //                 name="linkedin"
-  //                 onChange={handleChange}
-  //                 value={profile.linkedin}
-  //                 disabled={!isEditing && !isFirstVisit}
-  //               />
-  //               <input
-  //                 placeholder="Leetcode Link"
-  //                 className="input-links bg-zinc-500"
-  //                 onChange={handleChange}
-  //                 name="leetcode"
-  //                 value={profile.leetcode}
-  //                 disabled={!isEditing && !isFirstVisit}
-  //               />
-  //             </div>
-  //             <div className="space-y-5 me-20">
-  //               <input
-  //                 placeholder="Instagram Link"
-  //                 onChange={handleChange}
-  //                 className="bg-zinc-500 input-links"
-  //                 name="instagram"
-  //                 value={profile.instagram}
-  //                 disabled={!isEditing && !isFirstVisit}
-  //               />
-  //               <input
-  //                 placeholder="Twitter Link"
-  //                 onChange={handleChange}
-  //                 className="bg-zinc-500 input-links"
-  //                 name="twitter"
-  //                 value={profile.twitter}
-  //                 disabled={!isEditing && !isFirstVisit}
-  //               />
-  //             </div>
-  //           </div>
-  //           <div>
-  //             <h1 className="text-2xl text-start mt-3 mb-2">
-  //               Ongoing Projects
-  //             </h1>
-  //             <textarea
-  //               className="outline-none bg-zinc-700 w-full border-2 rounded-md"
-  //               onChange={handleChange}
-  //               name="projects"
-  //               value={profile.projects}
-  //               disabled={!isEditing && !isFirstVisit}
-  //             ></textarea>
-  //           </div>
-  //           <h1 className="text-2xl text-start mt-3 mb-2">Domain</h1>
-  //           <Select
-  //             isMulti
-  //             options={domainOptions}
-  //             value={domainOptions.filter((option) =>
-  //               profile.domain.includes(option.value)
-  //             )}
-  //             onChange={handleDomainChange}
-  //             styles={customStyles}
-  //             isDisabled={!isEditing && !isFirstVisit}
-  //           />
-
-  //           <h1 className="text-2xl text-start mt-3 mb-2">Skills</h1>
-  //           <Select
-  //             isMulti
-  //             options={
-  //               profile.domain.length > 0
-  //                 ? profile.domain.flatMap(
-  //                     (domain) => skillOptionsByDomain[domain] || []
-  //                   )
-  //                 : []
-  //             }
-  //             value={Object.values(skillOptionsByDomain)
-  //               .flat()
-  //               .filter((option) =>
-  //                 Array.isArray(profile.skills)
-  //                   ? profile.skills.includes(option.value)
-  //                   : false
-  //               )}
-  //             onChange={handleSkillsChange}
-  //             styles={customStyles}
-  //             isDisabled={!isEditing && !isFirstVisit}
-  //           />
-  //         </div>
-  //       </div>
-  //       <div className="flex justify-center mt-5">
-  //         <button
-  //           type="button"
-  //           className="text-center px-5 py-2 bg-green-500 rounded-lg mr-3"
-  //           // onClick={() => setIsEditing(true)} // ENABLE EDIT MODE
-  //           onClick={() => {
-  //             setIsEditing(true);
-  //             setIsFirstVisit(true);
-  //           }}
-  //         >
-  //           Edit
-  //         </button>
-  //         <button
-  //           type="submit"
-  //           className="text-center px-5 py-2 bg-blue-500 rounded-lg"
-  //           disabled={!isEditing && !isFirstVisit}
-  //         >
-  //           Save
-  //         </button>
-  //       </div>
-  //     </form>
-  //   </>
-  // );
-
+ 
   return (
-    <div className="min-h-screen bg-[#090c1b] text-white p-6">
-      <form onSubmit={handleSave}>
+    <div className="min-h-screen bg-[#091024] text-white p-6 w-full">
+      <form onSubmit={handleSave} className="max-w-6xl mx-auto">
         <ToastContainer />
-        <div className="profile-container p-6 bg-[#0d1126] rounded-xl shadow-2xl border-2 border-[#9B30FF]">
-          <div className="flex flex-col lg:flex-row gap-8">
+        <div className="profile-container w-full h-full p-8 bg-[#0d1126] rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300">
+          <div className="flex flex-col md:flex-row gap-6">
             {/* Left Profile Section */}
-            <div className="w-full lg:w-1/3 p-6 bg-[#0d1126] rounded-xl border border-[#9B30FF]">
+            <div className="w-full md:w-1/3 p-5 bg-[#0B142C] rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/40 transition-all duration-300">
               <div className="flex flex-col items-center">
-                <h4 className="text-2xl font-bold text-[#E1C3FF] mb-6 text-center">
+                <h4 className="text-xl font-bold text-[#E1C3FF] mb-4 text-center hover:text-[#3D306F] transition-colors duration-300">
                   {studentName ? `Welcome, ${studentName}` : "Loading..."}
                 </h4>
                 
                 {/* Profile Image */}
-                <div className="relative mb-6">
-                  <div className="relative overflow-hidden rounded-full border-4 border-[#9B30FF] w-44 h-44">
+                <div className="relative mb-4">
+                  <div className="relative overflow-hidden rounded-full border-4 border-[#9B30FF] w-36 h-36 shadow-lg shadow-[#9B30FF]/30 hover:shadow-[#9B30FF]/50 transition-all duration-300 group">
                     <img
                       src={
                         profile.image.startsWith("/uploads/")
@@ -653,7 +459,7 @@ const Profile = () => {
                           : `http://localhost:3002/images/default_image.jpg`
                       }
                       alt="Profile"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"
                       onClick={() =>
                         (isEditing || isFirstVisit) &&
                         document.getElementById("imageUpload").click()
@@ -662,6 +468,14 @@ const Profile = () => {
                         cursor: (isEditing || isFirstVisit) ? "pointer" : "default",
                       }}
                     />
+                    {(isEditing || isFirstVisit) && (
+                      <div className="absolute inset-0 bg-[#3D306F] bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                    )}
                   </div>
                   <input
                     type="file"
@@ -673,211 +487,260 @@ const Profile = () => {
                 </div>
   
                 {/* Personal Information */}
-                <div className="w-full space-y-4">
-                  <input
-                    type="email"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    value={studentEmail}
-                    disabled
-                  />
-                  <input
-                    type="text"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    value={profile.rollNo}
-                    name="rollNo"
-                    onChange={handleChange}
-                    required
-                    disabled={!isEditing && !isFirstVisit}
-                  />
-                  <input
-                    type="text"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    placeholder="Location"
-                    onChange={handleChange}
-                    required
-                    name="location"
-                    value={profile.location}
-                    disabled={!isEditing && !isFirstVisit}
-                  />
-                  <input
-                    type="tel"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    value={studentContact}
-                    disabled
-                  />
-                  <input
-                    type="text"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    placeholder="Branch"
-                    onChange={handleChange}
-                    required
-                    name="branch"
-                    value={profile.branch}
-                    disabled={!isEditing && !isFirstVisit}
-                  />
-                  <input
-                    type="number"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    placeholder="CGPA"
-                    onChange={handleChange}
-                    required
-                    name="CGPA"
-                    value={profile.CGPA}
-                    disabled={!isEditing && !isFirstVisit}
-                  />
-                  <select
-                    value={profile.selectYear}
-                    onChange={handleChange}
-                    name="selectYear"
-                    className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                    disabled={!isEditing && !isFirstVisit}
-                  >
-                    <option value="">Select Year</option>
-                    <option value="1st year">1st Year</option>
-                    <option value="2nd year">2nd Year</option>
-                    <option value="3rd year">3rd Year</option>
-                    <option value="4th year">4th Year</option>
-                  </select>
+                <div className="w-full space-y-3">
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">KIIT Mail</label>
+                    <input
+                      type="email"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      value={studentEmail}
+                      placeholder="KIIT mail"
+                      disabled
+                    />
+                  </div>
+  
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">Roll Number</label>
+                    <input
+                      type="text"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      placeholder="KIIT Roll Number"
+                      name="rollNo"
+                      onChange={handleChange}
+                      required
+                      value={profile.rollNo}
+                      disabled={!isEditing && !isFirstVisit}
+                    />
+                  </div>
+  
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">Location</label>
+                    <input
+                      type="text"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      placeholder="Location"
+                      onChange={handleChange}
+                      required
+                      name="location"
+                      value={profile.location}
+                      disabled={!isEditing && !isFirstVisit}
+                    />
+                  </div>
+  
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">Contact</label>
+                    <input
+                      type="tel"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      value={studentContact}
+                      placeholder="Contact"
+                      disabled
+                    />
+                  </div>
+  
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">Branch</label>
+                    <input
+                      type="text"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      placeholder="Branch"
+                      onChange={handleChange}
+                      required
+                      name="branch"
+                      value={profile.branch}
+                      disabled={!isEditing && !isFirstVisit}
+                    />
+                  </div>
+  
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">CGPA</label>
+                    <input
+                      type="number"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      placeholder="CGPA"
+                      onChange={handleChange}
+                      required
+                      name="CGPA"
+                      value={profile.CGPA}
+                      disabled={!isEditing && !isFirstVisit}
+                    />
+                  </div>
+  
+                  <div>
+                    <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">Year</label>
+                    <select
+                      value={profile.selectYear}
+                      onChange={handleChange}
+                      name="selectYear"
+                      id="year"
+                      required
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      disabled={!isEditing && !isFirstVisit}
+                    >
+                      <option value="">Select Year</option>
+                      <option value="1st year">1st Year</option>
+                      <option value="2nd year">2nd Year</option>
+                      <option value="3rd year">3rd Year</option>
+                      <option value="4th year">4th Year</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
   
             {/* Right Profile Section */}
-            <div className="w-full lg:w-2/3 bg-[#0d1126] p-6 rounded-xl border-2 border-[#9B30FF]">
-              <h1 className="text-2xl font-bold text-[#E1C3FF] mb-4">Write short bio</h1>
-              <textarea
-                className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-4 text-white h-40 resize-none disabled:opacity-70"
-                onChange={handleChange}
-                name="Bio"
-                value={profile.Bio}
-                required
-                disabled={!isEditing && !isFirstVisit}
-              ></textarea>
-              
-              <h1 className="text-2xl font-bold text-[#E1C3FF] mt-8 mb-4">Social media links</h1>
-              <div className="bg-[#0d1126] p-6 rounded-xl border-2 border-[#9B30FF]">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <input
-                      placeholder="Github Link"
-                      className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                      name="github"
-                      onChange={handleChange}
-                      value={profile.github}
-                      disabled={!isEditing && !isFirstVisit}
-                    />
-                    <input
-                      placeholder="LinkedIn Link"
-                      className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                      name="linkedin"
-                      onChange={handleChange}
-                      value={profile.linkedin}
-                      disabled={!isEditing && !isFirstVisit}
-                    />
-                    <input
-                      placeholder="Leetcode Link"
-                      className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                      name="leetcode"
-                      onChange={handleChange}
-                      value={profile.leetcode}
-                      disabled={!isEditing && !isFirstVisit}
-                    />
-                  </div>
-                  <div className="space-y-4">
-                    <input
-                      placeholder="Instagram Link"
-                      className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                      name="instagram"
-                      onChange={handleChange}
-                      value={profile.instagram}
-                      disabled={!isEditing && !isFirstVisit}
-                    />
-                    <input
-                      placeholder="Twitter Link"
-                      className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-3 text-white disabled:opacity-70"
-                      name="twitter"
-                      onChange={handleChange}
-                      value={profile.twitter}
-                      disabled={!isEditing && !isFirstVisit}
-                    />
+            <div className="w-full md:w-2/3 bg-[#0B142C] p-5 rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/40 transition-all duration-300">
+              <div className="space-y-4">
+                <div>
+                  <h1 className="text-xl font-bold text-[#E1C3FF] mb-2 hover:text-[#3D306F] transition-colors duration-300">Bio</h1>
+                  <textarea
+                    className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-3 text-sm text-white h-32 resize-none disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                    onChange={handleChange}
+                    name="Bio"
+                    value={profile.Bio}
+                    required
+                    disabled={!isEditing && !isFirstVisit}
+                  ></textarea>
+                </div>
+  
+                <div>
+                  <h1 className="text-xl font-bold text-[#E1C3FF] mb-2 hover:text-[#3D306F] transition-colors duration-300">Social Links</h1>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <input
+                        placeholder="GitHub"
+                        className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                        name="github"
+                        onChange={handleChange}
+                        value={profile.github}
+                        disabled={!isEditing && !isFirstVisit}
+                      />
+                      <input
+                        placeholder="LinkedIn"
+                        className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                        name="linkedin"
+                        onChange={handleChange}
+                        value={profile.linkedin}
+                        disabled={!isEditing && !isFirstVisit}
+                      />
+                      <input
+                        placeholder="Leetcode"
+                        className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                        onChange={handleChange}
+                        name="leetcode"
+                        value={profile.leetcode}
+                        disabled={!isEditing && !isFirstVisit}
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <input
+                        placeholder="Instagram"
+                        className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                        onChange={handleChange}
+                        name="instagram"
+                        value={profile.instagram}
+                        disabled={!isEditing && !isFirstVisit}
+                      />
+                      <input
+                        placeholder="Twitter"
+                        className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                        onChange={handleChange}
+                        name="twitter"
+                        value={profile.twitter}
+                        disabled={!isEditing && !isFirstVisit}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <h1 className="text-2xl font-bold text-[#E1C3FF] mt-8 mb-4">Ongoing Projects</h1>
-              <textarea
-                className="w-full bg-[#0d1126] border-2 border-[#9B30FF] rounded-lg p-4 text-white h-32 resize-none disabled:opacity-70"
-                onChange={handleChange}
-                name="projects"
-                value={profile.projects}
-                disabled={!isEditing && !isFirstVisit}
-              ></textarea>
-              
-              <h1 className="text-2xl font-bold text-[#E1C3FF] mt-8 mb-4">Domain</h1>
-              <div className="mb-6">
-                <Select
-                  isMulti
-                  options={domainOptions}
-                  value={domainOptions.filter((option) =>
-                    profile.domain.includes(option.value)
-                  )}
-                  onChange={handleDomainChange}
-                  styles={customStyles}
-                  isDisabled={!isEditing && !isFirstVisit}
-                />
-              </div>
-              
-              <h1 className="text-2xl font-bold text-[#E1C3FF] mt-8 mb-4">Skills</h1>
-              <div className="mb-6">
-                <Select
-                  isMulti
-                  options={
-                    profile.domain.length > 0
-                      ? profile.domain.flatMap(
-                          (domain) => skillOptionsByDomain[domain] || []
-                        )
-                      : []
-                  }
-                  value={Object.values(skillOptionsByDomain)
-                    .flat()
-                    .filter((option) =>
-                      Array.isArray(profile.skills)
-                        ? profile.skills.includes(option.value)
-                        : false
+  
+                <div>
+                  <h1 className="text-xl font-bold text-[#E1C3FF] mb-2 hover:text-[#3D306F] transition-colors duration-300">Ongoing Projects</h1>
+                  <textarea
+                    className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-3 text-sm text-white h-32 resize-none disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                    onChange={handleChange}
+                    name="projects"
+                    value={profile.projects}
+                    disabled={!isEditing && !isFirstVisit}
+                  ></textarea>
+                </div>
+  
+                <div>
+                  <h1 className="text-xl font-bold text-[#E1C3FF] mb-2 hover:text-[#3D306F] transition-colors duration-300">Domain</h1>
+                  <Select
+                    isMulti
+                    options={domainOptions}
+                    value={domainOptions.filter((option) =>
+                      profile.domain.includes(option.value)
                     )}
-                  onChange={handleSkillsChange}
-                  styles={customStyles}
-                  isDisabled={!isEditing && !isFirstVisit}
-                />
+                    onChange={handleDomainChange}
+                    styles={customStyles}
+                    isDisabled={!isEditing && !isFirstVisit}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
+                </div>
+  
+                <div>
+                  <h1 className="text-xl font-bold text-[#E1C3FF] mb-2 hover:text-[#3D306F] transition-colors duration-300">Skills</h1>
+                  <Select
+                    isMulti
+                    options={
+                      profile.domain.length > 0
+                        ? profile.domain.flatMap(
+                            (domain) => skillOptionsByDomain[domain] || []
+                          )
+                        : []
+                    }
+                    value={Object.values(skillOptionsByDomain)
+                      .flat()
+                      .filter((option) =>
+                        Array.isArray(profile.skills)
+                          ? profile.skills.includes(option.value)
+                          : false
+                      )}
+                    onChange={handleSkillsChange}
+                    styles={customStyles}
+                    isDisabled={!isEditing && !isFirstVisit}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
+                </div>
               </div>
             </div>
           </div>
   
-          {/* Buttons positioned at the bottom - matching your original functionality */}
-          
+       
         </div>
-        <div className="flex justify-center mt-5">
+           {/* Action Buttons */}
+           <div className="flex justify-center gap-4 mt-6">
             <button
               type="button"
-              className="text-center px-5 py-2 bg-[#6D0BCF] rounded-lg mr-3"
+              className="px-5 py-2 bg-[#6D0BCF] hover:bg-[#3D306F] text-white rounded text-sm shadow-lg hover:shadow-[#3D306F]/50 transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-1"
               onClick={() => {
                 setIsEditing(true);
                 setIsFirstVisit(true);
               }}
             >
-              Edit
+              <span>Edit Profile</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
             </button>
             <button
               type="submit"
-              className="text-center px-5 py-2 bg-[#6D0BCF] rounded-lg"
+              className="px-5 py-2 bg-[#6D0BCF] hover:bg-[#3D306F] text-white rounded text-sm shadow-lg hover:shadow-[#3D306F]/50 transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-1 disabled:opacity-50 disabled:hover:bg-[#6D0BCF] disabled:hover:shadow-none disabled:transform-none"
               disabled={!isEditing && !isFirstVisit}
             >
-              Save
+              <span>Save Changes</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
             </button>
           </div>
       </form>
     </div>
   );
+
 };
 
 export default Profile;

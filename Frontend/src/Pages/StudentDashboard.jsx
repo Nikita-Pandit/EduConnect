@@ -753,7 +753,8 @@ const StudentDashboard = () => {
                 {selectedTeachers.map((teacher, index) => (
                   <li 
                     key={index} 
-                    className="bg-[#1a1f3d] hover:bg-[#0d1126] p-3 rounded-lg transition-colors duration-300 flex items-center gap-3 border border-[#9B30FF] shadow-md hover:shadow-purple-500/10"
+                    // className="bg-[#1a1f3d] hover:bg-[#0d1126] p-3 rounded-lg transition-colors duration-300 flex items-center gap-3 border border-[#9B30FF] shadow-md hover:shadow-purple-500/10"
+                    className="bg-[#1a1f3d] hover:bg-[#0d1126] p-3 rounded-lg transition-colors duration-300 flex items-center gap-3  shadow-md hover:shadow-purple-500/10"
                   >
                     <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
                     <span>{teacher.name}</span>
