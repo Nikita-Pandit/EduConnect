@@ -73,6 +73,8 @@ const Login = () => {
         <div className="relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-[#E1C3FF] text-white">
           <button
             className="absolute top-4 right-4 text-purple-400"
+            // className=" absolute top-4 right-4 bg-gradient-to-r from-[#3D306F] to-[#9B30FF] hover:from-[#9B30FF] hover:to-[#3D306F] px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-[#3D306F] flex items-center gap-2"
+
             onClick={handleClose} // Navigate to the home page
           >
             ✖
@@ -132,6 +134,7 @@ const Login = () => {
             <button
               type="submit"
               className="w-full px-5 py-2 bg-[#6D0BCF] border-[1.5px] border-[#E1C3FF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#46008B] hover:border-[#9B30FF]"
+              // className=" w-full px-5 py-2 border-[1.5px] border-[#E1C3FF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#46008B] hover:border-[#9B30FF] bg-gradient-to-r from-[#3D306F] to-[#9B30FF] hover:from-[#9B30FF] hover:to-[#3D306F] px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-[#3D306F] flex items-center gap-2"
 
               disabled={!isFormValid || loading}
             >
