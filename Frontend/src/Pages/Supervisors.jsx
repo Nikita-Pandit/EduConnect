@@ -11,7 +11,7 @@ const Supervisors = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
 
-  const studentId = localStorage.getItem("studentId"); // Get student ID
+  const studentId = localStorage.getItem("studentId");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,8 +19,6 @@ const Supervisors = () => {
         const response = await axios.get("http://localhost:3002/api/Supervisors", {
           params: { name, domain, studentId },
         });
-
-        console.log("Data fetched:", response.data.allProfileDetails);
         setData(response.data.allProfileDetails);
         setFilteredData(response.data.allProfileDetails);
       } catch (error) {
@@ -48,24 +46,26 @@ const Supervisors = () => {
   };
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center mt-20 gap-8">
-        <div className="relative">
+    <div className="min-h-screen bg-[#091024] text-white p-6">
+      {/* Search and Filter Section */}
+      <div className="flex flex-col md:flex-col items-center justify-center mt-10 gap-4 md:gap-8">
+        <div className="relative w-full md:w-96">
           <input
             type="text"
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Search teacher by name..."
-            className="text-white-600 text-center bg-zinc-500 p-4 border-2 rounded-md outline-none w-96"
+            className="text-white bg-[#0B142C] p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full  focus:ring-2 focus:ring-[#9B30FF]"
+
             autoComplete="off"
           />
           {showSuggestions && suggestions.length > 0 && (
-            <div className="absolute z-10 mt-1 w-96 bg-zinc-600 border border-gray-300 rounded-md shadow-lg">
+            <div className="absolute z-10 mt-1 w-full bg-[#0B142C]  rounded-md shadow-lg max-h-60 overflow-auto">
               {suggestions.map((suggestion, index) => (
                 <div
                   key={index}
-                  className="p-2 hover:bg-zinc-500 cursor-pointer"
+                  className="p-3 hover:bg-[#3D306F] cursor-pointer text-[#E1C3FF]"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion.name}
@@ -79,61 +79,74 @@ const Supervisors = () => {
           name="domain"
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
-          className="text-black-500 bg-zinc-500 p-4 border-2 rounded-md outline-none w-96"
+          className="text-white bg-[#0B142C] p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all w-full md:w-96 duration-300 focus:ring-2 focus:ring-[#9B30FF]"
+
         >
           <option value="">Select Domain</option>
           <option value="Web Development">Web Development</option>
-          <option value="Machine Learning">ML</option>
+          <option value="Machine Learning">Machine Learning</option>
           <option value="App Development">App Development</option>
           <option value="UI/UX Design">UI/UX Design</option>
         </select>
       </div>
 
+      {/* Teachers Grid */}
       <div className="p-5">
-        <div className="p-5 justify-center flex flex-row flex-wrap gap-5">
-          {filteredData.length > 0 ? (
-            filteredData.map((item, index) => {
-              const rank = item.rank?.[studentId] || "N/A"; // Get rank or default to "N/A"
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 max-w-6xl  hover:transform hover:scale-105">
+            {filteredData.length > 0 ? (
+              filteredData.map((item, index) => {
+                const rank = item.rank?.[studentId] || "N/A";
 
-              return (
-                <div key={index} className="bg-zinc-500 card p-3">
-                  <div className="image-profile-container border rounded-md">
-                    <img
-                      className="rounded-md w-full h-full object-cover"
-                      src={`http://localhost:3002${item.image}`}
-                      alt={item.name}
-                    />
+                return (
+                  <div 
+                    key={index} 
+                    className="bg-[#0B142C] p-5 rounded-xl  shadow-lg hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[300px] mx-auto"
+                  >
+                    {/* Teacher Image */}
+                    <div className="rounded-xl overflow-hidden mb-4">
+                      <img
+                        className="w-full h-48 object-cover"
+                        src={`http://localhost:3002${item.image}`}
+                        alt={item.name}
+                      />
+                    </div>
+                    
+                    {/* Teacher Info */}
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <h2 className="text-xl font-bold text-[#E1C3FF]">
+                          {item.name}
+                        </h2>
+                        <span className="bg-[#6D0BCF] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                          {rank}
+                        </span>
+                      </div>
+                      
+                      <p className="text-sm text-[#E1C3FF]">
+                        {Array.isArray(item.domain) ? item.domain.join(", ") : item.domain}
+                      </p>
+                      
+                      <button
+                        className="w-full mt-4 px-4 py-2 bg-[#6D0BCF] hover:bg-[#5A0AAE] text-white rounded-lg text-sm transition-all"
+                        onClick={() => navigate("/ViewTeacherDetails", { state: { teacherID: item.teacherID } })}
+                      >
+                        View Details
+                      </button>
+                    </div>
                   </div>
-                  <h1 className="student-name">{item.name}</h1>
-                  
-                  <div className="flex items-center gap-2">
-                    <p>{item.domain.join(", ")}</p>
-                    <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
-                      {rank}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-center">
-                    <button
-                      type="button"
-                      className="more-info text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5"
-                      onClick={() => navigate("/ViewTeacherDetails", { state: { teacherID: item.teacherID } })}
-                    >
-                      View more details
-                    </button>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <p>No data available</p>
-          )}
+                );
+              })
+            ) : (
+              <div className="col-span-full text-center py-10">
+                <p className="text-[#E1C3FF]">No teachers found matching your criteria</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 export default Supervisors;
-
-

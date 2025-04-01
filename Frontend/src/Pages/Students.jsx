@@ -46,7 +46,7 @@ const Students = () => {
           onChange={(e) => setBranch(e.target.value)}
           required
           // className="text-white bg-[#0d1126] p-3 rounded-xl border-2 border-[#9B30FF] shadow-sm shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full md:w-64"
-          className="text-white bg-[#0d1126] p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full md:w-64"
+          className="text-white bg-[#0B142C] p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full md:w-64"
         >
           <option value="">Select Branch</option>
           <option value="CSE">CSE</option>
