@@ -34,7 +34,7 @@ const Login = () => {
       const userDetails = response.data.userMoreDetails;
       if (userDetails.studentID) {
         localStorage.setItem("studentId", userDetails.studentID);
-        setTimeout(() => navigate("/Profile", { state: { id: userDetails.studentID } }), 2000);
+        setTimeout(() => navigate("/StudentDashboard", { state: { id: userDetails.studentID } }), 2000);
       } else {
         localStorage.setItem("teacherId", userDetails.teacherID);
         setTimeout(() => navigate("/TeacherDashboard", { state: { id: userDetails.teacherID } }), 2000);
