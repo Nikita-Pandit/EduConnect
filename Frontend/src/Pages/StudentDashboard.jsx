@@ -104,11 +104,6 @@ const StudentDashboard = () => {
       {/* Student Info Card */}
       <div className="bg-zinc-800 rounded-xl p-6 shadow-lg border-2 border-blue-500 mb-8">
         <div className="flex flex-col md:flex-row items-center gap-6">
-          {/* <img
-            src={studentInfo.image || "/images/default_image.jpg"}
-            alt="Profile"
-            className="w-32 h-32 rounded-full object-cover border-4 border-blue-400"
-          /> */}
 <img
   src={
     studentInfo.image 

@@ -32,6 +32,8 @@ const getTeacherInfo = async (req, res) => {
   console.log(teacherId);
   try {
     const teacher = await teacherModel.findById(teacherId);
+    
+
     console.log("Inside api/teacher/:id", teacher);
     if (!teacher) {
       return res.status(404).json({ message: "Teacher not found" });

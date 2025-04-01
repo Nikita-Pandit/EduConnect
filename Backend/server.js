@@ -118,7 +118,7 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
       {
         [`selectStudent.${teacherID}`]: true, // Query where teacherID exists and is true
       },
-      "name rollNo"
+      "name rollNo domain branch image"
     ); // Only fetch name & rollNumber
     console.log("*****************************************8", students);
     if (students.length > 0) {
