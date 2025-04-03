@@ -298,7 +298,7 @@ const ViewMoreDetails = () => {
 
   return (
     <div className="min-h-screen bg-[#091024] text-white p-6 w-full">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mt-10 mx-auto">
         <ToastContainer />
         <div className="profile-container w-full h-full p-8 bg-[#0d1126] rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300">
           <div className="flex flex-col md:flex-row gap-6">

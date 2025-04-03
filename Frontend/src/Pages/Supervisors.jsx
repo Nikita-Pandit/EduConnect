@@ -92,7 +92,7 @@ const Supervisors = () => {
 
       {/* Teachers Grid */}
       <div className="p-5">
-        <div className="flex justify-center">
+        <div className="flex mt-10 justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8 max-w-6xl  hover:transform hover:scale-105">
             {filteredData.length > 0 ? (
               filteredData.map((item, index) => {
@@ -101,7 +101,9 @@ const Supervisors = () => {
                 return (
                   <div 
                     key={index} 
-                    className="bg-[#0B142C] p-5 rounded-xl  shadow-lg hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[300px] mx-auto"
+                    // className="bg-[#0B142C] p-5 rounded-xl  shadow-lg hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[300px] mx-auto"
+                    className="bg-[#0B142C] p-5 rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[350px] hover:transform hover:scale-105 flex flex-col"
+
                   >
                     {/* Teacher Image */}
                     <div className="rounded-xl overflow-hidden mb-4">

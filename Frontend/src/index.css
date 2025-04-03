@@ -141,3 +141,9 @@ ul li:hover{
         .animate-fade-in {
           animation: fade-in 0.6s ease-out forwards;
         }
+
+
+        /* In your main layout component */
+.main-content {
+  padding-top: 64px; /* Adjust this value based on your header height */
+}

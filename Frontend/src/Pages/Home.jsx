@@ -7,7 +7,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center p-10">
+    <div className="bg-gray-900 text-white min-h-screen flex mt-10 flex-col items-center p-10">
       {/* Hero Section */}
       <motion.h1
         initial={{ opacity: 0, y: -50 }}

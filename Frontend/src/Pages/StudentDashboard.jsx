@@ -640,7 +640,7 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-[#091024] text-white p-6">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex mt-10 justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-[#E1C3FF] animate-pop-in">Student Dashboard</h1>
         <button
           onClick={() => navigate("/profile")}

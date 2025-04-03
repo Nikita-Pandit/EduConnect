@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const app = express();
 
@@ -37,7 +39,6 @@ app.use(
   "/images",
   express.static(path.join(__dirname, "../Frontend/public/images"))
 );
-// app.use('/images', express.static(path.join(__dirname, "../../Frontend/public/images")));
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -108,10 +109,7 @@ app.post("/api/studentCheckbox", async (req, res) => {
 // Keep all your existing endpoints
 
 app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
-  console.log("entere ssupervisedstidents");
   const { teacherID } = req.params;
-  console.log("Teacher ID is:", teacherID);
-
   try {
     // Find all students where selectStudent[teacherID] is true
     const students = await studentMoreInfo.find(
@@ -120,7 +118,6 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
       },
       "name rollNo domain branch image"
     ); // Only fetch name & rollNumber
-    console.log("*****************************************8", students);
     if (students.length > 0) {
       res.json({ students });
     } else {
@@ -173,11 +170,8 @@ app.post("/api/teacher/removeStudent", async (req, res) => {
   }
 });
 
-// ... (rest of the server code remains the same)
 
 //4th year
-// Add this to your server.js file (or wherever you have your routes)
-
 app.get("/api/student/unique/:studentId", async (req, res) => {
   const { studentId } = req.params;
   console.log("happy11111", studentId);
@@ -207,14 +201,13 @@ app.get("/api/student/unique/:studentId", async (req, res) => {
   }
 });
 
-// **********************************************************************************************************************************
 
 // Get teacher rankings for a specific student
 app.get("/api/teacherRanks/:studentId", async (req, res) => {
   try {
     const { studentId } = req.params;
     
-    // Find all teachers who have ranked this student
+    // Find all teachers who have prioritized this student
     const teachers = await teacherMoreInfo.find({
       [`rank.${studentId}`]: { $exists: true }
     });

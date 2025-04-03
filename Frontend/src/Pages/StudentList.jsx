@@ -146,7 +146,7 @@ const StudentList = () => {
    return (
     <div className="min-h-screen bg-[#091024] text-white p-6 animate-fade-in">
       <div className="max-w-7xl mx-auto">
-        <div className="p-6 bg-[#0d1126] rounded-xl shadow-2xl border-2 border-[#9B30FF] transform transition-all duration-500 hover:shadow-purple-500/30">
+        <div className="p-6 bg-[#0d1126] rounded-xl shadow-2xl mt-10  border-2 border-[#9B30FF] transform transition-all duration-500 hover:shadow-purple-500/30">
           <h2 className="text-2xl font-bold text-[#E1C3FF] mb-6">Student Details</h2>
           
           {studentDetailsContainer.length > 0 ? (
@@ -267,3 +267,5 @@ const StudentList = () => {
 };
 
 export default StudentList;
+
+

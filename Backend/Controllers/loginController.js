@@ -1,3 +1,5 @@
+
+
 const bcrypt = require("bcrypt");
 const studentModel = require("../Models/studentmodel");
 const teacherModel = require("../Models/teacherModel");
@@ -6,25 +8,17 @@ const teacherMoreInfo = require("../Models/teacherMoreInfo");
 
 const loginController = async (req, res) => {
   const { email, password } = req.body;
-
   console.log("Received Login Request for:", email);
-
   console.log(password);
   try {
-    const user =
-  
+    const user =  
       (await studentModel.findOne({ email }))  || 
       (await teacherModel.findOne({ email }))
       
-
     if (!user) {
       console.log("User not found");
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
-    console.log("User found:", user);
-    console.log("Entered Password:", password);
-    console.log("Stored Hashed Password:", user.password);
 
     // Compare entered password with hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);

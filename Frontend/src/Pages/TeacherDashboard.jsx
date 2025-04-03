@@ -415,9 +415,9 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#091024] text-white p-6">
+    <div className="min-h-screen  bg-[#091024] text-white p-6">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-8 mt-10">
         <h1 className="text-3xl font-bold text-[#E1C3FF] hover:text-[#9B30FF] transition-colors duration-300">
           Teacher Dashboard
         </h1>
