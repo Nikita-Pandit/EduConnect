@@ -14,10 +14,7 @@ const Students = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:3002/api/Students`, {
-          params: {
-            branch: branch,
-            year: year,
-            domain: domain,
+          params: {branch: branch, year: year,domain: domain,
           },
         });
         console.log("Data fetched:", response.data.allProfileDetails);
@@ -109,7 +106,7 @@ const Students = () => {
                       {item.name}
                     </h1>
                     <p className="text-sm text-[#E1C3FF] group-hover:text-white transition-all duration-300 mt-2 whitespace-pre-line">
-                      {item.domain}
+                      {Array.isArray(item.domain) ? item.domain.join(" , ") : item.domain}
                     </p>
                     <div className="mt-auto pt-6">
                       <button

@@ -1,0 +1,36 @@
+[
+  {
+    "Bio": "Passionate Computer Science professor with expertise in AI and Web Development.",
+    "github": "https://github.com/simranshah",
+    "linkedin": "https://linkedin.com/in/simranshah",
+    "twitter": "https://twitter.com/simranshah",
+    "domain": [
+      "AI",
+      "Web Development"
+    ],
+    "location": "Bhubaneswar, India",
+    "teacherID": "66151b32a04de4b57c159e8e",
+    "name": "Simran Shah",
+    "image": "/images/default_image.jpg",
+    "rank": {},
+    "_id": "67efc4012a66dec757bf8705",
+    "__v": 0
+  },
+  {
+    "Bio": "Experienced software engineer and mentor in Data Structures and Algorithms.",
+    "github": "https://github.com/abcdev",
+    "linkedin": "https://linkedin.com/in/abcdev",
+    "twitter": "https://twitter.com/abcdev",
+    "domain": [
+      "Data Structures",
+      "Algorithms"
+    ],
+    "location": "Delhi, India",
+    "teacherID": "66151b45a04de4b57c159e8f",
+    "name": "abc",
+    "image": "/images/default_image.jpg",
+    "rank": {},
+    "_id": "67efc4012a66dec757bf8706",
+    "__v": 0
+  }
+]

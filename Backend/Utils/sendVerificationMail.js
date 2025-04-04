@@ -33,3 +33,9 @@ const sendVerificationMail = async (email,token,role)=> {
     };
     
     module.exports = sendVerificationMail;
+
+
+
+
+    
+    

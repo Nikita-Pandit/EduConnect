@@ -1,6 +1,7 @@
 
 const studentModel=require("../Models/studentmodel")
 const studentMoreInfo=require("../Models/studentMoreInfo")
+
   const getProfileInfo = async (req, res) => {
     const { id } = req.params;
     console.log("Fetching profile for student ID:", id);

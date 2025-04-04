@@ -1,13 +1,23 @@
 
 
 const express = require("express");
-const app = express();
-
+const app = express()
 const nodemailer = require("nodemailer");
+
 const dotenv = require("dotenv");
 const env = dotenv.config();
 
 const mongoose = require("mongoose");
+// Connect to MongoDB
+mongoose
+  .connect(process.env.database_url)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err.message);
+  });
+
 
 const cors = require("cors");
 app.use(cors());
@@ -26,6 +36,16 @@ const chatRoutes = require("./Routes/chatRoutes");
 const teacherMoreInfo = require("./Models/teacherMoreInfo");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
+
+
+//seed data for teacher login
+const teacherSeedRoute = require("./Routes/teacherSeed");
+app.use("/api", teacherSeedRoute);
+
+//seed sata for teachermoreinfo
+const teacherMoreInfoSeedRoute = require("./Routes/teacherMoreInfoSeed");
+app.use("/api", teacherMoreInfoSeedRoute);
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,15 +67,6 @@ app.use("/uploads", express.static("uploads"));
 const jwt = require("jsonwebtoken");
 const studentMoreInfo = require("./Models/studentMoreInfo");
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.database_url)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err.message);
-  });
 
 app.use("/api", signupRoutes);
 app.use("/api", loginRoutes);

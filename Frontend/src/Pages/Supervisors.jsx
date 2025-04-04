@@ -11,7 +11,7 @@ const Supervisors = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
 
-  const studentId = localStorage.getItem("studentId");
+  const studentId = localStorage.getItem("studentId"); // Get student ID
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +19,7 @@ const Supervisors = () => {
         const response = await axios.get("http://localhost:3002/api/Supervisors", {
           params: { name, domain, studentId },
         });
+
         setData(response.data.allProfileDetails);
         setFilteredData(response.data.allProfileDetails);
       } catch (error) {

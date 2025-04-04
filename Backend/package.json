@@ -19,12 +19,14 @@
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.2",
+    "mongoose": "^8.13.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
     "path": "^0.12.7",
     "pdf-parse": "^1.1.1",
+    "postman": "^0.2.0",
     "react-chatbot-kit": "^2.2.2"
   }
 }

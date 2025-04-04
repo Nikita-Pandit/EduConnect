@@ -22,7 +22,7 @@ image:{
 },
 rank: {
   type: Map,
-  of: Number, // Assuming rank is a number (e.g., 1, 2, 3, etc.)
+  of: Number, 
   default: new Map(),
 }
 

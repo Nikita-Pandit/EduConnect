@@ -3,19 +3,15 @@ const teacherModel = require("../Models/teacherModel");
 const studentMoreInfo = require("../Models/studentMoreInfo");
 
 const getTeacherProfileInfo = async (req, res) => {
-  // console.log("hello");
   const { teacherId } = req.params;
   try {
     const moreInfo = await teacherMoreInfo.findOne({ teacherID: teacherId });
-    console.log("Before moreInfo", moreInfo);
     if (!moreInfo) {
-      // console.log("if");
       return res.status(404).json({
         success: false,
         message: "Profile info not matched from the database.",
       });
     }
-    // console.log("After", moreInfo);
     res.status(200).json({ success: true, moreInfo });
   } catch (error) {
     console.error("Error in getProfileInfo:", error.message);
@@ -38,7 +34,6 @@ const getTeacherInfo = async (req, res) => {
     if (!teacher) {
       return res.status(404).json({ message: "Teacher not found" });
     }
-    console.log(teacher);
     res.status(200).json({
       name: teacher.name,
       email: teacher.email,

@@ -131,7 +131,7 @@ const StudentList = () => {
       setSupervisedStudents(response.data.students || []);
     } catch (error) {
       console.error("Error saving changes:", error);
-      // alert("Error saving changes. Please try again.");
+      alert("Error saving changes. Please try again.");
     }
   };
 

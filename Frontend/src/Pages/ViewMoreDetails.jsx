@@ -353,7 +353,8 @@ const ViewMoreDetails = () => {
                     <label className="text-sm text-[#E1C3FF] hover:text-[#3D306F] transition-colors duration-300">Location</label>
                     <input
                       type="text"
-                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70
+                       shadow-sm shadow-[#9B30FF]/10 hover:bg-[#3D306F]/20 transition-all duration-300"
                       placeholder="Location"
                       name="location"
                       value={profile.location}
