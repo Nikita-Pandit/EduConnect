@@ -297,7 +297,6 @@ const Profile = () => {
   };
 
   const handleSave = async (e) => {
-    console.log("first");
     try {
       const response = await axios.post(
         `http://localhost:3002/api/Profile/${id}`,
@@ -314,7 +313,6 @@ const Profile = () => {
       setIsEditing(false); // Exit edit mode after saving
       navigate("/StudentDashboard");
     } catch (error) {
-      console.error("Error saving profile info in the database:", error);
       toast.error("Failed to save profile info in the database");
     }
   };
