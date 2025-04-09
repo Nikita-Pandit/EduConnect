@@ -375,78 +375,77 @@ const TeacherDashboard = () => {
           </div>
         </div>
       </div>
-  
-      {/* Domain Modal */}
-      {showDomainModal && selectedStudent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
-          <div className="bg-[#0d1126] rounded-xl p-6 shadow-lg border-2 border-[#9B30FF] max-w-md w-full animate-[fadeIn_0.3s_ease-in-out]">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-[#E1C3FF] hover:text-[#9B30FF] transition-colors duration-300">
-                {selectedStudent.name}'s Domains
-              </h3>
-              <button
-                onClick={closeDomainModal}
-                className="text-gray-400 hover:text-white transition-colors duration-300 transform hover:rotate-90"
+
+  {/* Domain Modal */}
+{showDomainModal && selectedStudent && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+    <div className="bg-[#0d1126] rounded-xl p-6 shadow-lg border-2 border-[#9B30FF] max-w-md w-full animate-[fadeIn_0.3s_ease-in-out]">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-bold text-[#E1C3FF] hover:text-[#9B30FF] transition-colors duration-300">
+          {selectedStudent.name}'s Domains
+        </h3>
+        <button
+          onClick={closeDomainModal}
+          className="text-gray-400 hover:text-white transition-colors duration-300 transform hover:rotate-90"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+        {selectedStudent.domain ? (
+          Array.isArray(selectedStudent.domain) ? (
+            selectedStudent.domain.map((domain, index) => (
+              <div
+                key={index}
+                className="bg-[#1a1f3d] p-3 rounded-lg flex items-center hover:bg-[#2a2f4d] transition-colors duration-300 group"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                <span className="rounded-full bg-[#6D0BCF] px-3 py-1 text-sm mr-3 group-hover:bg-[#46008B] transition-colors duration-300">
+                  Domain {index + 1}
+                </span>
+                <span className="group-hover:text-[#E1C3FF] transition-colors duration-300">
+                  {domain}
+                </span>
+              </div>
+            ))
+          ) : (
+            <div className="bg-[#1a1f3d] p-3 rounded-lg flex items-center hover:bg-[#2a2f4d] transition-colors duration-300 group">
+              <span className="rounded-full bg-[#6D0BCF] px-3 py-1 text-sm group-hover:bg-[#46008B] transition-colors duration-300">
+                {selectedStudent.domain}
+              </span>
             </div>
-  
-            <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-              {selectedStudent.domain ? (
-                Array.isArray(selectedStudent.domain) ? (
-                  selectedStudent.domain.map((domain, index) => (
-                    <div
-                      key={index}
-                      className="bg-[#1a1f3d] p-3 rounded-lg flex items-center hover:bg-[#2a2f4d] transition-colors duration-300 group"
-                    >
-                      <span className="rounded-full bg-[#6D0BCF] px-3 py-1 text-sm mr-3 group-hover:bg-[#46008B] transition-colors duration-300">
-                        {domain}
-                      </span>
-                      <span className="group-hover:text-[#E1C3FF] transition-colors duration-300">
-                        Domain {index + 1}
-                      </span>
-                    </div>
-                  ))
-                ) : (
-                  <div className="bg-[#1a1f3d] p-3 rounded-lg flex items-center hover:bg-[#2a2f4d] transition-colors duration-300 group">
-                    <span className="rounded-full bg-[#6D0BCF] px-3 py-1 text-sm group-hover:bg-[#46008B] transition-colors duration-300">
-                      {selectedStudent.domain}
-                    </span>
-                  </div>
-                )
-              ) : (
-                <p className="text-gray-400 hover:text-gray-300 transition-colors duration-300">
-                  No domains specified
-                </p>
-              )}
-            </div>
-  
-            <div className="mt-6 flex justify-end">
-              <button
-                onClick={closeDomainModal}
-                className="bg-[#6D0BCF] hover:bg-[#46008B] px-4 py-2 rounded-lg transition-all duration-300 border border-[#E1C3FF] hover:scale-105 shadow hover:shadow-[#9B30FF]/50"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-  
+          )
+        ) : (
+          <p className="text-gray-400 hover:text-gray-300 transition-colors duration-300">
+            No domains specified
+          </p>
+        )}
+      </div>
+
+      <div className="mt-6 flex justify-end">
+        <button
+          onClick={closeDomainModal}
+          className="bg-[#6D0BCF] hover:bg-[#46008B] px-4 py-2 rounded-lg transition-all duration-300 border border-[#E1C3FF] hover:scale-105 shadow hover:shadow-[#9B30FF]/50"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       {/* Tooltip container (add this at the bottom of your component) */}
       <div className="fixed z-[1000] hidden bg-[#0d1126] text-white px-3 py-2 rounded-lg border border-[#9B30FF] text-sm max-w-xs pointer-events-none transition-opacity duration-300 shadow-lg" id="tooltip"></div>
     </div>
