@@ -130,8 +130,7 @@ const StudentList = () => {
       );
       setSupervisedStudents(response.data.students || []);
     } catch (error) {
-      console.error("Error saving changes:", error);
-      alert("Error saving changes. Please try again.");
+      alert("This student is already selected by another teacher!");
     }
   };
 

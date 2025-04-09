@@ -80,7 +80,7 @@ const SignUp = () => {
         </div>
       )}
 
-      <div className="flex items-center justify-center min-h-screen bg-[#090c1b]">
+      <div className="flex items-center justify-center min-h-screen bg-[#091024]">
         <div
           className={`relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-[#E1C3FF] text-white ${
             loading ? "filter blur-sm" : ""

@@ -38,15 +38,6 @@ const path = require("path");
 const PORT = process.env.PORT || 5000;
 
 
-//seed data for teacher login
-const teacherSeedRoute = require("./Routes/teacherSeed");
-app.use("/api", teacherSeedRoute);
-
-//seed sata for teachermoreinfo
-const teacherMoreInfoSeedRoute = require("./Routes/teacherMoreInfoSeed");
-app.use("/api", teacherMoreInfoSeedRoute);
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

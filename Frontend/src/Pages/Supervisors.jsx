@@ -103,9 +103,7 @@ const Supervisors = () => {
                   <div 
                     key={index} 
                     // className="bg-[#0B142C] p-5 rounded-xl  shadow-lg hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[300px] mx-auto"
-                    className="bg-[#0B142C] p-5 rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[350px] hover:transform hover:scale-105 flex flex-col"
-
-                  >
+                    className="bg-[#0B142C] p-5 rounded-xl shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/40 transition-all duration-300 w-full max-w-[350px] hover:transform hover:scale-105 flex flex-col" >
                     {/* Teacher Image */}
                     <div className="rounded-xl overflow-hidden mb-4">
                       <img
