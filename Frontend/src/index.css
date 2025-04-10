@@ -147,3 +147,14 @@ ul li:hover{
 .main-content {
   padding-top: 64px; /* Adjust this value based on your header height */
 }
+
+
+
+/* Tailwind - Add to globals if needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

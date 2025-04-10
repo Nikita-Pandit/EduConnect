@@ -1,314 +1,390 @@
-// import React from "react";
-// import { motion } from "framer-motion";
-// import { useNavigate } from "react-router-dom";
-// // import {signup} from "./SignUp";
-// import {
-//   Sparkles,
-//   MessageSquareText,
-//   ShieldCheck,
-//   BarChart2,
-//   Users,
-//   Zap,
-// } from "lucide-react";
-
-// const features = [
-//   { icon: <ShieldCheck className="w-6 h-6 text-[#9B30FF]" />, text: "Secure Sign Up & Login" },
-//   { icon: <MessageSquareText className="w-6 h-6 text-[#9B30FF]" />, text: "AI Chatbot for Queries" },
-//   { icon: <Zap className="w-6 h-6 text-[#9B30FF]" />, text: "Teacher Prioritization System" },
-//   { icon: <BarChart2 className="w-6 h-6 text-[#9B30FF]" />, text: "Dynamic Ranking Visualization" },
-//   { icon: <Users className="w-6 h-6 text-[#9B30FF]" />, text: "Student-Teacher Selection" },
-//   { icon: <Sparkles className="w-6 h-6 text-[#9B30FF]" />, text: "Domain & Skill Matching" },
-// ];
-
-// const Home = () => {
-//   const navigate = useNavigate();
-
-//   return (
-//     <div className="bg-[#091024] min-h-screen text-white font-sans scroll-smooth">
-      
-//       {/* Hero Section */}
-//       <section className="text-center py-24 px-6 bg-gradient-to-b from-[#0d1126] via-[#091024] to-[#0d1126]">
-//         <motion.h1
-//           initial={{ opacity: 0, y: -30 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.8 }}
-//           className="text-5xl font-bold text-[#E1C3FF] mb-4 drop-shadow-md"
-//         >
-//           Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E1C3FF] to-[#9B30FF]">EduConnect</span>
-//         </motion.h1>
-//         <motion.p
-//           initial={{ opacity: 0 }}
-//           animate={{ opacity: 1 }}
-//           transition={{ delay: 0.3 }}
-//           className="text-lg text-[#9B30FF] max-w-xl mx-auto"
-//         >
-//           AI-powered collaboration platform connecting students and teachers for project guidance, mentorship, and innovation.
-//         </motion.p>
-//         <motion.button
-//           whileHover={{ scale: 1.05 }}
-//           whileTap={{ scale: 0.95 }}
-//           className="mt-10 px-8 py-3 bg-gradient-to-r from-[#6D0BCF] to-[#9B30FF] text-white rounded-full shadow-lg hover:shadow-purple-400 transition duration-300"
-//           onClick={() => navigate("/signup")}
-//         >
-//           Get Started
-//         </motion.button>
-//       </section>
-
-//       {/* Features Section with Image Left */}
-//       <section className="py-20 px-6">
-//         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-//           <motion.img
-//             whileHover={{ scale: 1.02 }}
-//             src="https://www.gstatic.com/classroom/themes/img_reachout.jpg"
-//             alt="Features Illustration"
-//             className="w-full md:w-1/2 rounded-2xl shadow-lg"
-//           />
-//           <div className="grid sm:grid-cols-2 gap-6 w-full md:w-1/2">
-//             {features.map((item, index) => (
-//               <motion.div
-//                 key={index}
-//                 whileHover={{ scale: 1.05 }}
-//                 className={`p-5 rounded-xl border shadow-md hover:shadow-purple-400 ${
-//                   index % 2 === 0 ? "bg-[#0d1126] border-[#E1C3FF]" : "bg-[#091024] border-[#9B30FF]"
-//                 }`}
-//               >
-//                 <div className="flex items-center gap-4">
-//                   {item.icon}
-//                   <p className="text-[#E1C3FF] text-lg">{item.text}</p>
-//                 </div>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* About Us Section with Image Right */}
-//       <section className="py-20 px-6 bg-[#0d1126]">
-//         <div className="max-w-7xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12">
-//           <motion.img
-//             whileHover={{ scale: 1.02 }}
-//             src="https://www.gstatic.com/classroom/themes/img_code.jpg"
-//             alt="About Us"
-//             className="w-full md:w-1/2 rounded-2xl shadow-lg"
-//           />
-//           <motion.div
-//             whileHover={{ scale: 1.02 }}
-//             className="bg-[#091024] p-8 rounded-2xl border border-[#E1C3FF] w-full md:w-1/2 transition-shadow hover:shadow-purple-500/40"
-//           >
-//             <h2 className="text-4xl font-semibold text-[#E1C3FF] mb-4">About Us</h2>
-//             <p className="text-lg leading-relaxed">
-//               EduConnect is a next-gen student-teacher collaboration platform designed to bridge the gap between ambitious students and experienced mentors. With intelligent AI suggestions and skill-based matching, we simplify your journey from project ideation to successful execution.
-//             </p>
-//           </motion.div>
-//         </div>
-//       </section>
-
-//       {/* Contact Us Section with Image Left */}
-//       <section className="py-20 px-6 bg-[#0d1126]">
-//         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-//           <motion.img
-//             whileHover={{ scale: 1.02 }}
-//             src="https://www.gstatic.com/classroom/themes/img_graduation.jpg"
-//             alt="Contact Us"
-//             className="w-full md:w-1/2 rounded-2xl shadow-lg"
-//           />
-//           <motion.div
-//             whileHover={{ scale: 1.02 }}
-//             className="bg-[#091024] p-8 rounded-2xl border border-[#9B30FF] w-full md:w-1/2 text-center shadow-md hover:shadow-purple-400"
-//           >
-//             <h2 className="text-4xl text-[#E1C3FF] mb-6">Contact Us</h2>
-//             <p className="text-white mb-4 text-lg">Have questions or feedback? Reach out to us!</p>
-//             <p className="text-[#9B30FF] text-lg font-medium">
-//               Email: <a href="mailto:support@educonnect.com">support@educonnect.com</a>
-//             </p>
-//           </motion.div>
-//         </div>
-//       </section>
-
-//     </div>
-//   );
-// };
-
-// export default Home;
-
-
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Sparkles,
-  MessageSquareText,
-  ShieldCheck,
-  BarChart2,
-  Users,
-  Zap,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
-const features = [
-  { icon: <ShieldCheck className="w-6 h-6 text-[#9B30FF]" />, text: "Secure Sign Up & Login" },
-  { icon: <MessageSquareText className="w-6 h-6 text-[#9B30FF]" />, text: "AI Chatbot for Queries" },
-  { icon: <Zap className="w-6 h-6 text-[#9B30FF]" />, text: "Teacher Prioritization System" },
-  { icon: <BarChart2 className="w-6 h-6 text-[#9B30FF]" />, text: "Dynamic Ranking Visualization" },
-  { icon: <Users className="w-6 h-6 text-[#9B30FF]" />, text: "Student-Teacher Selection" },
-  { icon: <Sparkles className="w-6 h-6 text-[#9B30FF]" />, text: "Domain & Skill Matching" },
+const domainOptions = [
+  {
+    value: "Web Development",
+    label: "Web Development",
+    img: "https://img.icons8.com/color/96/web-design.png",
+  },
+  {
+    value: "Data Science",
+    label: "Data Science",
+    img: "https://img.icons8.com/color/96/data-configuration.png",
+  },
+  {
+    value: "Machine Learning",
+    label: "Machine Learning",
+    img: "https://img.icons8.com/color/96/artificial-intelligence.png",
+  },
+  {
+    value: "App Development",
+    label: "App Development",
+    img: "https://img.icons8.com/color/96/android-os.png",
+  },
+  {
+    value: "UI/UX Design",
+    label: "UI/UX Design",
+    img: "https://img.icons8.com/color/96/design.png",
+  },
+  {
+    value: "Cybersecurity",
+    label: "Cybersecurity",
+    img: "https://img.icons8.com/color/96/privacy.png",
+  },
+  {
+    value: "Cloud Computing",
+    label: "Cloud Computing",
+    img: "https://img.icons8.com/color/96/cloud.png",
+  },
+  {
+    value: "Blockchain",
+    label: "Blockchain",
+    img: "https://img.icons8.com/color/96/blockchain-technology.png",
+  },
+  {
+    value: "Game Development",
+    label: "Game Development",
+    img: "https://img.icons8.com/color/96/controller.png",
+  },
+  {
+    value: "DevOps",
+    label: "DevOps",
+    img: "https://img.icons8.com/color/96/devops.png",
+  },
+  {
+    value: "Embedded Systems",
+    label: "Embedded Systems",
+    img: "https://img.icons8.com/color/96/motherboard.png",
+  },
+  {
+    value: "Internet of Things",
+    label: "Internet of Things",
+    img: "https://img.icons8.com/color/96/internet-of-things.png",
+  },
+  {
+    value: "Artificial Intelligence",
+    label: "Artificial Intelligence",
+    img: "https://img.icons8.com/color/96/artificial-intelligence.png",
+  },
+  {
+    value: "Big Data",
+    label: "Big Data",
+    img: "https://img.icons8.com/color/96/big-data.png",
+  },
+  {
+    value: "Quantum Computing",
+    label: "Quantum Computing",
+    img: "https://img.icons8.com/color/96/quantum-computing.png",
+  },
+  {
+    value: "AR/VR",
+    label: "AR/VR",
+    img: "https://img.icons8.com/color/96/augmented-reality.png",
+  },
+  {
+    value: "Bioinformatics",
+    label: "Bioinformatics",
+    img: "https://img.icons8.com/color/96/dna.png",
+  },
+  {
+    value: "Networking",
+    label: "Networking",
+    img: "https://img.icons8.com/color/96/network.png",
+  },
+  {
+    value: "Database Administration",
+    label: "Database Administration",
+    img: "https://img.icons8.com/color/96/database.png",
+  },
+  {
+    value: "Software Testing",
+    label: "Software Testing",
+    img: "https://img.icons8.com/color/96/bug.png",
+  },
+  {
+    value: "Game AI",
+    label: "Game AI",
+    img: "https://img.icons8.com/color/96/robot.png",
+  },
+  {
+    value: "Robotics",
+    label: "Robotics",
+    img: "https://img.icons8.com/color/96/robot-2.png",
+  },
+  {
+    value: "Full Stack Development",
+    label: "Full Stack Development",
+    img: "https://img.icons8.com/color/96/source-code.png",
+  },
+  {
+    value: "Microservices Architecture",
+    label: "Microservices Architecture",
+    img: "https://img.icons8.com/color/96/microservices.png",
+  },
+  {
+    value: "IT Support",
+    label: "IT Support",
+    img: "https://img.icons8.com/color/96/technical-support.png",
+  },
+  {
+    value: "E-commerce Development",
+    label: "E-commerce Development",
+    img: "https://img.icons8.com/color/96/shopping-cart.png",
+  },
+  {
+    value: "Cloud Security",
+    label: "Cloud Security",
+    img: "https://img.icons8.com/color/96/cloud-security.png",
+  },
+  {
+    value: "Penetration Testing",
+    label: "Penetration Testing",
+    img: "https://img.icons8.com/color/96/hacker.png",
+  },
+  {
+    value: "Cryptography",
+    label: "Cryptography",
+    img: "https://img.icons8.com/color/96/lock.png",
+  },
+  {
+    value: "Software Architecture",
+    label: "Software Architecture",
+    img: "https://img.icons8.com/color/96/software-architecture.png",
+  },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userType, setUserType] = useState(null);
+  const scrollRef = React.useRef(null);
+ 
+  // Check authentication status from localStorage (aligned with your login system)
+  const isLoggedIn = localStorage.getItem("studentId") || localStorage.getItem("teacherId");
+  const userRole = localStorage.getItem("studentId") ? "student" : "teacher";
 
-  useEffect(() => {
-    // Check if user is logged in by looking for tokens in localStorage
-    const checkAuthStatus = () => {
-      const teacherId = localStorage.getItem("teacherId");
-      const studentId = localStorage.getItem("studentId");
-      
-      if (teacherId) {
-        setIsLoggedIn(true);
-        setUserType("teacher");
-      } else if (studentId) {
-        setIsLoggedIn(true);
-        setUserType("student");
+  const handleButtonClick = () => {
+    if (isLoggedIn) {
+      // User is logged in - navigate to appropriate dashboard
+      // This matches your login component's navigation logic
+      if (userRole === "student") {
+        navigate("/StudentDashboard", { 
+          state: { id: localStorage.getItem("studentId") } 
+        });
       } else {
-        setIsLoggedIn(false);
-        setUserType(null);
+        navigate("/TeacherDashboard", { 
+          state: { id: localStorage.getItem("teacherId") } 
+        });
       }
-    };
-
-    checkAuthStatus();
-
-    // Optional: Listen for storage changes if needed
-    const handleStorageChange = () => checkAuthStatus();
-    window.addEventListener("storage", handleStorageChange);
-    
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
-
-  const handleDashboardNavigation = () => {
-    if (userType === "teacher") {
-      navigate("/TeacherDashboard");
-    } else if (userType === "student") {
-      navigate("/StudentDashboard");
+    } else {
+      // User is not logged in - go to signup
+      navigate("/SignUp");
     }
   };
 
-  return (
-    <div className="bg-[#091024] min-h-screen text-white font-sans scroll-smooth">
-      {/* Hero Section */}
-      <section className="text-center py-24 px-6 bg-gradient-to-b from-[#0d1126] via-[#091024] to-[#0d1126]">
-        <motion.h1
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl font-bold text-[#E1C3FF] mb-4 drop-shadow-md"
-        >
-          Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E1C3FF] to-[#9B30FF]">EduConnect</span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-lg text-[#9B30FF] max-w-xl mx-auto"
-        >
-          AI-powered collaboration platform connecting students and teachers for project guidance, mentorship, and innovation.
-        </motion.p>
-        
-        <div className="mt-10">
-          {!isLoggedIn ? (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-gradient-to-r from-[#6D0BCF] to-[#9B30FF] text-white rounded-full shadow-lg hover:shadow-purple-400 transition duration-300"
-              onClick={() => navigate("/signup")}
-            >
-              Get Started
-            </motion.button>
-          ) : (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-gradient-to-r from-[#3D306F] to-[#9B30FF] text-white rounded-full shadow-lg hover:shadow-purple-400 transition duration-300"
-              onClick={handleDashboardNavigation}
-            >
-              Go to {userType === "teacher" ? "Teacher" : "Student"} Dashboard
-            </motion.button>
-          )}
-        </div>
-      </section>
+  const scrollLeft = () =>
+    scrollRef.current.scrollBy({ left: -400, behavior: "smooth" });
+  const scrollRight = () =>
+    scrollRef.current.scrollBy({ left: 400, behavior: "smooth" });
 
-      {/* Features Section with Image Left */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          <motion.img
-            whileHover={{ scale: 1.02 }}
-            src="https://www.gstatic.com/classroom/themes/img_reachout.jpg"
-            alt="Features Illustration"
-            className="w-full md:w-1/2 rounded-2xl shadow-lg"
+  return (
+    <div className="bg-[#0B0F2C] text-white min-h-screen overflow-x-hidden">
+      {/* EDUCONNECT SECTION */}
+      <div className="relative w-full h-[80vh] flex items-center justify-center px-6 py-10 overflow-hidden">
+        <svg
+          className="absolute top-0 left-0 h-full w-[50vw] z-0 opacity-30"
+          viewBox="0 0 500 1000"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M 0 0 A 500 500 0 0 1 0 1000"
+            fill="none"
+            stroke="#A855F7"
+            strokeWidth="2"
+            strokeDasharray="12, 14"
           />
-          <div className="grid sm:grid-cols-2 gap-6 w-full md:w-1/2">
-            {features.map((item, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.05 }}
-                className={`p-5 rounded-xl border shadow-md hover:shadow-purple-400 ${
-                  index % 2 === 0 ? "bg-[#0d1126] border-[#E1C3FF]" : "bg-[#091024] border-[#9B30FF]"
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  {item.icon}
-                  <p className="text-[#E1C3FF] text-lg">{item.text}</p>
-                </div>
-              </motion.div>
-            ))}
+          <path
+            d="M 40 0 A 460 460 0 0 1 40 1000"
+            fill="none"
+            stroke="#A855F7"
+            strokeWidth="2"
+            strokeDasharray="12, 14"
+          />
+          <path
+            d="M 80 0 A 420 420 0 0 1 80 1000"
+            fill="none"
+            stroke="#A855F7"
+            strokeWidth="2"
+            strokeDasharray="12, 14"
+          />
+        </svg>
+
+        <div className="relative z-10 w-full max-w-4xl text-center">
+          <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-6 drop-shadow-md">
+            EDUCONNECT —{" "}
+            <span className="bg-gradient-to-r from-purple-500 to-indigo-400 bg-clip-text text-transparent">
+              CONNECTING MINDS, SHAPING FUTURES!
+            </span>
+          </h1>
+          <p className="text-gray-300 text-lg sm:text-xl mb-10">
+          AI-Powered Student-Teacher Collaboration Platform 
+          </p>
+
+          {/* <div className="flex justify-center">
+            <button
+              onClick={() => navigate("/signup")} 
+              className="px-10 py-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-full shadow-lg hover:scale-105 transition duration-300 text-lg"
+            >
+              Start
+            </button>
+          </div> */}
+           <div className="flex justify-center">
+            <button
+              onClick={handleButtonClick}
+              className="px-10 py-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-full shadow-lg hover:scale-105 transition duration-300 text-lg"
+            >
+              {isLoggedIn ? "Go to Dashboard" : "Get Started"}
+            </button>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* About Us Section with Image Right */}
-      <section className="py-20 px-6 bg-[#0d1126]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12">
-          <motion.img
-            whileHover={{ scale: 1.02 }}
-            src="https://www.gstatic.com/classroom/themes/img_code.jpg"
-            alt="About Us"
-            className="w-full md:w-1/2 rounded-2xl shadow-lg"
-          />
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="bg-[#091024] p-8 rounded-2xl border border-[#E1C3FF] w-full md:w-1/2 transition-shadow hover:shadow-purple-500/40"
-          >
-            <h2 className="text-4xl font-semibold text-[#E1C3FF] mb-4">About Us</h2>
-            <p className="text-lg leading-relaxed">
-              EduConnect is a next-gen student-teacher collaboration platform designed to bridge the gap between ambitious students and experienced mentors. With intelligent AI suggestions and skill-based matching, we simplify your journey from project ideation to successful execution.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {/* DOMAIN SECTION */}
+      <div className="relative w-full px-6 py-16 bg-[#10142F] border-t border-purple-600">
+        <h2 className="text-center text-3xl font-bold mb-10">
+          <span className="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
+            OUR DOMAINS
+          </span>
+        </h2>
 
-      {/* Contact Us Section with Image Left */}
-      <section className="py-20 px-6 bg-[#0d1126]">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          <motion.img
-            whileHover={{ scale: 1.02 }}
-            src="https://www.gstatic.com/classroom/themes/img_graduation.jpg"
-            alt="Contact Us"
-            className="w-full md:w-1/2 rounded-2xl shadow-lg"
-          />
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="bg-[#091024] p-8 rounded-2xl border border-[#9B30FF] w-full md:w-1/2 text-center shadow-md hover:shadow-purple-400"
+        <div className="relative">
+          <button
+            onClick={scrollLeft}
+            className="absolute top-1/2 left-0 z-20 transform -translate-y-1/2 bg-purple-600 text-white rounded-full p-2 hover:bg-purple-700 shadow-lg"
           >
-            <h2 className="text-4xl text-[#E1C3FF] mb-6">Contact Us</h2>
-            <p className="text-white mb-4 text-lg">Have questions or feedback? Reach out to us!</p>
-            <p className="text-[#9B30FF] text-lg font-medium">
-              Email: <a href="mailto:support@educonnect.com" className="hover:underline">support@educonnect.com</a>
-            </p>
-          </motion.div>
+            <ChevronRight className="rotate-180" size={24} />
+          </button>
+
+          <div
+            ref={scrollRef}
+            className="overflow-x-auto no-scrollbar px-6"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            <div className="grid grid-flow-col grid-rows-2 auto-cols-max gap-6 w-max min-h-[320px] pb-2">
+              {domainOptions.map((domain, index) => (
+                <div
+                  key={index}
+                  className="w-[270px] h-[140px] rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-4 flex flex-col justify-between shadow-md hover:shadow-purple-500 hover:scale-105 transition duration-300"
+                >
+                  <div className="text-white font-bold text-lg mb-2">
+                    {domain.label}
+                  </div>
+                  <img
+                    src={domain.img}
+                    alt={domain.label}
+                    className="w-16 h-16 object-contain self-end"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={scrollRight}
+            className="absolute top-1/2 right-0 z-20 transform -translate-y-1/2 bg-purple-600 text-white rounded-full p-2 hover:bg-purple-700 shadow-lg"
+          >
+            <ChevronRight size={24} />
+          </button>
         </div>
-      </section>
+      </div>
+
+      {/* FEATURE SECTION */}
+      <div className="w-full px-6 py-16 bg-[#0B0F2C] border-t border-purple-600">
+        <h2 className="text-center text-3xl font-bold mb-10">
+          <span className="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
+            EDUCONNECT FEATURES
+          </span>
+        </h2>
+
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 max-w-6xl mx-auto">
+          {/* Feature 1 */}
+          <div className="rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-6 shadow-md hover:shadow-purple-500 transform transition duration-300 hover:scale-105">
+            <div className="text-xl font-bold text-white mb-2">
+              🤖 AI Chatbot
+            </div>
+            <p className="text-gray-300">
+              Smart chatbot answers queries about students, teachers, and
+              general information.
+            </p>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-6 shadow-md hover:shadow-purple-500 transform transition duration-300 hover:scale-105">
+            <div className="text-xl font-bold text-white mb-2">
+              🎯 Prioritization
+            </div>
+            <p className="text-gray-300">
+              4th-year students can prioritize teachers for project mentorship
+              (1st, 2nd, 3rd).
+            </p>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-6 shadow-md hover:shadow-purple-500 transform transition duration-300 hover:scale-105">
+            <div className="text-xl font-bold text-white mb-2">
+              🧑‍🏫 Teacher Selection
+            </div>
+            <p className="text-gray-300">
+              Teachers can view student profiles and select students based on
+              their skills and CGPA.
+            </p>
+          </div>
+
+          {/* Feature 4 */}
+          <div className="rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-6 shadow-md hover:shadow-purple-500 transform transition duration-300 hover:scale-105">
+            <div className="text-xl font-bold text-white mb-2">
+              👥 Student Collaboration
+            </div>
+            <p className="text-gray-300">
+              Students can view each other's profiles and collaborate for group
+              projects via shared domains or skills.
+            </p>
+          </div>
+
+          {/* Feature 5 */}
+          <div className="rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-6 shadow-md hover:shadow-purple-500 transform transition duration-300 hover:scale-105">
+            <div className="text-xl font-bold text-white mb-2">
+              📊 Student Dashboard
+            </div>
+            <p className="text-gray-300">
+              Students can view the teachers they’ve prioritized and which
+              teacher has selected them.
+            </p>
+          </div>
+
+          {/* Feature 6 */}
+          <div className="rounded-xl border border-purple-500 bg-[#0F1331] px-6 py-6 shadow-md hover:shadow-purple-500 transform transition duration-300 hover:scale-105">
+            <div className="text-xl font-bold text-white mb-2">
+              📋 Teacher Dashboard
+            </div>
+            <p className="text-gray-300">
+              Teachers can view priority stats, selected students, and manage
+              their mentorships.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Hide Scrollbar Style */}
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
