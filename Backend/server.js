@@ -8,6 +8,7 @@ const dotenv = require("dotenv");
 const env = dotenv.config();
 
 const mongoose = require("mongoose");
+
 // Connect to MongoDB
 mongoose
   .connect(process.env.database_url)
@@ -131,8 +132,6 @@ app.get("/api/supervisedstudents/:teacherID", async (req, res) => {
   }
 });
 //checkbox
-// ... (previous imports remain the same)
-
 app.post("/api/teacher/removeStudent", async (req, res) => {
   const { teacherID, rollNo } = req.body;
 

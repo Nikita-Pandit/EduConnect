@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import heroImage from "../assets/hero.png";
 
 const domainOptions = [
   {
@@ -230,14 +231,6 @@ const Home = () => {
           AI-Powered Student-Teacher Collaboration Platform 
           </p>
 
-          {/* <div className="flex justify-center">
-            <button
-              onClick={() => navigate("/signup")} 
-              className="px-10 py-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-full shadow-lg hover:scale-105 transition duration-300 text-lg"
-            >
-              Start
-            </button>
-          </div> */}
            <div className="flex justify-center">
             <button
               onClick={handleButtonClick}
@@ -247,6 +240,52 @@ const Home = () => {
             </button>
           </div>
         </div>
+        {/* <div className="hidden lg:flex items-center justify-center flex-1 z-10">
+          <div className="relative w-full h-full max-w-[503px] max-h-[698px]">
+            <img 
+              src={heroImage} // Replace with your actual image path
+              alt="Rate your Experience"
+              className="w-full h-full object-contain"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-[#0B0F2C] to-transparent w-1/3"></div>
+          </div>
+        </div> */}
+        <div className="hidden lg:flex items-center justify-center flex-1 z-10">
+  <div className="relative w-[260px] h-[360px] flex items-center justify-center">
+
+    {/* Oval border only */}
+    <div className="absolute inset-0 rounded-[45%/40%] border-2 border-[#A855F7] z-10" />
+
+    {/* Inner purple glow behind the image */}
+    <div className="absolute w-[200px] h-[300px] bg-[#A855F7] opacity-20 blur-2xl rounded-[45%/40%] z-0" />
+
+    {/* Top floating circle */}
+    <div className="absolute top-6 right-6 w-6 h-6 bg-[#A855F7] opacity-40 rounded-full z-20" />
+
+    {/* Profile image */}
+    <img
+      src={heroImage}
+      alt="Student"
+      className="relative w-[200px] h-[300px] object-cover z-30"
+      style={{ borderRadius: '45% / 40%' }}
+    />
+
+    {/* Smaller Rating badge */}
+    <div className="absolute bottom-4 right-[-30px] flex items-center bg-[#A855F7] bg-opacity-60 text-white text-[10px] px-2 py-[2px] rounded-full shadow-md z-40">
+      <span className="mr-1 whitespace-nowrap">⭐ Rate your Experience</span>
+      <input
+        type="range"
+        min="1"
+        max="5"
+        defaultValue="3"
+        className="accent-pink-300 w-12 h-[3px] mx-1"
+      />
+      <span className="text-base">😊</span>
+    </div>
+  </div>
+</div>
+
+      {/* </div> */}
       </div>
 
       {/* DOMAIN SECTION */}

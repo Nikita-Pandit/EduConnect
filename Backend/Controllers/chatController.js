@@ -1,7 +1,8 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const teacherModel = require("../Models/teacherModel");
 const teacherMoreInfo = require("../Models/teacherMoreInfo");
-const studentModel = require("../Models/studentModel");
+// const studentModel = require("../Models/studentModel");
+const studentModel = require("../Models/studentmodel");
 const studentMoreInfo = require("../Models/studentMoreInfo");
 
 // Load API Key from .env
