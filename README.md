@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/3ae6f165-4f53-4743-8c1c-5dfcb1955525)
+
 # 🚀 EduConnect
 
 **AI-Powered Student-Teacher Collaboration Platform**  
@@ -39,6 +39,9 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ---
 
 ## 📸 Screenshots
+
+### Home Page
+![Image](https://github.com/user-attachments/assets/9f86644f-1534-40f6-877b-1705cf201582)
 
 ### 🔐 Login Page
 ![Image](https://github.com/user-attachments/assets/6d173dca-c8c8-4c0b-84de-b56f1cfe7c1d)
