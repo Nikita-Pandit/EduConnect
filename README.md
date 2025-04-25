@@ -1,4 +1,4 @@
-
+![image](https://github.com/user-attachments/assets/3ae6f165-4f53-4743-8c1c-5dfcb1955525)
 # 🚀 EduConnect
 
 **AI-Powered Student-Teacher Collaboration Platform**  
@@ -44,13 +44,16 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ![Image](https://github.com/user-attachments/assets/6d173dca-c8c8-4c0b-84de-b56f1cfe7c1d)
 
 ### 🧑‍🎓 Student Dashboard
-![Student Dashboard](screenshots/student-dashboard.png)
+![Image](https://github.com/user-attachments/assets/a5e7af46-4a8d-4268-848a-d8c1f86bedfa)
+
+### 👩‍🏫 Teacher Profile 
+![Image](https://github.com/user-attachments/assets/24a8db7c-704b-4a34-a6af-a1a5cd9622e6)
 
 ### 👩‍🏫 Teacher Dashboard
-![Teacher Dashboard](screenshots/teacher-dashboard.png)
+![Image](https://github.com/user-attachments/assets/b118cc90-be32-4ed6-94ef-9cb167be0daa)
 
 ### 🤖 AI Chatbot
-![Chatbot](screenshots/chatbot.png)
+![Image](https://github.com/user-attachments/assets/a4abaf85-31b8-446e-9fa8-bf9fa437b251)
 
 ### 📈 Mentorship Trend Visualization
 ![Graph](screenshots/mentorship-trend.png)
