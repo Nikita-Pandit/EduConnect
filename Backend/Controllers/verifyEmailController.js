@@ -14,7 +14,7 @@ const verifyEmailController=async(req,res)=>{
         userIDMatchWithToken = await studentModel.findOne({
           verificationToken: token,
         });
-
+     console.log("userIDMatchWithToken",userIDMatchWithToken)
         user = await studentModel.findOneAndUpdate(
           { verificationToken: token },
           { isVerified: true, verificationToken: null },
