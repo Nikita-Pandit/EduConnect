@@ -88,7 +88,11 @@ const verifyEmailController = async (req, res) => {
     //   `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
     // );
     console.log("apple");
-    return res.json({success:true});
+     return res.json({success:true});
+    setTimeout(() => {
+  console.log("Delayed log after 2s:", token);
+}, 5000);
+   
   } catch (error) {
     console.error("Error during verification:", error);
     return res.status(500).json({ message: "Verification failed" });
