@@ -333,6 +333,7 @@ const Profile = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+      console.log("imageee", response.data.image)
       setProfile((prevProfile) => ({
         ...prevProfile,
         image: response.data.image,
@@ -459,6 +460,7 @@ const Profile = () => {
                     {/* Image - removed onClick from here */}
                     <img
                       src={
+                     
                         profile.image.startsWith("/uploads/")
                           ? `http://localhost:3002${profile.image}`
                           : `http://localhost:3002/images/default_image.jpg`
