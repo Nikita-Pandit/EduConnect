@@ -35,6 +35,9 @@ const signupController = async (req, res) => {
             });
             await user.save(); // Save teacher to the database
             console.log("User created:", user);
+             return res.redirect(
+      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    );
             
 // console.log("User isVerified status:", user.isVerified);
         } else {
