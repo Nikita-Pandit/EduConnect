@@ -34,7 +34,7 @@ const verifyEmailController=async(req,res)=>{
         return res.status(400).json({ message: "Invalid or expired token" });
       }
       return res.redirect(
-        `http://localhost:5173/SignUp?id=${userIDMatchWithToken._id}&role=${role}`
+        `https://educonnect-1-jv7g.onrender.com/SignUp?id=${userIDMatchWithToken._id}&role=${role}`
       );
     } catch (error) {
       console.error("Error during verification:", error);
