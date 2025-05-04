@@ -5,16 +5,16 @@ const teacherSchema = new mongoose.Schema({
   password: { type: String, required: true },
   contact: { type: Number, required: true },
   email: { type: String, required: true },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  verificationToken: {
-    type: String,
-  },
-  verificationTokenExpiry: { type: Date },
-  resetPasswordToken: { type: String }, // Optional
-  resetPasswordExpires: { type: Date }, // Optional
+  // isVerified: {
+  //   type: Boolean,
+  //   default: false,
+  // },
+  // verificationToken: {
+  //   type: String,
+  // },
+  // verificationTokenExpiry: { type: Date },
+  // resetPasswordToken: { type: String }, // Optional
+  // resetPasswordExpires: { type: Date }, // Optional
 });
 // Hash password before saving it to the database
 teacherSchema.pre("save", async function (next) {
