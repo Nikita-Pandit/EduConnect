@@ -43,7 +43,7 @@ const signupController = async (req, res) => {
         }
 
         // Send the verification email
-        const emailSent = await sendVerificationMail(email, verificationToken, role);
+        //const emailSent = await sendVerificationMail(email, verificationToken, role);
 
         // if (emailSent) {
         //     res.status(201).json({ message: 'User created. Verification email sent!' });
