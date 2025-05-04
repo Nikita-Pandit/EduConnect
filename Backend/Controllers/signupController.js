@@ -8,7 +8,7 @@ const signupController = async (req, res) => {
     const role = req.query.role; // Extract role from query parameters
     const { email, name, password, contact } = req.body;
     console.log("Received data:", name, email, contact);
-
+let user;
     try {
         // Generate a unique token for email verification
         // const verificationToken = crypto.randomBytes(32).toString('hex');
@@ -16,7 +16,7 @@ const signupController = async (req, res) => {
 
         // Create a new user based on the role (student or teacher)
         if (role === "student") { // Check if the role is "student"
-            const user = new studentModel({
+             user = new studentModel({
                 name,
                 email,
                 contact,
