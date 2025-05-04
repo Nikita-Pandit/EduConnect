@@ -33,18 +33,21 @@ const signupController = async (req, res) => {
                 // verificationToken,
                 // verificationTokenExpiry
             });
-            await user.save(); // Save teacher to the database
-            console.log("User created:", user);
-             return res.redirect(
-      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
-    );
+            await user.save(); 
+        }// Save teacher to the database
+        
+            
             
 // console.log("User isVerified status:", user.isVerified);
-        } else {
+        else {
             // Handle invalid role
             return res.status(400).json({ message: 'Invalid role specified.' }); // Return error for invalid role
         }
 
+        console.log("User created:", user);
+             return res.redirect(
+      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    );
         // Send the verification email
         //const emailSent = await sendVerificationMail(email, verificationToken, role);
 
