@@ -219,9 +219,10 @@ const SignUp = () => {
             <button
               type="submit"
               className="w-full px-5 py-2 bg-[#6D0BCF] border-[1.5px] border-[#E1C3FF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#46008B] hover:border-[#9B30FF]"
-              disabled={loading}
+{/*               disabled={loading} */}
             >
-              {loading ? "Registering..." : "Register"}
+{/*               {loading ? "Registering..." : "Register"} */}
+            Register
             </button>
           </form>
           <p className="text-center text-sm mt-4 text-white">
