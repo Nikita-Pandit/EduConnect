@@ -42,7 +42,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     try {
       await axios.post(`https://educonnect-z5ju.onrender.com/api/SignUp?role=${role}`, {
         name,
@@ -61,9 +61,11 @@ const SignUp = () => {
       toast.error("Failed to send verification email.", {
         style: { color: "#FF0000" },
       });
-    } finally {
-      setLoading(false);
-    }
+    } 
+    
+    // finally {
+    //   setLoading(false);
+    // }
   };
 
    // Close the login form and navigate to the home page
