@@ -43,6 +43,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // setLoading(true);
+    console.log("ball");
     try {
       await axios.post(`https://educonnect-z5ju.onrender.com/api/SignUp?role=${role}`, {
         name,
