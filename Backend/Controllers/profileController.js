@@ -82,7 +82,7 @@ const studentMoreInfo=require("../Models/studentMoreInfo")
   const getProfileImage = async (req, res) => {
     try {
       const { id } = req.params;
-      
+      console.log("id in image", id);
       if (!req.file) {
         return res.status(400).json({
           success: false,
@@ -91,6 +91,7 @@ const studentMoreInfo=require("../Models/studentMoreInfo")
       }
   
       const imagePath = `/uploads/${req.file.filename}`;
+      console.log(imagePath)
       const updatedProfile = await studentMoreInfo.findOneAndUpdate(
         { studentID: id },
         { image: imagePath },
