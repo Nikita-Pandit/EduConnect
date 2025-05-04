@@ -51,7 +51,10 @@ const SignUp = () => {
         password,
         role,
       });
-      toast.success("Verification email sent! Please check your inbox.", {
+      // toast.success("Verification email sent! Please check your inbox.", {
+      //   style: { color: "#0000FF" },
+      // });
+          toast.success("user registered successfully.", {
         style: { color: "#0000FF" },
       });
     } catch (error) {
