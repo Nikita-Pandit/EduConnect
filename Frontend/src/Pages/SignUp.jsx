@@ -20,7 +20,7 @@ const SignUp = () => {
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
