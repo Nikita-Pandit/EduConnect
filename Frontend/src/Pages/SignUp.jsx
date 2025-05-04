@@ -44,7 +44,7 @@ const SignUp = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`http://localhost:3002/api/SignUp?role=${role}`, {
+      await axios.post(`https://educonnect-z5ju.onrender.com/api/SignUp?role=${role}`, {
         name,
         email,
         contact,
