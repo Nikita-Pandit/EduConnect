@@ -25,9 +25,14 @@ const signupController = async (req, res) => {
             });
             await user.save(); 
   console.log("User created:", user);
-             return res.redirect(
-      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
-    );
+    //          return res.redirect(
+    //   `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    // );
+
+            return res.status(200).json({ 
+  redirectUrl: `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}` 
+});
+
             
             // Save student to the database
         } 
@@ -42,9 +47,14 @@ const signupController = async (req, res) => {
             });
             await user.save(); 
               console.log("User created:", user);
-             return res.redirect(
-      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
-    );
+    //          return res.redirect(
+    //   `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    // );
+
+            return res.status(200).json({ 
+  redirectUrl: `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}` 
+});
+
         }// Save teacher to the database
         
             
@@ -71,7 +81,12 @@ const signupController = async (req, res) => {
         // }
     } catch (error) {
         console.error('Error during signup:', error);
-        res.status(400).json({ error: 'Error creating user' }); // Return error if user creation fails
+        res.status(400).json({ error: 'Error creating user' });
+        
+        
+        
+        
+        // Return error if user creation fails
     }
 };
 
