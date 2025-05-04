@@ -4,6 +4,7 @@ const teacherModel = require("../Models/teacherModel");
 const crypto = require('crypto');
 
 const signupController = async (req, res) => {
+    console.log("signup page");
     const role = req.query.role; // Extract role from query parameters
     const { email, name, password, contact } = req.body;
     console.log("Received data:", name, email, contact);
