@@ -10,8 +10,8 @@ const resetPassword = async (email, resetToken,name) => {
         });
 
          // Dynamic base URL (use the correct domain for dev/prod)
-         const baseUrl = process.env.BASE_URL || 'http://localhost:3002';
-         const frontendUrl=process.env.FRONTEND_URL ||'https://educonnect-1-jv7g.onrender.com'
+         // const baseUrl = process.env.BASE_URL || 'http://localhost:3002';
+         // const frontendUrl=process.env.FRONTEND_URL ||'https://educonnect-1-jv7g.onrender.com'
 
          const mailOptions = {
             to: email,
@@ -19,7 +19,7 @@ const resetPassword = async (email, resetToken,name) => {
             html: `
               <p>Hi ${name},</p>
               <p>You requested a password reset. Click the link below to reset your password:</p>
-              <a href="${frontendUrl}/Resetpassword/${resetToken}">Reset Password</a>
+              <a href="https://educonnect-1-jv7g.onrender.com/Resetpassword/${resetToken}">Reset Password</a>
               <p>If you did not request this, please ignore this email.</p>
             `,
           };   
