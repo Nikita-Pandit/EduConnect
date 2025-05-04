@@ -84,9 +84,10 @@ const verifyEmailController = async (req, res) => {
     await user.save();
 
     // Redirect after successful verification
-    return res.redirect(
-      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
-    );
+    // return res.redirect(
+    //   `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    // );
+    return res.json({success:true});
   } catch (error) {
     console.error("Error during verification:", error);
     return res.status(500).json({ message: "Verification failed" });
