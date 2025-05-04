@@ -52,12 +52,12 @@ const SignUp = () => {
         password,
         role,
       });
-  
-          toast.success("user registered successfully.", {
-        style: { color: "#0000FF" },
-      });
+  console.log("backend");
+      //     toast.success("user registered successfully.", {
+      //   style: { color: "#0000FF" },
+      // });
     } catch (error) {
-      toast.error("Failed to send verification email.", {
+      toast.error("registration failed...", {
         style: { color: "#FF0000" },
       });
     } 
