@@ -87,6 +87,7 @@ const verifyEmailController = async (req, res) => {
     // return res.redirect(
     //   `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
     // );
+    console.log("apple");
     return res.json({success:true});
   } catch (error) {
     console.error("Error during verification:", error);
