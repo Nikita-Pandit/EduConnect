@@ -8,7 +8,6 @@ const signupController = async (req, res) => {
     const role = req.query.role; // Extract role from query parameters
     const { email, name, password, contact } = req.body;
     console.log("Received data:", name, email, contact);
-let user;
     try {
         // Generate a unique token for email verification
         // const verificationToken = crypto.randomBytes(32).toString('hex');
@@ -16,7 +15,7 @@ let user;
 
         // Create a new user based on the role (student or teacher)
         if (role === "student") { // Check if the role is "student"
-             user = new studentModel({
+          const   user = new studentModel({
                 name,
                 email,
                 contact,
@@ -24,8 +23,15 @@ let user;
                 // verificationToken,
                 // verificationTokenExpiry
             });
-            await user.save(); // Save student to the database
-        } else if (role === "teacher") { // Check if the role is "teacher"
+            await user.save(); 
+  console.log("User created:", user);
+             return res.redirect(
+      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    );
+            
+            // Save student to the database
+        } 
+        else if (role === "teacher") { // Check if the role is "teacher"
             const user = new teacherModel({
                 name,
                 email,
@@ -35,6 +41,10 @@ let user;
                 // verificationTokenExpiry
             });
             await user.save(); 
+              console.log("User created:", user);
+             return res.redirect(
+      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    );
         }// Save teacher to the database
         
             
@@ -45,10 +55,10 @@ let user;
             return res.status(400).json({ message: 'Invalid role specified.' }); // Return error for invalid role
         }
 
-        console.log("User created:", user);
-             return res.redirect(
-      `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
-    );
+    //     console.log("User created:", user);
+    //          return res.redirect(
+    //   `https://educonnect-1-jv7g.onrender.com/SignUp?id=${user._id}&role=${role}`
+    // );
         // Send the verification email
         //const emailSent = await sendVerificationMail(email, verificationToken, role);
 
