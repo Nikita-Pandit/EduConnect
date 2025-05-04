@@ -252,6 +252,11 @@ app.get("/api/selectedTeachers/:studentId", async (req, res) => {
   }
 });
 
+app.get("/api/test", (req, res) => {
+  res.send("API is working");
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
