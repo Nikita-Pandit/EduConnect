@@ -79,11 +79,11 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 git clone https://github.com/your-username/educonnect.git
 
 # Navigate to frontend
-cd client
-npm install
-npm start
-
-# Navigate to backend
-cd server
+cd Frontend
 npm install
 npm run dev
+
+# Navigate to backend
+cd Backend
+npm install
+npx nodemon server.js
