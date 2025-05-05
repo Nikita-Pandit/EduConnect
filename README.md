@@ -43,6 +43,10 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ### Home Page
 ![Image](https://github.com/user-attachments/assets/9f86644f-1534-40f6-877b-1705cf201582)
 
+![Image](https://github.com/user-attachments/assets/01216802-0c22-450b-8dda-685019388cb6)
+
+![Image](https://github.com/user-attachments/assets/e1f53cce-b20e-478a-ad76-0962ec3cbae5)
+
 ### 🔐 Authentication
 | Login | Signup |
 |-------|--------|
