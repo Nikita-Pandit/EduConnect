@@ -64,7 +64,7 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ![Image](https://github.com/user-attachments/assets/a4abaf85-31b8-446e-9fa8-bf9fa437b251)
 
 ### 📈 Mentorship Trend Visualization
-![Graph](screenshots/mentorship-trend.png)
+![Image](https://github.com/user-attachments/assets/f5e725fb-299e-4845-a76f-7924886e2b9d)
 
 ---
 
