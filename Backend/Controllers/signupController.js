@@ -9,7 +9,7 @@ const signupController = async (req, res) => {
     console.log("Received data:", name, email, contact);
 
     try {
-        // Generate a unique token for email verification
+    
         const verificationToken = crypto.randomBytes(32).toString('hex');
         const verificationTokenExpiry = Date.now() + 24 * 60 * 60 * 1000; // Token valid for 24 hours
 
@@ -56,3 +56,4 @@ const signupController = async (req, res) => {
 };
 
 module.exports = { signupController };
+
