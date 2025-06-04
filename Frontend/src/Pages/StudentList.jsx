@@ -11,12 +11,12 @@ const StudentList = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [supervisedStudents, setSupervisedStudents] = useState([]);
   const navigate = useNavigate();
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   useEffect(() => {
     const fetchStudentRank = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/api/teacher/rank/${teacherID}`
+          `${backendUrl}/api/teacher/rank/${teacherID}`
         );
         setStudentIdContainer(response.data.rank);
       } catch (error) {
@@ -27,7 +27,7 @@ const StudentList = () => {
     const fetchSupervisedStudents = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/api/supervisedstudents/${teacherID}`
+          `${backendUrl}/api/supervisedstudents/${teacherID}`
         );
         const students = response.data.students || [];
 
@@ -53,7 +53,7 @@ const StudentList = () => {
         Object.entries(studentIdContainer).map(async ([id, rank]) => {
           try {
             const response = await axios.get(
-              `http://localhost:3002/api/student/idList/${id}`
+              `${backendUrl}/api/student/idList/${id}`
             );
             const { name, roll } = response.data;
             return { name, roll, rank, id };
@@ -101,7 +101,7 @@ const StudentList = () => {
       // Send additions to server
       await Promise.all(
         additions.map(async (rollNo) => {
-          await axios.post("http://localhost:3002/api/studentCheckbox", {
+          await axios.post(`${backendUrl}/api/studentCheckbox`, {
             teacherID,
             rollNo,
           });
@@ -111,7 +111,7 @@ const StudentList = () => {
       // Send removals to server
       await Promise.all(
         removals.map(async (rollNo) => {
-          await axios.post("http://localhost:3002/api/teacher/removeStudent", {
+          await axios.post(`${backendUrl}/api/teacher/removeStudent`, {
             teacherID,
             rollNo,
           });
@@ -126,7 +126,7 @@ const StudentList = () => {
 
       // Refresh supervised students list
       const response = await axios.get(
-        `http://localhost:3002/api/supervisedstudents/${teacherID}`
+        `${backendUrl}/api/supervisedstudents/${teacherID}`
       );
       setSupervisedStudents(response.data.students || []);
     } catch (error) {

@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 
 const ResetPassword = () => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   console.log(backendUrl);
   
   const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ const ResetPassword = () => {
     }
 
     try {
-      await axios.post(`http://localhost:3002/api/reset-password`, {
+      await axios.post(`${backendUrl}/api/reset-password`, {
         token,
         password,
       });

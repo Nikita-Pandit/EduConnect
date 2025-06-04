@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+ const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 const resetPassword = async (email, resetToken,name) => {
     try {
         const transporter = nodemailer.createTransport({
@@ -10,8 +11,8 @@ const resetPassword = async (email, resetToken,name) => {
         });
 
          // Dynamic base URL (use the correct domain for dev/prod)
-         const baseUrl = process.env.BASE_URL || 'http://localhost:3002';
-         const frontendUrl=process.env.FRONTEND_URL ||'http://localhost:5173'
+         // const baseUrl = process.env.BASE_URL || 'http://localhost:3002';
+         // const frontendUrl=process.env.FRONTEND_URL ||'https://educonnect-1-jv7g.onrender.com'
 
          const mailOptions = {
             to: email,
@@ -19,7 +20,7 @@ const resetPassword = async (email, resetToken,name) => {
             html: `
               <p>Hi ${name},</p>
               <p>You requested a password reset. Click the link below to reset your password:</p>
-              <a href="${frontendUrl}/Resetpassword/${resetToken}">Reset Password</a>
+              <a href="${frontendUrl}/${resetToken}">Reset Password</a>
               <p>If you did not request this, please ignore this email.</p>
             `,
           };   

@@ -20,12 +20,14 @@ const Login = () => {
   const isPasswordValid = password.trim() !== "";
   const isFormValid = isEmailValid && isPasswordValid;
 
+
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
 
     try {
-        const response = await axios.post("http://localhost:3002/api/Login", { email, password });
+        const response = await axios.post(`${backendUrl}/api/Login`, { email, password });
         
       toast.success("Login Successful");
 

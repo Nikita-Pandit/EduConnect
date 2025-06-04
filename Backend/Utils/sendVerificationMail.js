@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
-
+ const baseUrl = process.env.BASE_URL || 'http://localhost:3002';
 const sendVerificationMail = async (email,token,role)=> {
     try{
         const transporter = nodemailer.createTransport({
@@ -9,8 +9,20 @@ const sendVerificationMail = async (email,token,role)=> {
                 pass: process.env.EMAIL_PASS,
             },
         });
-        const mailOptions = {
-            from: "2247064@kiit.ac.in",
+        // const mailOptions = {
+        //     from: "22054434@kiit.ac.in",
+        //     to: email,
+        //     subject: "Verify Your Email",
+        //     html:`
+        //     <h1>Email Verification</h1>
+        //     <p>Please verify your email by clicking the link below:</p>
+        //     <a href="${baseUrl}/verify?token=${token}&role=${role}">Verify Email</a>
+        //     `,
+          
+        //  };
+
+                const mailOptions = {
+            from: "22054434@kiit.ac.in",
             to: email,
             subject: "Verify Your Email",
             html:`

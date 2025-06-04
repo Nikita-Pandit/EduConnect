@@ -345,7 +345,7 @@ import axios from "axios";
 const ViewTeacherDetails = () => {
   const location = useLocation();
   const viewTeacherId = location?.state?.teacherID || localStorage.getItem("teacherId") || "defaultID";
-  
+   const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherContact, setTeacherContact] = useState("");
@@ -374,7 +374,7 @@ const ViewTeacherDetails = () => {
       const studentId = localStorage.getItem("studentId");
       if (!studentId) return;
       const response = await axios.get(
-        `http://localhost:3002/api/student/unique/${studentId}`
+        `${backendUrl}/api/student/unique/${studentId}`
       );
       setStudentYear(response.data.selectYear);
     } catch (error) {
@@ -385,7 +385,7 @@ const ViewTeacherDetails = () => {
   const fetchTeacherName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/teacher/${viewTeacherId}`
+        `${backendUrl}/api/teacher/${viewTeacherId}`
       );
       setTeacherName(response.data.name);
       setTeacherEmail(response.data.email);
@@ -399,7 +399,7 @@ const ViewTeacherDetails = () => {
   const fetchTeacherProfileInfo = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/teacherProfile/${viewTeacherId}`
+        `${backendUrl}/api/teacherProfile/${viewTeacherId}`
       );
       setProfile(prev => ({ ...prev, ...response.data.moreInfo }));
 
@@ -420,7 +420,7 @@ const ViewTeacherDetails = () => {
         return;
       }
 
-      await axios.post(`http://localhost:3002/api/teacherRank`, {
+      await axios.post(`${backendUrl}/api/teacherRank`, {
         teacherRank: rank,
         studentId: localStorage.getItem("studentId"),
         viewTeacherId,
@@ -471,8 +471,8 @@ const ViewTeacherDetails = () => {
                     <img
                       src={
                         profile.image.startsWith("/uploads/")
-                          ? `http://localhost:3002${profile.image}`
-                          : `http://localhost:3002/images/default_image.jpg`
+                          ? `${backendUrl}${profile.image}`
+                          : `${backendUrl}/images/default_image.jpg`
                       }
                       alt="Profile"
                       className="w-full h-full object-cover"

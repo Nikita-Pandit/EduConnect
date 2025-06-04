@@ -43,6 +43,10 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ### Home Page
 ![Image](https://github.com/user-attachments/assets/9f86644f-1534-40f6-877b-1705cf201582)
 
+![Image](https://github.com/user-attachments/assets/01216802-0c22-450b-8dda-685019388cb6)
+
+![Image](https://github.com/user-attachments/assets/e1f53cce-b20e-478a-ad76-0962ec3cbae5)
+
 ### 🔐 Authentication
 | Login | Signup |
 |-------|--------|
@@ -64,7 +68,7 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ![Image](https://github.com/user-attachments/assets/a4abaf85-31b8-446e-9fa8-bf9fa437b251)
 
 ### 📈 Mentorship Trend Visualization
-![Graph](screenshots/mentorship-trend.png)
+![Image](https://github.com/user-attachments/assets/f5e725fb-299e-4845-a76f-7924886e2b9d)
 
 ---
 
@@ -75,11 +79,11 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 git clone https://github.com/your-username/educonnect.git
 
 # Navigate to frontend
-cd client
-npm install
-npm start
-
-# Navigate to backend
-cd server
+cd Frontend
 npm install
 npm run dev
+
+# Navigate to backend
+cd Backend
+npm install
+npx nodemon server.js

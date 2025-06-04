@@ -196,22 +196,22 @@ const StudentHeader = () => {
       console.error("Logout failed:", error);
     }
   };
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         let response;
         if (localStorage.getItem("teacherId")) {
           response = await axios.get(
-            `http://localhost:3002/api/teacherProfile/${userId}`
+            `${backendUrl}/api/teacherProfile/${userId}`
           );
         } else {
           response = await axios.get(
-            `http://localhost:3002/api/Profile/${userId}`
+            `${backendUrl}/api/Profile/${userId}`
           );
         }
         if (response.data.moreInfo.image) {
-          setImage(`http://localhost:3002${response.data.moreInfo.image}`);
+          setImage(`${backendUrl}${response.data.moreInfo.image}`);
           setFlag(true);
         }
       } catch (error) {

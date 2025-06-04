@@ -10,6 +10,8 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false); // NEW STATE
   const [isFirstVisit, setIsFirstVisit] = useState(true);
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },
     { value: "Data Science", label: "Data Science" },
@@ -238,7 +240,7 @@ const Profile = () => {
     try {
       console.log("id in profile", id);
       const response = await axios.get(
-        `http://localhost:3002/api/student/${id}`
+        `${backendUrl}/api/student/${id}`
       );
       setStudentName(response.data.name);
       setStudentEmail(response.data.email);
@@ -255,7 +257,7 @@ const Profile = () => {
   const fetchProfileInfo = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/Profile/${id}`
+        `${backendUrl}/api/Profile/${id}`
       );
       if (response.data.success) {
         setProfile({
@@ -276,7 +278,7 @@ const Profile = () => {
     const fetchProfileInfo = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/api/Profile/${id}`
+          `${backendUrl}/api/Profile/${id}`
         );
         if (response.data.success) {
           setProfile(response.data.moreInfo);
@@ -299,7 +301,7 @@ const Profile = () => {
   const handleSave = async (e) => {
     try {
       const response = await axios.post(
-        `http://localhost:3002/api/Profile/${id}`,
+        `${backendUrl}/api/Profile/${id}`,
         profile
       );
       toast.success("Profile info saved in the database successfully.", {
@@ -327,7 +329,7 @@ const Profile = () => {
     try {
       console.log("student img");
       const response = await axios.post(
-        `http://localhost:3002/api/Profile/${id}/uploadImage`,
+        `${backendUrl}/api/Profile/${id}/uploadImage`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -462,8 +464,8 @@ const Profile = () => {
                       src={
                      
                         profile.image.startsWith("/uploads/")
-                          ? `http://localhost:3002${profile.image}`
-                          : `http://localhost:3002/images/default_image.jpg`
+                          ? `${backendUrl}${profile.image}`
+                          : `${backendUrl}/images/default_image.jpg`
                       }
                       alt="Profile"
                       className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"

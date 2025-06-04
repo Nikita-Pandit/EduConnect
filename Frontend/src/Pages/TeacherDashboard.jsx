@@ -21,15 +21,15 @@ const TeacherDashboard = () => {
   const [teacherInfo, setTeacherInfo] = useState({});
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showDomainModal, setShowDomainModal] = useState(false);
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   useEffect(() => {
     const fetchTeacherData = async () => {
       try {
         const teacherResponse = await axios.get(
-          `http://localhost:3002/api/teacher/${teacherId}`
+          `${backendUrl}/api/teacher/${teacherId}`
         );
         const moreInfoResponse = await axios.get(
-          `http://localhost:3002/api/teacherProfile/${teacherId}`
+          `${backendUrl}/api/teacherProfile/${teacherId}`
         );
 
         setTeacherInfo({
@@ -44,7 +44,7 @@ const TeacherDashboard = () => {
     const fetchRankData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/api/teacher/rankStatistics/${teacherId}`
+          `${backendUrl}/api/teacher/rankStatistics/${teacherId}`
         );
         const { rankPercentages } = response.data;
 
@@ -62,7 +62,7 @@ const TeacherDashboard = () => {
     const fetchSupervisedStudents = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/api/supervisedstudents/${teacherId}`
+          `${backendUrl}/api/supervisedstudents/${teacherId}`
         );
         const students = response.data.students || [];
         setSupervisedStudents(students);
@@ -128,7 +128,7 @@ const TeacherDashboard = () => {
             <img
               src={
                 teacherInfo.image
-                  ? `http://localhost:3002${
+                  ? `${backendUrl}${
                       teacherInfo.image.startsWith("/") ? "" : "/"
                     }${teacherInfo.image}`
                   : "/images/default_image.jpg"
@@ -237,7 +237,7 @@ const TeacherDashboard = () => {
                             <img
                               src={
                                 student.image
-                                  ? `http://localhost:3002${
+                                  ? `${backendUrl}${
                                       student.image.startsWith("/") ? "" : "/"
                                     }${student.image}`
                                   : "/images/default_profile.jpg"

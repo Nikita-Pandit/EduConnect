@@ -190,7 +190,7 @@ const Students = () => {
   const [domain, setDomain] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },
     { value: "Data Science", label: "Data Science" },
@@ -243,7 +243,7 @@ const Students = () => {
         setLoading(true);
         setError(null);
         
-        const response = await axios.get(`http://localhost:3002/api/Students`, {
+        const response = await axios.get(`${backendUrl}/api/Students`, {
           params: { branch, year, domain },
         });
 
@@ -343,7 +343,7 @@ const Students = () => {
                   <div className="image-profile-container rounded-xl overflow-hidden hover:border-[#E1C3FF] transition-all duration-300 mb-4 flex-shrink-0">
                     <img
                       className="w-full h-56 object-cover hover:opacity-90 transition-all duration-300"
-                      src={`http://localhost:3002${item.image}`}
+                      src={`${backendUrl}${item.image}`}
                       alt={item.name}
                       onError={(e) => {
                         e.target.onerror = null;

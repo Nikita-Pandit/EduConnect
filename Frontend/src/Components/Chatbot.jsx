@@ -188,14 +188,14 @@ const Chatbot = () => {
   const [isMaximized, setIsMaximized] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef(null);
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   const sendMessage = async () => {
     if (!input.trim()) return;
     const newMessages = [...messages, { sender: "user", text: input }];
     setMessages(newMessages);
 
     try {
-      const response = await axios.post("http://localhost:3002/api/chatbot", {
+      const response = await axios.post(`${backendUrl}/api/chatbot`, {
         message: input,
       });
       const structuredResponse = formatBotResponse(response.data.reply);

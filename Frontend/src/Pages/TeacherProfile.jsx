@@ -11,7 +11,7 @@ const TeacherProfile = () => {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
   const navigate = useNavigate();
 
-  
+   const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
 
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },
@@ -75,7 +75,7 @@ const TeacherProfile = () => {
   const fetchTeacherName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/teacher/${teacherId}`
+        `${backendUrl}/api/teacher/${teacherId}`
       );
       setTeacherName(response.data.name);
       setTeacherEmail(response.data.email);
@@ -92,7 +92,7 @@ const TeacherProfile = () => {
   const fetchTeacherProfileInfo = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/teacherProfile/${teacherId}`
+        `${backendUrl}/api/teacherProfile/${teacherId}`
       );
       if (response.data.success) {
         const fetchedProfile = response.data.moreInfo;
@@ -122,7 +122,7 @@ const TeacherProfile = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:3002/api/teacherProfile/${teacherId}`,
+        `${backendUrl}/api/teacherProfile/${teacherId}`,
         profile
       );
       toast.success("Profile info saved in the database successfully.", {
@@ -149,7 +149,7 @@ const TeacherProfile = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3002/api/teacherProfile/${teacherId}/uploadImage`,
+        `${backendUrl}/api/teacherProfile/${teacherId}/uploadImage`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -243,8 +243,8 @@ return (
     <img
       src={
         profile.image.startsWith("/uploads/")
-          ? `http://localhost:3002${profile.image}`
-          : `http://localhost:3002/images/default_image.jpg`
+          ? `${backendUrl}${profile.image}`
+          : `${backendUrl}/images/default_image.jpg`
       }
       alt="Profile"
       className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"

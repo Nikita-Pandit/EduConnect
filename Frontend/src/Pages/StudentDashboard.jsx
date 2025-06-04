@@ -307,15 +307,15 @@ const StudentDashboard = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [profileCompletion, setProfileCompletion] = useState(0);
   const [selectedTeachers, setSelectedTeachers] = useState([]);
-
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:3002/api/student/${studentId}`
+          `${backendUrl}/api/student/${studentId}`
         );
         const moreInfoResponse = await axios.get(
-          `http://localhost:3002/api/Profile/${studentId}`
+          `${backendUrl}/api/Profile/${studentId}`
         );
 
         setStudentInfo({
@@ -325,14 +325,14 @@ const StudentDashboard = () => {
         calculateProfileCompletion(moreInfoResponse.data.moreInfo);
 
         const ranksResponse = await axios.get(
-          `http://localhost:3002/api/teacherRanks/${studentId}`
+          `${backendUrl}/api/teacherRanks/${studentId}`
         );
         // SORT RANKS IN ASCENDING ORDER
         const sortedRanks = ranksResponse.data.sort((a, b) => a.rank - b.rank);
         setTeacherRanks(sortedRanks);
 
         const selectedResponse = await axios.get(
-          `http://localhost:3002/api/selectedTeachers/${studentId}`
+          `${backendUrl}/api/selectedTeachers/${studentId}`
         );
         setSelectedTeachers(selectedResponse.data);
       } catch (error) {
@@ -401,7 +401,7 @@ const StudentDashboard = () => {
             <img
               src={
                 studentInfo.image 
-                  ? `http://localhost:3002${studentInfo.image.startsWith('/') ? '' : '/'}${studentInfo.image}`
+                  ? `${backendUrl}${studentInfo.image.startsWith('/') ? '' : '/'}${studentInfo.image}`
                   : "/images/default_image.jpg"
               }
               alt="Profile" 

@@ -200,11 +200,11 @@ const Supervisors = () => {
   ];
 
   const studentId = localStorage.getItem("studentId"); // Get student ID
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3002/api/Supervisors", {
+        const response = await axios.get(`${backendUrl}/api/Supervisors`, {
           params: { name, domain, studentId },
         });
 
@@ -295,7 +295,7 @@ const Supervisors = () => {
                     <div className="rounded-xl overflow-hidden mb-4">
                       <img
                         className="w-full h-48 object-cover"
-                        src={`http://localhost:3002${item.image}`}
+                        src={`${backendUrl}${item.image}`}
                         alt={item.name}
                       />
                     </div>

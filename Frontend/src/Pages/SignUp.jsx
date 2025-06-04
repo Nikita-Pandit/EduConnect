@@ -20,9 +20,12 @@ const SignUp = () => {
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
 
+
+
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("id");
@@ -42,28 +45,28 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+ 
+    console.log("ball");
     try {
-      await axios.post(`http://localhost:3002/api/SignUp?role=${role}`, {
+      await axios.post(`${backendUrl}/api/SignUp?role=${role}`, {
         name,
         email,
         contact,
         password,
         role,
       });
-      toast.success("Verification email sent! Please check your inbox.", {
+          toast.success("user registered successfully.", {
         style: { color: "#0000FF" },
       });
     } catch (error) {
-      toast.error("Failed to send verification email.", {
+      toast.error("registration failed...", {
         style: { color: "#FF0000" },
       });
-    } finally {
-      setLoading(false);
-    }
+    } 
+  
   };
 
-   // Close the login form and navigate to the home page
+ 
    const handleClose = () => {
     navigate("/"); // Navigate to the home page
   };
@@ -71,32 +74,19 @@ const SignUp = () => {
   return (
     <>
       <ToastContainer />
-      {loading && (
-        <div className="loading-container flex justify-center items-center mt-50 relative inset-0 z-50 bg-opacity-50">
-          <div className="spinner-border animate-spin border-4 border-red-500 rounded-full w-8 h-8"></div>
-          <p className="ml-3 text-white">
-            Sending verification mail. Please wait...
-          </p>
-        </div>
-      )}
+    
 
       <div className="flex items-center justify-center min-h-screen bg-[#091024]">
         <div
-          className={`relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-[#E1C3FF] text-white ${
-            loading ? "filter blur-sm" : ""
-          }`}
+          className={
+            `relative bg-[#0d1126] w-[400px] p-8 rounded-[20px] border border-[#E1C3FF] text-white
+          
+          `}
         >
-          {/* Close (X) Button - Navigates to Home Page */}
-          {/* <button
-            // className="absolute top-4 right-4 text-[#E1C3FF] text-2xl font-bold hover:text-red-500 transition"
-            className="absolute top-4 right-4 text-[#9B30FF] text-xl font-normal hover:text-red-500 transition"
-            onClick={() => navigate("/")}
-          >
-            <FaTimes /> */}
-          {/* </button> */}
+       
           <button
             className="absolute top-4 right-4 text-purple-400"
-            onClick={handleClose} // Navigate to the home page
+            onClick={handleClose}
           >
             ✖
           </button>
@@ -106,7 +96,7 @@ const SignUp = () => {
               Register
             </h1>
 
-            {/* Name Input */}
+       
             <div className="relative">
               <input
                 type="text"
@@ -214,9 +204,10 @@ const SignUp = () => {
             <button
               type="submit"
               className="w-full px-5 py-2 bg-[#6D0BCF] border-[1.5px] border-[#E1C3FF] rounded-[51.2px] text-white text-lg font-bold self-start hover:bg-[#46008B] hover:border-[#9B30FF]"
-              disabled={loading}
-            >
-              {loading ? "Registering..." : "Register"}
+            
+          >
+            Register
+            
             </button>
           </form>
           <p className="text-center text-sm mt-4 text-white">

@@ -240,7 +240,7 @@ const ViewMoreDetails = () => {
   const location = useLocation();
   const id = location?.state?.studentID || localStorage.getItem("studentId") || "defaultID";
   console.log("id in view more details: ", id);
-
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
   const [studentName, setStudentName] = useState("");
   const [studentEmail, setStudentEmail] = useState("");
   const [studentContact, setStudentContact] = useState("");
@@ -265,7 +265,7 @@ const ViewMoreDetails = () => {
   const fetchStudentName = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/student/${id}`
+        `${backendUrl}/api/student/${id}`
       );
       setStudentName(response.data.name);
       setStudentEmail(response.data.email);
@@ -279,7 +279,7 @@ const ViewMoreDetails = () => {
     console.log("profile section");
     try {
       const response = await axios.get(
-        `http://localhost:3002/api/Profile/${id}`
+        `${backendUrl}/api/Profile/${id}`
       );
       console.log(response.data.moreInfo);
       setProfile(prevProfile => ({
@@ -315,8 +315,8 @@ const ViewMoreDetails = () => {
                     <img
                       src={
                         profile.image.startsWith("/uploads/")
-                          ? `http://localhost:3002${profile.image}`
-                          : `http://localhost:3002/images/default_image.jpg`
+                          ? `${backendUrl}${profile.image}`
+                          : `${backendUrl}/images/default_image.jpg`
                       }
                       alt="Profile"
                       className="w-full h-full object-cover"
