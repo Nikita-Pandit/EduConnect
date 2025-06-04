@@ -299,6 +299,7 @@ const Profile = () => {
   };
 
   const handleSave = async (e) => {
+       e.preventDefault();
     try {
       const response = await axios.post(
         `${backendUrl}/api/Profile/${id}`,
