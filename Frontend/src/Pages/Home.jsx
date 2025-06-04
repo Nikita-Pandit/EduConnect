@@ -521,7 +521,7 @@ const navigate=useNavigate()
     }
   }, [navigate, location]);
 const Home = () => {
-  const navigate = useNavigate();
+
   const scrollRef = React.useRef(null);
  
   const isLoggedIn = localStorage.getItem("studentId") || localStorage.getItem("teacherId");
