@@ -447,7 +447,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-
+import { useLocation, useNavigate } from "react-router-dom";
 const domainOptions = [
   {
     value: "Web Development",
@@ -502,6 +502,24 @@ const domainOptions = [
   // ... (rest of the domain options remain the same)
 ];
 
+const location=useLocation()
+const navigate=useNavigate()
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const id = queryParams.get("id");
+    const role = queryParams.get("role");
+
+    if (id) {
+      console.log("Id received from URL:", id);
+      if (role === "student") {
+        localStorage.setItem("studentId", id);
+        navigate("/Profile");
+      } else {
+        localStorage.setItem("teacherId", id);
+        navigate("/TeacherProfile");
+      }
+    }
+  }, [navigate, location]);
 const Home = () => {
   const navigate = useNavigate();
   const scrollRef = React.useRef(null);

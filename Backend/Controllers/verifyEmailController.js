@@ -170,7 +170,7 @@ const verifyEmailController=async(req,res)=>{
         return res.status(400).json({ message: "Invalid or expired token" });
       }
       return res.redirect(
-        `${frontendUrl}/SignUp?id=${userIDMatchWithToken._id}&role=${role}`
+        `${frontendUrl}?id=${userIDMatchWithToken._id}&role=${role}`
       );
     } catch (error) {
       console.error("Error during verification:", error);

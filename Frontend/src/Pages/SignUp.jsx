@@ -26,22 +26,22 @@ const SignUp = () => {
 
 
       const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const id = queryParams.get("id");
-    const role = queryParams.get("role");
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(location.search);
+  //   const id = queryParams.get("id");
+  //   const role = queryParams.get("role");
 
-    if (id) {
-      console.log("Id received from URL:", id);
-      if (role === "student") {
-        localStorage.setItem("studentId", id);
-        navigate("/Profile");
-      } else {
-        localStorage.setItem("teacherId", id);
-        navigate("/TeacherProfile");
-      }
-    }
-  }, [navigate, location]);
+  //   if (id) {
+  //     console.log("Id received from URL:", id);
+  //     if (role === "student") {
+  //       localStorage.setItem("studentId", id);
+  //       navigate("/Profile");
+  //     } else {
+  //       localStorage.setItem("teacherId", id);
+  //       navigate("/TeacherProfile");
+  //     }
+  //   }
+  // }, [navigate, location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
