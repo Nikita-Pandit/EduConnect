@@ -444,10 +444,10 @@
 
 
 
-import React from "react";
+import React, {useEffect}from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const domainOptions = [
   {
     value: "Web Development",
@@ -502,7 +502,9 @@ const domainOptions = [
   // ... (rest of the domain options remain the same)
 ];
 
-const location=useLocation()
+
+const Home = () => {
+  const location=useLocation()
 const navigate=useNavigate()
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -520,8 +522,6 @@ const navigate=useNavigate()
       }
     }
   }, [navigate, location]);
-const Home = () => {
-
   const scrollRef = React.useRef(null);
  
   const isLoggedIn = localStorage.getItem("studentId") || localStorage.getItem("teacherId");
