@@ -1,8 +1,16 @@
-
 # 🚀 EduConnect
 
 **AI-Powered Student-Teacher Collaboration Platform**  
 Bridging the gap between students and teachers through smart mentorship tools, AI chat assistance, and data-driven decision-making.
+
+---
+
+## 🔗 Live Demo
+
+🌐 [Visit EduConnect Live](https://educonnect-frontend.onrender.com)  
+🛠️ [Backend API Endpoint](https://educonnect-backend.onrender.com)
+
+> Note: It may take a few seconds to load due to Render’s free-tier cold start.
 
 ---
 
@@ -27,14 +35,16 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 
 ## 🛠️ Tech Stack
 
-| Tech | Role |
-|------|------|
-| React.js | Frontend |
-| Node.js + Express | Backend |
-| MongoDB | Database |
-| Gemini API | AI Chatbot |
-| JWT | Authentication |
-| Bcrypt | Data encryption |
+| Tech         | Role           |
+|--------------|----------------|
+| React.js     | Frontend       |
+| Tailwind CSS | UI Styling     |
+| Node.js      | Backend Logic  |
+| Express.js   | API Framework  |
+| MongoDB      | Database       |
+| Gemini API   | AI Chatbot     |
+| JWT          | Authentication |
+| Bcrypt       | Password Hashing |
 
 ---
 
@@ -75,15 +85,16 @@ EduConnect is a modern web-based platform designed to simplify and enhance the p
 ## ⚙️ How to Run Locally
 
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/your-username/educonnect.git
+cd educonnect
 
-# Navigate to frontend
+# Start Frontend
 cd Frontend
 npm install
 npm run dev
 
-# Navigate to backend
-cd Backend
+# Start Backend
+cd ../Backend
 npm install
 npx nodemon server.js
