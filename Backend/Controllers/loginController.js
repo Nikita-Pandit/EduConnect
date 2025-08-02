@@ -14,14 +14,16 @@ const loginController = async (req, res) => {
     const user =  
       (await studentModel.findOne({ email }))  || 
       (await teacherModel.findOne({ email }))
-      
+  
     if (!user) {
       console.log("User not found");
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
     // Compare entered password with hashed password
+    console.log("mmmm", user)
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     console.log("Password Match:", isPasswordValid);
 
     if (!isPasswordValid) {

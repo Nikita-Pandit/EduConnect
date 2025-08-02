@@ -158,3 +158,22 @@ ul li:hover{
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+/* Custom scrollbar for react-select dropdown */
+.react-select__menu-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.react-select__menu-list::-webkit-scrollbar-track {
+  background: #0B142C; /* Dark track */
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb {
+  background-color: #9B30FF; /* Purple scrollbar */
+  border-radius: 4px;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb:hover {
+  background-color: #B963FF; /* Lighter purple on hover */
+}

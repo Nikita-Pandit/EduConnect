@@ -181,6 +181,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+
 
 const Students = () => {
   const navigate = useNavigate();
@@ -286,22 +288,51 @@ const Students = () => {
           ))}
         </select>
 
-        <select
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          name="year"
-          id="year"
-          className="text-white bg-[#0B142C] p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full md:w-64"
-        >
-          <option value="">Select Year</option>
-          {yearOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+{/* ----------------- */}
 
-        <select
+{/* <select
+  value={year}
+  onChange={(e) => setYear(e.target.value)}
+  name="year"
+  id="year"
+  className="text-white bg-[#0B142C] appearance-none p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full md:w-64 focus:outline-none"
+>
+  <option value="" className="bg-[#0B142C] text-white">Select Year</option>
+  {yearOptions.map((option) => (
+    <option
+      key={option.value}
+      value={option.value}
+      className="bg-[#0B142C] text-white"
+    >
+      {option.label}
+    </option>
+  ))}
+</select> */}
+
+
+
+<select
+  value={year}
+  onChange={(e) => setYear(e.target.value)}
+  name="year"
+  id="year"
+  className="text-white bg-[#0B142C] appearance-none p-3 rounded-xl shadow-md shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/30 transition-all duration-300 w-full md:w-64 focus:outline-none"
+>
+  <option value="" className="bg-[#0B142C] text-white">Select Year</option>
+  {yearOptions.map((option) => (
+    <option
+      key={option.value}
+      value={option.value}
+      className="bg-[#0B142C] text-white"
+    >
+      {option.label}
+    </option>
+  ))}
+</select>
+
+      
+
+        {/* <select
           name="domain"
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
@@ -314,7 +345,64 @@ const Students = () => {
               {option.label}
             </option>
           ))}
-        </select>
+        </select> */}
+
+
+
+        <Select
+  name="domain"
+  value={domainOptions.find((option) => option.value === domain)}
+  onChange={(selectedOption) => setDomain(selectedOption ? selectedOption.value : "")}
+  options={domainOptions}
+  placeholder="Select Domain"
+  isClearable
+  className="w-full md:w-64 text-black z-50"
+  styles={{
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "#0B142C",
+      color: "white",
+      borderRadius: "0.75rem",
+      padding: "4px",
+      outline:"none",
+      border: "none",
+      boxShadow: "0 0 0 1px #9B30FF",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#0B142C",
+      color: "white",
+      zIndex: 99,
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#6D0BCF" : "#0B142C",
+      color: "white",
+      cursor: "pointer",
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      scrollbarWidth: "none",
+      msOverflowStyle: "none",
+      "&::-webkit-scrollbar": {
+        display: "none",
+      },
+    }),
+  }}
+/>
+
       </div>
 
       {/* Loading and Error States */}

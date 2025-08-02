@@ -454,6 +454,9 @@ const domainOptions = [
     label: "Web Development",
     img: "https://img.icons8.com/color/96/web-design.png",
   },
+
+
+
   {
     value: "Data Science",
     label: "Data Science",
@@ -499,6 +502,33 @@ const domainOptions = [
     label: "DevOps",
     img: "https://img.icons8.com/color/96/devops.png",
   },
+
+  {
+  value: "Artificial Intelligence",
+  label: "Artificial Intelligence",
+  img: "https://img.icons8.com/color/96/brain.png",
+},
+{
+  value: "Augmented Reality",
+  label: "Augmented Reality",
+  img: "https://img.icons8.com/color/96/augmented-reality.png",
+},
+{
+  value: "Internet of Things (IoT)",
+  label: "Internet of Things (IoT)",
+  img: "https://img.icons8.com/color/96/internet-of-things.png",
+},
+{
+  value: "Robotics",
+  label: "Robotics",
+  img: "https://img.icons8.com/color/96/robot.png",
+},
+{
+  value: "Computer Vision",
+  label: "Computer Vision",
+  img: "https://img.icons8.com/color/96/face-id.png",
+},
+
   // ... (rest of the domain options remain the same)
 ];
 

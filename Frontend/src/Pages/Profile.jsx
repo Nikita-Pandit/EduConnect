@@ -329,6 +329,7 @@ const Profile = () => {
 
     try {
       console.log("student img");
+
       const response = await axios.post(
         `${backendUrl}/api/Profile/${id}/uploadImage`,
         formData,
@@ -336,6 +337,7 @@ const Profile = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+      console.log("response", response);
       console.log("imageee", response.data.image)
       setProfile((prevProfile) => ({
         ...prevProfile,
@@ -343,10 +345,41 @@ const Profile = () => {
       }));
       toast.success("Image uploaded successfully!");
     } catch (error) {
+      console.log("Mellow");
       console.error("Error uploading image:", error);
       toast.error("Failed to upload image.");
     }
   };
+
+
+  //   const handleImageChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
+
+  //   const formData = new FormData();
+  //   formData.append("image", file);
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${backendUrl}/api/Profile/${id}/uploadImage`,
+  //       formData,
+  //       {
+  //         headers: { "Content-Type": "multipart/form-data" },
+  //       }
+  //     );
+  //     setProfile((prevProfile) => ({
+  //       ...prevProfile,
+  //       image: response.data.image,
+  //     }));
+  //     toast.success("Image uploaded successfully!");
+  //   } catch (error) {
+  //     console.error("Error uploading image:", error);
+  //     toast.error("Failed to upload image.");
+  //   }
+  // };
+
+
+
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -447,67 +480,45 @@ const Profile = () => {
 
                 {/* Profile Image */}
 
-                <div className="relative mb-4">
-                  {/* Clickable container - moved onClick here */}
-                  <div
-                    className="relative overflow-hidden rounded-full border-4 border-[#9B30FF] w-36 h-36 shadow-lg shadow-[#9B30FF]/30 hover:shadow-[#9B30FF]/50 transition-all duration-300 group"
-                    onClick={() => {
-                      if (isEditing || isFirstVisit) {
-                        document.getElementById("imageUpload").click();
-                      }
-                    }}
-                    style={{
-                      cursor: isEditing || isFirstVisit ? "pointer" : "default",
-                    }}
-                  >
-                    {/* Image - removed onClick from here */}
-                    <img
-                      src={
-                     
-                        profile.image.startsWith("/uploads/")
-                          ? `${backendUrl}${profile.image}`
-                          : `${backendUrl}/images/default_image.jpg`
-                      }
-                      alt="Profile"
-                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"
-                    />
-
-                    {/* Edit overlay */}
-                    {(isEditing || isFirstVisit) && (
-                      <div className="absolute inset-0 bg-[#3D306F] bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* File input - removed disabled prop */}
-                  <input
-                    type="file"
-                    id="imageUpload"
-                    className="hidden"
-                    onChange={handleImageChange}
-                    accept="image/*"
-                  />
-                </div>
+         {/* Profile Image Section */}
+<div className="relative mb-4">
+  <div 
+    className="relative overflow-hidden rounded-full border-4 border-[#9B30FF] w-36 h-36 shadow-lg shadow-[#9B30FF]/20 hover:shadow-[#9B30FF]/40 transition-all duration-300 group"
+    onClick={() => {
+      if (isEditing || isFirstVisit) {
+        document.getElementById("imageUpload").click();
+      }
+    }}
+    style={{
+      cursor: (isEditing || isFirstVisit) ? "pointer" : "default",
+    }}
+  >
+    <img
+      src={
+        profile.image.startsWith("/uploads/")
+          ? `${backendUrl}${profile.image}`
+          : `${backendUrl}/images/default_image.jpg`
+      }
+      alt="Profile"
+      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"
+    />
+    {(isEditing || isFirstVisit) && (
+      <div className="absolute inset-0 bg-[#3D306F] bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </div>
+    )}
+  </div>
+  <input
+    type="file"
+    id="imageUpload"
+    className="hidden"
+    onChange={handleImageChange}
+    accept="image/*"
+  />
+</div>
 
                 {/* Personal Information */}
                 <div className="w-full space-y-3">

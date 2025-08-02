@@ -78,7 +78,8 @@ const studentMoreInfo=require("../Models/studentMoreInfo")
       res.status(500).json({ success: false, message: "Error fetching student data." });
     }
   };
-  
+
+
   const getProfileImage = async (req, res) => {
     try {
       const { id } = req.params;
@@ -91,7 +92,7 @@ const studentMoreInfo=require("../Models/studentMoreInfo")
       }
   
       const imagePath = `/uploads/${req.file.filename}`;
-      console.log(imagePath)
+      console.log("imagePath", imagePath)
       const updatedProfile = await studentMoreInfo.findOneAndUpdate(
         { studentID: id },
         { image: imagePath },
