@@ -7,8 +7,8 @@ Bridging the gap between students and teachers through smart mentorship tools, A
 
 ## 🔗 Live Demo
 
-🌐 [Visit EduConnect Live](https://educonnect-frontend.onrender.com)  
-🛠️ [Backend API Endpoint](https://educonnect-backend.onrender.com)
+🌐 [Visit EduConnect Live](https://educonnect-frontend-hk5t.onrender.com)  
+🛠️ [Backend API Endpoint](https://educonnect-backend-ygs7.onrender.com)
 
 > Note: It may take a few seconds to load due to Render’s free-tier cold start.
 
@@ -98,3 +98,4 @@ npm run dev
 cd ../Backend
 npm install
 npx nodemon server.js
+
