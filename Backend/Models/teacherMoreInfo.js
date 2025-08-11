@@ -8,6 +8,7 @@ const teacherMoreInfoSchema=new mongoose.Schema({
   github:String,
   linkedin:String,
   twitter:String,
+  Google_Scholar:String,
 domain:{
   type:[String] //Array of strings
 },

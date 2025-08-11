@@ -54,6 +54,7 @@ const createTeacherProfileInfo = async (req, res) => {
     Bio,
     github,
     linkedin,
+    Google_Scholar,
     twitter,
     location,
     domain,
@@ -66,7 +67,7 @@ const createTeacherProfileInfo = async (req, res) => {
     if (matchID) {
       const updated = await teacherMoreInfo.findOneAndUpdate(
         { teacherID: teacherId },
-        { name, Bio, github, linkedin, twitter, location, domain, image }
+        { name, Bio, github, linkedin, twitter, location, domain, image,Google_Scholar }
       );
     } else {
       profile = new teacherMoreInfo({
@@ -77,6 +78,7 @@ const createTeacherProfileInfo = async (req, res) => {
         twitter,
         domain: Array.isArray(domain) ? domain : [],
         location,
+        Google_Scholar,
         teacherID: teacherId,
         image,
         rank,

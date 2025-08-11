@@ -44,6 +44,8 @@ const TeacherProfile = () => {
     { value: "Penetration Testing", label: "Penetration Testing" },
     { value: "Cryptography", label: "Cryptography" },
     { value: "Software Architecture", label: "Software Architecture" },
+       { value: "Deep Learning", label: "Deep Learning" },
+           { value: "Data Mining", label: "Data Mining" },
   ];
 
   const handleDomainChange = (selectedOptions) => {
@@ -66,6 +68,7 @@ const TeacherProfile = () => {
     github: "",
     linkedin: "",
     twitter: "",
+    Google_Scholar:"",
     domain: "",
     location: "",
     image: "/images/default_image.jpg",
@@ -266,6 +269,8 @@ return (
     accept="image/*"
   />
 </div>
+
+
               {/* Personal Information */}
               <div className="w-full space-y-3">
                 <div>
@@ -322,6 +327,14 @@ return (
                 <h1 className="text-xl font-bold text-[#E1C3FF] mb-2 hover:text-[#3D306F] transition-colors duration-300">Social Links</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-3">
+                          <input
+                      placeholder="Google Scholar"
+                      className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:border-[#3D306F] hover:bg-[#3D306F]/20 transition-all duration-300"
+                      name="Google_Scholar"
+                      onChange={handleChange}
+                      value={profile.Google_Scholar}
+                      disabled={!isEditing && !isFirstVisit}
+                    />
                     <input
                       placeholder="GitHub"
                       className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:border-[#3D306F] hover:bg-[#3D306F]/20 transition-all duration-300"
