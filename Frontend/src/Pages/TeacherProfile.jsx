@@ -280,6 +280,7 @@ return (
                     className="w-full bg-[#0d1126] border border-[#9B30FF] rounded p-2 text-sm text-white disabled:opacity-70 shadow-sm shadow-[#9B30FF]/10 hover:border-[#3D306F] hover:bg-[#3D306F]/20 transition-all duration-300"
                     value={teacherEmail}
                     disabled
+                     //disabled={!isEditing && !isFirstVisit}
                   />
                 </div>
 
