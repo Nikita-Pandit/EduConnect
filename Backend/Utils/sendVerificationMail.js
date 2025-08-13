@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
- const backendUrl = process.env.BASE_URL || 'http://localhost:3002';
+ const backendUrl = process.env.BASE_URL;
 const sendVerificationMail = async (email,token,role)=> {
     try{
         const transporter = nodemailer.createTransport({
