@@ -254,6 +254,10 @@ app.get("/api/selectedTeachers/:studentId", async (req, res) => {
 
 
 
+app.get("/", (req,res)=>{
+  res.send("EduConnect API – Connecting learners and educators!")
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
