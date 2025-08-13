@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
- const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+ const frontendUrl = process.env.FRONTEND_URL;
 const resetPassword = async (email, resetToken,name) => {
     try {
         const transporter = nodemailer.createTransport({
@@ -10,9 +10,6 @@ const resetPassword = async (email, resetToken,name) => {
             },
         });
 
-         // Dynamic base URL (use the correct domain for dev/prod)
-         // const baseUrl = process.env.BASE_URL || 'http://localhost:3002';
-         // const frontendUrl=process.env.FRONTEND_URL ||'https://educonnect-1-jv7g.onrender.com'
 
          const mailOptions = {
             to: email,
