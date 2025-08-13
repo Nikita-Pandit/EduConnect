@@ -8,8 +8,7 @@ const teacherMoreInfo = require("../Models/teacherMoreInfo");
 
 const loginController = async (req, res) => {
   const { email, password } = req.body;
-  console.log("Received Login Request for:", email);
-  console.log(password);
+
   try {
     const user =  
       (await studentModel.findOne({ email }))  || 
@@ -21,7 +20,6 @@ const loginController = async (req, res) => {
     }
 
     // Compare entered password with hashed password
-    console.log("mmmm", user)
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     console.log("Password Match:", isPasswordValid);

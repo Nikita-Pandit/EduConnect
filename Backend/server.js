@@ -75,8 +75,7 @@ app.use("/api", chatRoutes);
 // Add this endpoint to your existing server.js file
 app.post("/api/studentCheckbox", async (req, res) => {
   const { teacherID, rollNo } = req.body;
-  console.log("Teacher id for selecting student: ", teacherID);
-  console.log("Student id for selecting student: ", rollNo);
+
 
   try {
     // Find student and update selectStudent field
@@ -175,7 +174,7 @@ app.post("/api/teacher/removeStudent", async (req, res) => {
 //4th year
 app.get("/api/student/unique/:studentId", async (req, res) => {
   const { studentId } = req.params;
-  console.log("happy11111", studentId);
+
   try {
     // Validate input
     if (!studentId) {

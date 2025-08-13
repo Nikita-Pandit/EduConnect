@@ -307,7 +307,8 @@ const StudentDashboard = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [profileCompletion, setProfileCompletion] = useState(0);
   const [selectedTeachers, setSelectedTeachers] = useState([]);
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   useEffect(() => {
     const fetchStudentData = async () => {
       try {

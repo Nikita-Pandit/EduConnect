@@ -534,6 +534,8 @@ const domainOptions = [
 
 
 const Home = () => {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      console.log(backendUrl);
   const location=useLocation()
 const navigate=useNavigate()
   useEffect(() => {

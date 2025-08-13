@@ -251,7 +251,7 @@ const SignUp = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const backendUrl =
-    import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+    import.meta.env.VITE_BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

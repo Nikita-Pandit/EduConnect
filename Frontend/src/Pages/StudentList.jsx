@@ -11,7 +11,7 @@ const StudentList = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [supervisedStudents, setSupervisedStudents] = useState([]);
   const navigate = useNavigate();
- const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+ const backendUrl = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     const fetchStudentRank = async () => {
       try {

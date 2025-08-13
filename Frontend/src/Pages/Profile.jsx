@@ -10,7 +10,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false); // NEW STATE
   const [isFirstVisit, setIsFirstVisit] = useState(true);
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const domainOptions = [
     { value: "Web Development", label: "Web Development" },

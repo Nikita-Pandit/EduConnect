@@ -138,7 +138,7 @@
 const studentModel=require("../Models/studentmodel")
 const teacherModel=require("../Models/teacherModel")
 
- const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+ const frontendUrl = process.env.FRONTEND_URL;
 
 const verifyEmailController=async(req,res)=>{
     const { token } = req.query;

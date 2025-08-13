@@ -21,7 +21,7 @@ const Login = () => {
   const isFormValid = isEmailValid && isPasswordValid;
 
 
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading

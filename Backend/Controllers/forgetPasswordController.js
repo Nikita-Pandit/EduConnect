@@ -4,13 +4,11 @@ const resetPassword = require('../Utils/resetPassword');
 
 const forgetPasswordController = async (req,res) =>{
     const {email} = req.body;
-    console.log("email in forgot-password",email)
     try{
         const user = await studentModel.findOne({email});
         if(!user){
             return res.status(200).json({ message: 'If the email exists, a reset link will be sent.' });
         }
-        console.log("user in forgot-password",user)
         const resetToken = crypto.randomBytes(32).toString('hex');
         const resetTokenExpires = Date.now()+3600000;  //1 hour validity
         

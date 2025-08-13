@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 
 const ResetPassword = () => {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
-  console.log(backendUrl);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,7 +16,7 @@ const ResetPassword = () => {
 
   const { token } = useParams();
   const navigate = useNavigate();
-  console.log(token);
+
 
   const handleResetPassword = async () => {
     if (password !== confirmPassword) {

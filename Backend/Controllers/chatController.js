@@ -11,7 +11,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const chatWithAI = async (req, res) => {
   try {
     const { message } = req.body;
-    console.log("Chatbot message: ", message);
+   
 
     // Fetch all teacher details
     const teachers = await teacherModel.find({}, "name email contact");
