@@ -27,5 +27,5 @@ studentSchema.pre("save", async function (next) {
 
 const studentModel = mongoose.models.students || mongoose.model("students", studentSchema);
 
-// const studentModel = mongoose.model("students", studentSchema);
+
 module.exports = studentModel;

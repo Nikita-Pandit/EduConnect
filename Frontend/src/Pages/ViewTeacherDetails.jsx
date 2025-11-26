@@ -349,6 +349,7 @@ const ViewTeacherDetails = () => {
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherContact, setTeacherContact] = useState("");
+  
   const [isRanked, setIsRanked] = useState(false);
   const [studentYear, setStudentYear] = useState(null);
   const [teacherRank, setTeacherRank] = useState(null);

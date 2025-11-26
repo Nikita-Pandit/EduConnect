@@ -138,7 +138,7 @@
 const studentModel=require("../Models/studentmodel")
 const teacherModel=require("../Models/teacherModel")
 
- const frontendUrl = "https://edu-connect-frontend-rosy.vercel.app"
+ const frontendUrl = process.env.FRONTEND_URL;
 
 const verifyEmailController=async(req,res)=>{
     const { token } = req.query;
