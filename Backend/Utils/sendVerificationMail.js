@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer")
-//  const backendUrl = "https://edu-connect-backend-jet.vercel.app"
- const backendUrl = process.env.BASE_URL;
+const backendUrl = "https://edu-connect-backend-jet.vercel.app"
+//  const backendUrl = process.env.BASE_URL;
  const sendVerificationMail = async (email,token,role)=> {
     try{
         const transporter = nodemailer.createTransport({

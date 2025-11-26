@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
- const frontendUrl = process.env.FRONTEND_URL;
+ const frontendUrl = "https://edu-connect-frontend-rosy.vercel.app"
+ 
 const resetPassword = async (email, resetToken,name) => {
     try {
         const transporter = nodemailer.createTransport({

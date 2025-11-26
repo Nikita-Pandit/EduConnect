@@ -151,7 +151,7 @@
 //               {teacherName ? `Welcome ${teacherName}` : "Loading..."}
 //             </h4>
 //             <div>
-//               <img src={`http://localhost:3002${profile.image}`} alt="" />
+//               <img src={`${profile.image}`} alt="" />
 //             </div>
 //             <div className="flex flex-col gap-3">
 //               <input

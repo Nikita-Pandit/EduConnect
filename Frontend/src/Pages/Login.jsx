@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa"; // Icons
 
 const Login = () => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +55,7 @@ const Login = () => {
     }
 
     try {
-      await axios.post("http://localhost:3002/api/forgot-password", { email });
+      await axios.post(`${backendUrl}/api/forgot-password`, { email });
       toast.success("Password reset link sent to your email.");
     } catch (error) {
       toast.error("Failed to send password reset link. Please try again later.");
