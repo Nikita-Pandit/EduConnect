@@ -31,8 +31,9 @@ const Login = () => {
         const response = await axios.post(`${backendUrl}/api/Login`, { email, password });
         
       toast.success("Login Successful");
-
-      const userDetails = response.data.userMoreDetails;
+let userDetails;
+ if(response.data.userMoreDetails){
+userDetails = response.data.userMoreDetails;
       if (userDetails.studentID) {
         localStorage.setItem("studentId", userDetails.studentID);
         setTimeout(() => navigate("/StudentDashboard", { state: { id: userDetails.studentID } }), 2000);
@@ -40,6 +41,9 @@ const Login = () => {
         localStorage.setItem("teacherId", userDetails.teacherID);
         setTimeout(() => navigate("/TeacherDashboard", { state: { id: userDetails.teacherID } }), 2000);
       }
+ }
+     
+
     } catch (error) {
       toast.error("Invalid credentials. Please try again.");
     } finally {
