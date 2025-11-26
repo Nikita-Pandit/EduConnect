@@ -18,7 +18,7 @@ const resetPassword = async (email, resetToken,name) => {
             html: `
               <p>Hi ${name},</p>
               <p>You requested a password reset. Click the link below to reset your password:</p>
-              <a href="${frontendUrl}/${resetToken}">Reset Password</a>
+              <a href="${frontendUrl}/Resetpassword/${resetToken}">Reset Password</a>
               <p>If you did not request this, please ignore this email.</p>
             `,
           };   
